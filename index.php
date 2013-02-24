@@ -8,7 +8,7 @@ require_once('db.php');
 require_once('checkAuth.php');
 
 $coordsID = $_GET['coordID'];
-var_dump($coordsID);
+
 
 //if (!isset($coordID)) {
   //  header('Location: index.php');
@@ -60,6 +60,9 @@ var_dump($coordsID);
 	<link rel="stylesheet" href="stylesheets/foundation.css">
 	<!-- <link rel="stylesheet" href="stylesheets/compass.css"> -->
 	<link rel="stylesheet" href="stylesheets/app.css">
+
+	<link href="stylesheet/bootstrap.min.css" rel="stylesheet">
+	<link href="stylesheet/bootstrap-responsive.min.css" rel="stylesheet">
 	
 
 	<!--[if lt IE 9]>
@@ -90,47 +93,45 @@ var_dump($coordsID);
 
 		<div class="row">
 			<div class="twelve columns">
-				<h3>The Grid</h3>
+				<form>
+			        
+			        <select name="days">
+			                <option value="today">Today</option>
+			                <option value="yesterday">Yesterday</option>
+			                <option value="daybefore">The day before</option>
+			        </select>
+				</form>
+
+				
 
 				<div class='overview'>
 				<!-- Grid Example -->
-				<div class="row">
-					<div class="twelve columns">
-						<div id='map' style="height: 500px; width: 100%"/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="six columns">
-						<div class="panel">
-							<p>Six columns</p>
+					<div class="row">
+						<div class="six columns">
+							<div id='map' style="height: 500px;">
+							</div>
 						</div>
-					</div>
-					<div class="six columns">
-						<div class="panel">
-							<p>Six columns</p>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="four columns">
-						<div class="panel">
-							<p>Four columns</p>
-						</div>
-					</div>
-					<div class="four columns">
-						<div class="panel">
-							<p>Four columns</p>
-						</div>
-					</div>
-					<div class="four columns">
-						<div class="panel">
-							<p>Four columns</p>
-						</div>
-					</div>
-				</div>
-			</div>
+						<div class="six columns">
+							
+							<ul class="thumbnails">
+							  <li class="span4">
+							    <div class="thumbnail">
+							      <img src="img/smiley.png" alt="">
+							      <h3>Date taken: 12/34/5678</h3>
+							      <p>Gps locations: 1234.5678,0987.6543</p>
+							    </div>
+							  </li>
+							  
+							</ul>
 
+
+						</div>
+					</div>
+				
+				</div>
+<!--
 				<h3>Tabs</h3>
+				<p class="nice radius large white button">Pictures!</p>
 				<dl class="tabs">
 					<dd><a href="#simple1" class="active">Simple Tab 1</a></dd>
 					<dd><a href="#simple2">Simple Tab 2</a></dd>
@@ -165,6 +166,7 @@ var_dump($coordsID);
 						<p><a href="#" class="nice radius large white button">Nice White Button</a></p>
 					</div>
 				</div>
+			-->
 			</div>
 
 			
@@ -181,6 +183,7 @@ var_dump($coordsID);
 	<script src="javascripts/jquery.placeholder.min.js"></script>
 	<script src="javascripts/jquery.tooltips.js"></script>
 	<script src="javascripts/app.js"></script>
+	<script src="javascripts/bootstrap.js"></script>
 	
 	<script type="text/javascript" language="JavaScript" src="http://j.maxmind.com/app/geoip.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
