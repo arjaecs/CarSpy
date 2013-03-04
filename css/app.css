@@ -4322,9 +4322,7 @@ kbd {
   color: #333333;
 }
 /* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
-.panel > :first-child {
-  margin-top: 0;
-}
+
 /* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
 .panel > :last-child {
   margin-bottom: 0;
@@ -5078,7 +5076,7 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 7, ../scss/app.scss */
+/* line 9, ../scss/app.scss */
 body {
   background: #ffa84c;
   /* Old browsers */
@@ -5098,7 +5096,7 @@ body {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 20, ../scss/app.scss */
+/* line 22, ../scss/app.scss */
 #topnav {
   z-index: 999;
   width: 100%;
@@ -5109,7 +5107,7 @@ body {
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* line 32, ../scss/app.scss */
+/* line 34, ../scss/app.scss */
 #topnav h1 {
   color: #ffffff;
   /* Old browsers */
@@ -5129,7 +5127,7 @@ body {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 47, ../scss/app.scss */
+/* line 49, ../scss/app.scss */
 #topnav h3 {
   margin-top: 25px;
   text-align: right;
@@ -5151,34 +5149,33 @@ body {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 64, ../scss/app.scss */
+/* line 66, ../scss/app.scss */
 #topnav #buttonnav-col {
   background: url(/img/linenbg.jpg);
 }
 
-/* line 69, ../scss/app.scss */
+/* line 71, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 73, ../scss/app.scss */
+/* line 75, ../scss/app.scss */
 .container {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   background: #202020;
   background-color: rgba(0, 0, 0, 0.3);
-  margin-top: 5px;
 }
 
-/* line 83, ../scss/app.scss */
+/* line 85, ../scss/app.scss */
 .mapcase {
   padding: 0px;
   width: 100%;
 }
 
-/* line 90, ../scss/app.scss */
+/* line 92, ../scss/app.scss */
 #map_canvas {
   height: 290px;
   position: relative;
@@ -5195,12 +5192,11 @@ width of un-hovered image = 180px - you can set this to anything
 so total container width = 640 + 180*2 = 1000px;
 default width = 720/3 = 240px; 
 */
-/* line 109, ../scss/app.scss */
+/* line 111, ../scss/app.scss */
 .accordian {
   width: 100%;
   overflow: hidden;
   /*Time for some styling*/
-  margin: 5px auto;
   padding: 0px;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
   -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
@@ -5208,14 +5204,14 @@ default width = 720/3 = 240px;
 }
 
 /*A small hack to prevent flickering on some browsers*/
-/* line 122, ../scss/app.scss */
+/* line 124, ../scss/app.scss */
 .accordian ul {
   width: 2000px;
   /*This will give ample space to the last item to move
   instead of falling down/flickering during hovers.*/
 }
 
-/* line 128, ../scss/app.scss */
+/* line 130, ../scss/app.scss */
 .accordian li {
   position: relative;
   display: block;
@@ -5234,25 +5230,25 @@ default width = 720/3 = 240px;
 }
 
 /*Reduce with of un-hovered elements*/
-/* line 149, ../scss/app.scss */
+/* line 151, ../scss/app.scss */
 .accordian ul:hover li {
   width: 180px;
 }
 
 /*Lets apply hover effects now*/
 /*The LI hover style should override the UL hover style*/
-/* line 152, ../scss/app.scss */
+/* line 154, ../scss/app.scss */
 .accordian ul li:hover {
   width: 640px;
 }
 
-/* line 155, ../scss/app.scss */
+/* line 157, ../scss/app.scss */
 .accordian li img {
   display: block;
 }
 
 /*Image title styles*/
-/* line 160, ../scss/app.scss */
+/* line 162, ../scss/app.scss */
 .image_title {
   background: rgba(0, 0, 0, 0.5);
   position: absolute;
@@ -5261,11 +5257,74 @@ default width = 720/3 = 240px;
   width: 100%;
 }
 
-/* line 167, ../scss/app.scss */
+/* line 169, ../scss/app.scss */
 .image_title a {
   display: block;
   color: #fff;
   text-decoration: none;
   padding: 20px;
   font-size: 16px;
+}
+
+/* line 177, ../scss/app.scss */
+.ribbon-before {
+  position: absolute;
+  left: 1px;
+  background: url(/img/ribbon-before.png);
+  width: 9px;
+  height: 9px;
+  margin-top: -32px;
+}
+
+/* line 186, ../scss/app.scss */
+.ribbon-after {
+  position: absolute;
+  left: 1px;
+  width: 9px;
+  height: 9px;
+  margin-top: -32px;
+  left: auto;
+  right: 1px;
+  background: url(/img/ribbon-after.png);
+}
+
+/* line 200, ../scss/app.scss */
+.panel {
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  margin-top: inherit;
+  margin-bottom: 0px;
+}
+
+/* line 206, ../scss/app.scss */
+.infopanel {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #161616;
+  margin-bottom: 1.25em;
+  padding: 20px;
+  background: #2f2f2f;
+  margin-bottom: 0px;
+}
+/* line 44, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
+.infopanel h1, .infopanel h2, .infopanel h3, .infopanel h4, .infopanel h5, .infopanel h6, .infopanel p {
+  color: white;
+}
+/* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
+.infopanel > :first-child {
+  margin-top: 0;
+}
+/* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
+.infopanel > :last-child {
+  margin-bottom: 0;
+}
+/* line 51, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
+.infopanel h1, .infopanel h2, .infopanel h3, .infopanel h4, .infopanel h5, .infopanel h6 {
+  line-height: 1;
+  margin-bottom: 0.625em;
+}
+/* line 53, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.3/scss/foundation/components/_panels.scss */
+.infopanel h1.subheader, .infopanel h2.subheader, .infopanel h3.subheader, .infopanel h4.subheader, .infopanel h5.subheader, .infopanel h6.subheader {
+  line-height: 1.4;
 }

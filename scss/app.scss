@@ -4,6 +4,8 @@
 // Comment out this import if you are customizing you imports below
 @import "foundation";
 
+@import "compass";
+
 body{
 	background: #ffa84c; /* Old browsers */
 	background: -moz-radial-gradient(center, ellipse cover,  #ffa84c 0%, #ff7b0d 100%); /* FF3.6+ */
@@ -76,7 +78,7 @@ body{
 box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
 background: #202020;
 background-color: rgba(0, 0, 0, 0.3);
-margin-top:5px;
+//margin-top:5px;
 
 }
 
@@ -111,7 +113,7 @@ default width = 720/3 = 240px;
 	overflow: hidden;
 	
 	/*Time for some styling*/
-	margin: 5px auto;
+	//margin: 5px auto;
 	padding: 0px;
 	box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
 	-webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
@@ -172,5 +174,37 @@ width: 100%;
 	font-size: 16px;
 }
 
+.ribbon-before {
+position: absolute;
+left: 1px;
+background: url(/img/ribbon-before.png);
+width: 9px;
+height: 9px;
+margin-top: -32px;
+}
 
+.ribbon-after {
+
+position: absolute;
+left: 1px;
+
+width: 9px;
+height: 9px;
+margin-top: -32px;
+left: auto;
+right: 1px;
+background: url(/img/ribbon-after.png);
+
+}
+
+.panel{
+	 @include single-box-shadow;
+	 margin-top:inherit;
+	 margin-bottom:0px;
+}
+
+.infopanel{
+	 @include panel(#2f2f2f, 20px); 
+	 margin-bottom:0px;
+}
 
