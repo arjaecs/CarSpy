@@ -5111,7 +5111,6 @@ body {
 
 /* line 32, ../scss/app.scss */
 #topnav h1 {
-  text-align: center;
   color: #ffffff;
   /* Old browsers */
   color: -moz-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%);
@@ -5130,18 +5129,40 @@ body {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 48, ../scss/app.scss */
+/* line 47, ../scss/app.scss */
+#topnav h3 {
+  margin-top: 25px;
+  text-align: right;
+  color: #ffffff;
+  /* Old browsers */
+  color: -moz-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%);
+  /* FF3.6+ */
+  color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #e5e5e5));
+  /* Chrome,Safari4+ */
+  color: -webkit-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%);
+  /* Chrome10+,Safari5.1+ */
+  color: -o-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%);
+  /* Opera 12+ */
+  color: -ms-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%);
+  /* IE10+ */
+  color: radial-gradient(ellipse at center, #ffffff 0%, #e5e5e5 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
+  /* IE6-9 fallback on horizontal gradient */
+}
+
+/* line 64, ../scss/app.scss */
 #topnav #buttonnav-col {
   background: url(/img/linenbg.jpg);
 }
 
-/* line 53, ../scss/app.scss */
+/* line 69, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 57, ../scss/app.scss */
+/* line 73, ../scss/app.scss */
 .container {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
@@ -5151,17 +5172,100 @@ body {
   margin-top: 5px;
 }
 
-/* line 67, ../scss/app.scss */
+/* line 83, ../scss/app.scss */
 .mapcase {
   padding: 0px;
   width: 100%;
 }
 
-/* line 74, ../scss/app.scss */
+/* line 90, ../scss/app.scss */
 #map_canvas {
   height: 290px;
   position: relative;
   background-color: #e5e3df;
   overflow: hidden;
   -webkit-transform: translateZ(0);
+}
+
+/*Time to apply widths for accordian to work
+Width of image = 640px
+total images = 5
+so width of hovered image = 640px
+width of un-hovered image = 180px - you can set this to anything
+so total container width = 640 + 180*2 = 1000px;
+default width = 720/3 = 240px; 
+*/
+/* line 109, ../scss/app.scss */
+.accordian {
+  width: 100%;
+  overflow: hidden;
+  /*Time for some styling*/
+  margin: 5px auto;
+  padding: 0px;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+}
+
+/*A small hack to prevent flickering on some browsers*/
+/* line 122, ../scss/app.scss */
+.accordian ul {
+  width: 2000px;
+  /*This will give ample space to the last item to move
+  instead of falling down/flickering during hovers.*/
+}
+
+/* line 128, ../scss/app.scss */
+.accordian li {
+  position: relative;
+  display: block;
+  width: 333px;
+  float: left;
+  border-left: 1px solid #888888;
+  box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+  /*Transitions to give animation effect*/
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  /*If you hover on the images now you should be able to 
+  see the basic accordian*/
+}
+
+/*Reduce with of un-hovered elements*/
+/* line 149, ../scss/app.scss */
+.accordian ul:hover li {
+  width: 180px;
+}
+
+/*Lets apply hover effects now*/
+/*The LI hover style should override the UL hover style*/
+/* line 152, ../scss/app.scss */
+.accordian ul li:hover {
+  width: 640px;
+}
+
+/* line 155, ../scss/app.scss */
+.accordian li img {
+  display: block;
+}
+
+/*Image title styles*/
+/* line 160, ../scss/app.scss */
+.image_title {
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+/* line 167, ../scss/app.scss */
+.image_title a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 20px;
+  font-size: 16px;
 }
