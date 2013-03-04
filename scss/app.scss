@@ -1,0 +1,82 @@
+// Global Foundation Settings
+@import "settings";
+
+// Comment out this import if you are customizing you imports below
+@import "foundation";
+
+body{
+	background: #ffa84c; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #ffa84c 0%, #ff7b0d 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffa84c), color-stop(100%,#ff7b0d)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #ffa84c 0%,#ff7b0d 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #ffa84c 0%,#ff7b0d 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #ffa84c 0%,#ff7b0d 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #ffa84c 0%,#ff7b0d 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+
+#topnav
+{
+	z-index:999;width:100%;
+	background:#232323 url(/img/linenbg.jpg);
+	-moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	-o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5)
+}
+	
+
+
+#topnav h1
+{
+	text-align:center;
+	
+	color: #ffffff; /* Old browsers */
+	color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+	color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+	color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+	color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
+	color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+	color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	
+
+}
+
+#topnav #buttonnav-col
+{
+	background:url(/img/linenbg.jpg)
+}
+
+#topnav #buttonnav
+{
+	width:285px;margin:0 auto
+}
+
+.container{
+-webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+-moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+background: #202020;
+background-color: rgba(0, 0, 0, 0.3);
+margin-top:5px;
+
+}
+
+.mapcase{
+
+	padding: 0px;
+
+	width: 100%;
+}
+
+#map_canvas{
+	height: 290px;
+	position: relative;
+	background-color: rgb(229, 227, 223);
+	overflow: hidden;
+	-webkit-transform: translateZ(0);
+
+}
+
