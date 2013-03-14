@@ -1,0 +1,161 @@
+// Global Foundation Settings
+@import "settings";
+
+// Comment out this import if you are customizing you imports below
+@import "foundation";
+
+@import "compass";
+
+$graybg: #2f2f2f;
+
+body{
+	
+  background: $graybg; 
+
+}
+
+#topnav
+{
+	z-index:999;width:100%;
+	background:#232323 url(/img/linenbg.jpg);
+	-moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	-o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5)
+}
+	
+
+
+#topnav h1
+{
+	
+	
+	color: #ffffff; /* Old browsers */
+	color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+	color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+	color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+	color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
+	color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+	color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	
+
+}
+#topnav h3
+{
+	
+	margin-top: 25px;
+	text-align: right;
+	color: #ffffff; /* Old browsers */
+	color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+	color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+	color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+	color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
+	color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+	color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	
+
+}
+
+#topnav #buttonnav-col
+{
+	background:url(/img/linenbg.jpg)
+}
+
+#topnav #buttonnav
+{
+	width:285px;margin:0 auto
+}
+
+.shadowbox{
+-webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+-moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
+background: #202020;
+background-color: rgba(0, 0, 0, 0.3);
+//margin-top:5px;
+max-width: 320px;
+margin:auto;
+margin-top: 10%;
+height: 305px;
+padding: 10px;
+}
+
+.loginBox{
+	
+	max-width: 25em;
+
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  -ms-box-align: stretch;
+  box-align: stretch;
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  -ms-box-direction: reverse;
+  box-direction: reverse;
+  height: 200px;
+  margin:auto;
+  
+}
+.loginBox .container, .loginBox .sidebar {
+  padding: 20px;
+}
+.loginBox .content {
+  -webkit-box-flex: 4;
+  -moz-box-flex: 4;
+  -ms-box-flex: 4;
+  box-flex: 4;
+  background-color: #c5c1b4;
+}
+.loginBox .sidebar {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  box-flex: 1;
+  background-color: #375f99;
+  margin-right: 1px;
+}
+
+.form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+font-size: 16px;
+height: auto;
+margin-bottom: 15px;
+padding: 7px 9px;
+}
+
+.btn-group{
+	width:100%;
+}
+.btn-large{
+	width:50%;
+}
+
+
+

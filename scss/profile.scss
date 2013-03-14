@@ -6,15 +6,12 @@
 
 @import "compass";
 
+
+
+$graybg: #2f2f2f;
+
 body{
-	background: #ffa84c; /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  #ffa84c 0%, #ff7b0d 100%); /* FF3.6+ */
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffa84c), color-stop(100%,#ff7b0d)); /* Chrome,Safari4+ */
-	background: -webkit-radial-gradient(center, ellipse cover,  #ffa84c 0%,#ff7b0d 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-radial-gradient(center, ellipse cover,  #ffa84c 0%,#ff7b0d 100%); /* Opera 12+ */
-	background: -ms-radial-gradient(center, ellipse cover,  #ffa84c 0%,#ff7b0d 100%); /* IE10+ */
-	background: radial-gradient(ellipse at center,  #ffa84c 0%,#ff7b0d 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */ 
+	  background: $graybg; 
 
 
 }
@@ -83,102 +80,12 @@ span{
 box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
 background: #202020;
 background-color: rgba(0, 0, 0, 0.3);
-//margin-top:5px;
-
-}
-
-.mapcase{
-
-	padding: 5px;
-
-	//width: 100%;
-}
-
-#map_canvas{
-	height: 290px;
-	position: relative;
-	background-color: rgb(229, 227, 223);
-	overflow: hidden;
-	-webkit-transform: translateZ(0);
+margin-top:15%;
+padding: 10px;
 
 }
 
 
-/*Time to apply widths for accordian to work
-Width of image = 640px
-total images = 5
-so width of hovered image = 640px
-width of un-hovered image = 180px - you can set this to anything
-so total container width = 640 + 180*2 = 1000px;
-default width = 720/3 = 240px; 
-*/
-
-.accordian {
-	width: 100%;
-	overflow: hidden;
-	
-	/*Time for some styling*/
-	//margin-top:1px;
-	padding: 0px;
-	box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-	-webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-	-moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-}
-
-/*A small hack to prevent flickering on some browsers*/
-.accordian ul {
-	width: 2000px;
-	/*This will give ample space to the last item to move
-	instead of falling down/flickering during hovers.*/
-}
-
-.accordian li {
-	position: relative;
-	display: block;
-	width: 333px;
-	float: left;
-	
-	border-left: 1px solid #888;
-	
-	box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-	-moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-	
-	/*Transitions to give animation effect*/
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-	/*If you hover on the images now you should be able to 
-	see the basic accordian*/
-}
-
-/*Reduce with of un-hovered elements*/
-.accordian ul:hover li {width: 180px;}
-/*Lets apply hover effects now*/
-/*The LI hover style should override the UL hover style*/
-.accordian ul li:hover {width: 640px;}
-
-
-.accordian li img {
-	display: block;
-}
-
-/*Image title styles*/
-.image_title {
-	background: rgba(0, 0, 0, 0.5);
-	position: absolute;
-	left: 0; bottom: 0;	
-width: 100%;	
-
-}
-.image_title a {
-	display: block;
-	color: #fff;
-	text-decoration: none;
-	//padding: 20px;
-	font-size: 16px;
-	text-align:center;
-}
 
 .ribbon-before {
 position: absolute;
@@ -186,7 +93,7 @@ left: 1px;
 background: url(/img/ribbon-before.png);
 width: 9px;
 height: 9px;
-margin-top: -31px;
+margin-top: -31px !important;
 }
 
 .ribbon-after {
@@ -203,24 +110,7 @@ background: url(/img/ribbon-after.png);
 
 }
 
-.panel{
-	 @include single-box-shadow;
-	 margin-top:inherit;
-	 margin-bottom:0px;
 
-
-}
-
-.firstpanel{
-	 @include panel; 
-	 margin-top:10px;
-	 margin-bottom:0px;
-}
-
-.infopanel{
-	 @include panel( #2f2f2f,20px); 
-	 margin-bottom:0px;
-}
 
 #cslogo{
 	
@@ -255,6 +145,43 @@ select{
 
 .user{
 	width:110px;
+}
+
+.panel{
+	 @include single-box-shadow;
+	 margin-top:10px;
+	 margin-bottom:10px;
+	 float:left;
+	 width:100%;
 
 
+}
+
+#personal{
+	
+	float:left;
+	width:50%;
+	padding:10px;
+
+}
+
+#vehicle{
+
+	float:left;
+	width:50%;
+	padding:10px;
+}
+
+table tbody tr> :first-child {
+
+color: #999;
+font-weight: bold;
+
+word-wrap: break-word;
+
+
+}
+
+table{
+	width:100%;
 }

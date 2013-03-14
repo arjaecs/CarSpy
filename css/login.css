@@ -4694,7 +4694,10 @@ kbd {
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6, .panel p {
   color: #333333;
 }
-
+/* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
+.panel > :first-child {
+  margin-top: 0;
+}
 /* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
 .panel > :last-child {
   margin-bottom: 0;
@@ -5452,32 +5455,12 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 9, ../scss/app.scss */
+/* line 11, ../scss/login.scss */
 body {
-  background: #ffa84c;
-  /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #ffa84c 0%, #ff7b0d 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #ffa84c), color-stop(100%, #ff7b0d));
-  /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, #ffa84c 0%, #ff7b0d 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, #ffa84c 0%, #ff7b0d 100%);
-  /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, #ffa84c 0%, #ff7b0d 100%);
-  /* IE10+ */
-  background: radial-gradient(ellipse at center, #ffa84c 0%, #ff7b0d 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=1 );
-  /* IE6-9 fallback on horizontal gradient */
+  background: #2f2f2f;
 }
 
-/* line 21, ../scss/app.scss */
-span {
-  display: inline;
-}
-
-/* line 26, ../scss/app.scss */
+/* line 18, ../scss/login.scss */
 #topnav {
   z-index: 999;
   width: 100%;
@@ -5486,10 +5469,9 @@ span {
   -webkit-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
   -o-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
-  height: 85px;
 }
 
-/* line 39, ../scss/app.scss */
+/* line 30, ../scss/login.scss */
 #topnav h1 {
   color: #ffffff;
   /* Old browsers */
@@ -5509,8 +5491,9 @@ span {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 54, ../scss/app.scss */
+/* line 45, ../scss/login.scss */
 #topnav h3 {
+  margin-top: 25px;
   text-align: right;
   color: #ffffff;
   /* Old browsers */
@@ -5530,246 +5513,114 @@ span {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 71, ../scss/app.scss */
+/* line 62, ../scss/login.scss */
 #topnav #buttonnav-col {
   background: url(/img/linenbg.jpg);
 }
 
-/* line 76, ../scss/app.scss */
+/* line 67, ../scss/login.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 80, ../scss/app.scss */
-.container {
+/* line 71, ../scss/login.scss */
+.shadowbox {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   background: #202020;
   background-color: rgba(0, 0, 0, 0.3);
+  max-width: 320px;
+  margin: auto;
+  margin-top: 10%;
+  height: 305px;
+  padding: 10px;
 }
 
-/* line 90, ../scss/app.scss */
-.mapcase {
-  padding: 5px;
+/* line 85, ../scss/login.scss */
+.loginBox {
+  max-width: 25em;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-box;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  -ms-box-align: stretch;
+  box-align: stretch;
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  -ms-box-direction: reverse;
+  box-direction: reverse;
+  height: 200px;
+  margin: auto;
 }
 
-/* line 97, ../scss/app.scss */
-#map_canvas {
-  height: 290px;
-  position: relative;
-  background-color: #e5e3df;
-  overflow: hidden;
-  -webkit-transform: translateZ(0);
-}
-
-/*Time to apply widths for accordian to work
-Width of image = 640px
-total images = 5
-so width of hovered image = 640px
-width of un-hovered image = 180px - you can set this to anything
-so total container width = 640 + 180*2 = 1000px;
-default width = 720/3 = 240px; 
-*/
-/* line 116, ../scss/app.scss */
-.accordian {
-  width: 100%;
-  overflow: hidden;
-  /*Time for some styling*/
-  padding: 0px;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-  -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-  -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-}
-
-/*A small hack to prevent flickering on some browsers*/
-/* line 129, ../scss/app.scss */
-.accordian ul {
-  width: 2000px;
-  /*This will give ample space to the last item to move
-  instead of falling down/flickering during hovers.*/
-}
-
-/* line 135, ../scss/app.scss */
-.accordian li {
-  position: relative;
-  display: block;
-  width: 333px;
-  float: left;
-  border-left: 1px solid #888888;
-  box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-  /*Transitions to give animation effect*/
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  /*If you hover on the images now you should be able to 
-  see the basic accordian*/
-}
-
-/*Reduce with of un-hovered elements*/
-/* line 156, ../scss/app.scss */
-.accordian ul:hover li {
-  width: 180px;
-}
-
-/*Lets apply hover effects now*/
-/*The LI hover style should override the UL hover style*/
-/* line 159, ../scss/app.scss */
-.accordian ul li:hover {
-  width: 640px;
-}
-
-/* line 162, ../scss/app.scss */
-.accordian li img {
-  display: block;
-}
-
-/*Image title styles*/
-/* line 167, ../scss/app.scss */
-.image_title {
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-
-/* line 174, ../scss/app.scss */
-.image_title a {
-  display: block;
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  text-align: center;
-}
-
-/* line 183, ../scss/app.scss */
-.ribbon-before {
-  position: absolute;
-  left: 1px;
-  background: url(/img/ribbon-before.png);
-  width: 9px;
-  height: 9px;
-  margin-top: -31px;
-}
-
-/* line 192, ../scss/app.scss */
-.ribbon-after {
-  position: absolute;
-  left: 1px;
-  width: 9px;
-  height: 9px;
-  margin-top: -31px;
-  left: auto;
-  right: 1px;
-  background: url(/img/ribbon-after.png);
-}
-
-/* line 206, ../scss/app.scss */
-.panel {
-  -webkit-box-shadow: 0px 0px 5px #333333;
-  -moz-box-shadow: 0px 0px 5px #333333;
-  box-shadow: 0px 0px 5px #333333;
-  margin-top: inherit;
-  margin-bottom: 0px;
-}
-
-/* line 214, ../scss/app.scss */
-.firstpanel {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #d9d9d9;
-  margin-bottom: 1.25em;
-  padding: 1.25em;
-  background: #f2f2f2;
-  margin-top: 10px;
-  margin-bottom: 0px;
-}
-/* line 43, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.firstpanel h1, .firstpanel h2, .firstpanel h3, .firstpanel h4, .firstpanel h5, .firstpanel h6, .firstpanel p {
-  color: #333333;
-}
-/* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.firstpanel > :first-child {
-  margin-top: 0;
-}
-/* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.firstpanel > :last-child {
-  margin-bottom: 0;
-}
-/* line 51, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.firstpanel h1, .firstpanel h2, .firstpanel h3, .firstpanel h4, .firstpanel h5, .firstpanel h6 {
-  line-height: 1;
-  margin-bottom: 0.625em;
-}
-/* line 53, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.firstpanel h1.subheader, .firstpanel h2.subheader, .firstpanel h3.subheader, .firstpanel h4.subheader, .firstpanel h5.subheader, .firstpanel h6.subheader {
-  line-height: 1.4;
-}
-
-/* line 220, ../scss/app.scss */
-.infopanel {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #161616;
-  margin-bottom: 1.25em;
+/* line 109, ../scss/login.scss */
+.loginBox .container, .loginBox .sidebar {
   padding: 20px;
-  background: #2f2f2f;
-  margin-bottom: 0px;
-}
-/* line 44, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.infopanel h1, .infopanel h2, .infopanel h3, .infopanel h4, .infopanel h5, .infopanel h6, .infopanel p {
-  color: white;
-}
-/* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.infopanel > :first-child {
-  margin-top: 0;
-}
-/* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.infopanel > :last-child {
-  margin-bottom: 0;
-}
-/* line 51, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.infopanel h1, .infopanel h2, .infopanel h3, .infopanel h4, .infopanel h5, .infopanel h6 {
-  line-height: 1;
-  margin-bottom: 0.625em;
-}
-/* line 53, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.infopanel h1.subheader, .infopanel h2.subheader, .infopanel h3.subheader, .infopanel h4.subheader, .infopanel h5.subheader, .infopanel h6.subheader {
-  line-height: 1.4;
 }
 
-/* line 225, ../scss/app.scss */
-#cslogo {
-  padding: 11px;
-  margin-left: 30px;
+/* line 112, ../scss/login.scss */
+.loginBox .content {
+  -webkit-box-flex: 4;
+  -moz-box-flex: 4;
+  -ms-box-flex: 4;
+  box-flex: 4;
+  background-color: #c5c1b4;
 }
 
-/* line 231, ../scss/app.scss */
-select {
-  background-color: #2f2f2f;
-  height: 30px;
-  color: white;
+/* line 119, ../scss/login.scss */
+.loginBox .sidebar {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-box-flex: 1;
+  box-flex: 1;
+  background-color: #375f99;
+  margin-right: 1px;
 }
 
-/* line 242, ../scss/app.scss */
-.spacer {
-  width: 1020px !important;
-  margin-top: -5px;
-  margin-left: -10px;
-  margin-right: -10px;
+/* line 128, ../scss/login.scss */
+.form-signin {
+  max-width: 300px;
+  padding: 19px 29px 29px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* line 250, ../scss/app.scss */
-#topnav #buttonnav {
-  width: 285px;
-  margin: 0 auto;
+/* line 142, ../scss/login.scss */
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
 }
 
-/* line 256, ../scss/app.scss */
-.user {
-  width: 110px;
+/* line 146, ../scss/login.scss */
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}
+
+/* line 153, ../scss/login.scss */
+.btn-group {
+  width: 100%;
+}
+
+/* line 156, ../scss/login.scss */
+.btn-large {
+  width: 50%;
 }
