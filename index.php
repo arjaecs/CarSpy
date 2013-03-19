@@ -1,4 +1,17 @@
+<?php // Page for logging in and for registering if you are a new user.
+require_once('db.php');
 
+// Checks if the user is logged in and redirects to index
+if(isset($_COOKIE['loggedin'])){
+    $loggedin = true;
+    header('Location: home.php');
+    return;
+}
+else {
+	header('Location: login.php');
+}
+
+?>
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
@@ -22,7 +35,7 @@
 
 	<div id="topnav">
 		 <div id="cslogo"><a href="/"><img  src="img/CarSpyGray2.png"></a>
-<span><a href="/"><h3 style="margin-top:-45px; margin-right:50px; font-style:italic;">username</h3></span>
+<span><a href="/"><h3 style="margin-top:-45px; margin-right:50px; font-style:italic;">username</h3></a></span>
 				   </div>
 		
 		
@@ -149,6 +162,8 @@
   </script>
   
   	<script src="js/foundation/foundation.js"></script>
+
+  	<!--
 	
 	<script src="js/foundation/foundation.alerts.js"></script>
 	
@@ -174,7 +189,7 @@
 	
 	<script src="js/foundation/foundation.tooltips.js"></script>
 	
-	<script src="js/foundation/foundation.topbar.js"></script>
+	<script src="js/foundation/foundation.topbar.js"></script> -->
 
 	<script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false">

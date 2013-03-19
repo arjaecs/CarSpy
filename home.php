@@ -27,29 +27,40 @@
 		   
 		</div>  
 	</div>
-	<!--
+	
 	<div class="row">
 		<div class="large-12 columns container">
 			
 
 					<h3 align="center">Choose An Event:</h3>
 					
-					<span style="text-align:center">
+					
 					<form>
 			
-					
-					<select name="make" style="width:40%"></select>
-					<select name="type" style="width:40%"></select>
+					<span style="text-align:center; margin-left: 10%; ">
 					
 					
-					</form>
+
+					<select name='make' style="width:40%" class="form-select"  onchange="fillSelect(this.value,this.form['type'])">
+	                  <option value='blank'>Select Date</option>
+	                  <option value='LastDay'>subForLastDay</option>
+	                  <option value='Day1'>Day1</option>
+	                  <option value='Day2'>Day2</option>
+	                  <option value='Day3'>Day3</option>
+            
+					</select>
+					<select name="type" style="width:40%">
+						<option value="">Select Session</option>	
+					</select>
+					
+					
+						</form>
 					</span>
-				
 		</div>
-	</div> -->
+	</div> 
 
 	<div class="row container">
-		<div class="large-12  mapcase">
+		<div class="large-12">
 			<div style="height:300px; padding:5px; ">
 				<div id="map_canvas"></div>
 			</div>
@@ -70,7 +81,7 @@
 							<a href="#">Spy Pic 1</a>
 						</div>
 						<a href="#">
-							<img src="http://thecodeplayer.com/uploads/media/3yiC6Yq.jpg"/>
+							<img src="img/CarSpy2.jpg"/>
 						</a>
 					</li>
 					<li>
@@ -78,7 +89,7 @@
 							<a href="#">Spy Pic 2</a>
 						</div>
 						<a href="#">
-							<img src="http://thecodeplayer.com/uploads/media/40Ly3VB.jpg"/>
+							<img src="img/CarSpy2.jpg"/>
 						</a>
 					</li>
 					<li>
@@ -86,7 +97,7 @@
 							<a href="#">Spy Pic 3</a>
 						</div>
 						<a href="#">
-							<img src="http://thecodeplayer.com/uploads/media/00kih8g.jpg"/>
+							<img src="img/CarSpy2.jpg"/>
 						</a>
 					</li>
 					
@@ -129,7 +140,7 @@
   '.js><\/script>')
   </script>
   
-  	<script src="js/foundation/foundation.js"></script>
+  	<script src="js/foundation/foundation.js"></script> <!--
 	
 	<script src="js/foundation/foundation.alerts.js"></script>
 	
@@ -155,7 +166,7 @@
 	
 	<script src="js/foundation/foundation.tooltips.js"></script>
 	
-	<script src="js/foundation/foundation.topbar.js"></script>
+	<script src="js/foundation/foundation.topbar.js"></script> -->
 
 	<script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false">
@@ -163,8 +174,8 @@
     <script type="text/javascript">
       function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 8,
+          center: new google.maps.LatLng(18.201422, -67.145157),
+          zoom: 12,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -175,7 +186,29 @@
 
     </script>
 
-	
+	<script type="text/javascript">
+
+        var type = [];
+        type["blank"] = [""];
+        type["LastDay"] = ["Alternative", "Rock","Pop", "Hip Hop / Rap","Electronic", "Country", "Classical"];
+        type["Day1"] = ["Basketball","Baseball","Soccer","Volleyball","Tennis","Boxing","Swimming","Cycling"];
+        type["Day2"] = ["Culinary","Cinema","Arts","Theater","Comedy","Politics"];
+        type["Day3"] = ["Conferences","Meetings","Seminars","JobFairs","Sales"];
+
+        function fillSelect(nValue,nList){
+
+            nList.options.length = 1;
+            var curr = type[nValue];
+            for (each in curr)
+            {
+                var nOption = document.createElement('option');
+                nOption.appendChild(document.createTextNode(curr[each]));
+                nOption.setAttribute("value",curr[each]);
+                nList.appendChild(nOption);
+            }
+        }
+
+    </script>
   
   <script>
     $(document).foundation();

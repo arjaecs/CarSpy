@@ -1,9 +1,10 @@
 <?php // Page for logging in and for registering if you are a new user.
+session_start();
 
-// Checks if the user is logged in and redirects to index
+
 if(isset($_COOKIE['loggedin'])){
     $loggedin = true;
-    header('Location: index.html');
+    header('Location: profile.php');
     return;
 }
 
@@ -13,108 +14,102 @@ $id = 0;
 // When the user presses the submit button this code will run
 if ( count($_POST) > 0) {
     require_once('db.php');
-    $db = db::getInstance();
+    
 
-    // If the Sign Up button was pressed run this code
-    if($_POST['submit'] != 'Login'){
+    // If the Register button was pressed run this code
+   if($_POST['submit'] != 'Login'){
 
+    	$db = db::getInstance();
         // Encrypts the password the user entered
         $password = md5 ( $_POST['password'] );
+
+        $date = $_POST['date'];
 
         // Creates a new tuple in the table User with the info entered
         $sql = "INSERT INTO User
                 SET
 
-                    firstName = '{$_POST['first-name']}',
-                    lastName = '{$_POST['last-name']}',
-                    email = '{$_POST['email']}',
                     password = '{$password}',
-                    age = '{$_POST['age']}',
-                    gender = '{$_POST['gender']}',
-                    work = '{$_POST['work']}',
-                    securityQuestion = '{$_POST['question']}',
-                    securityAnswer = '{$_POST['answer']}'
+                    firstName = '{$_POST['firstName']}',
+                    lastName = '{$_POST['lastName']}',
+                    email = '{$_POST['email']}',
+                    phone = '{$_POST['phone']}',
+                    birth = '{$date}',
+                    address =  '{$_POST['address']}',
+                    gender = '{$_POST['gender']}'
         ";
 
         $stmt = $db->prepare($sql);
         // $stmt->bindValue(':vName', , PDO::PARAM_STR);
         $stmt->execute();
-        $loggedin = true;
-        // Gets the ID of the new created user
+       $loggedin = true;
         $id = $db->lastInsertId();
 
-        // If the user wanted to upload a picture run this code
-        if ($_FILES["photo"]["error"] == 0) {
-          // Code for preparing the picture for sotring in the database
-          $type = str_replace('image/', '', $_FILES['photo']['type']);
-
-          $fileName = $_FILES['photo']['name'];
-          $tmpName  = $_FILES['photo']['tmp_name'];
-          $fileSize = $_FILES['photo']['size'];
-          $fileType = $_FILES['photo']['type'];
-
-          $fp      = fopen($tmpName, 'r');
-          $content = fread($fp, filesize($tmpName));
-          $content = addslashes($content);
-          fclose($fp);
-
-          // Query to insert the info into the table Picture
-          $sql = "INSERT INTO Picture
-                  SET
-                    userID = '{$id}',
-                    ext = '{$type}',
-                    data = '{$content}'";
-
-          $stmt = $db->prepare($sql);
-          $stmt->execute();
-          // Gets the ID of the inserted picture
-          $picID = $db->lastInsertId();
-
-          // Updates the user's info with the id of the picture
-          $sql = "UPDATE User
-                  SET
-                    profilePicture = '{$picID}'
-                  WHERE userID = '{$id}'";
-
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-        }
-        else{
-            // Default photo
-
-        }
+        
     }
 
     // If the user pressed the Login button
     else {
-        // Query to get the user's info according to the username and password provided
-        $password = md5 ( $_POST['password'] );
+    	//echo "eureka";
+    	$db = db::getInstance();
+    //     // Query to get the user's info according to the username and password provided
+    	$salt = 'wkjhgkasflkjh';
+		$cookie_value = md5($salt . $_POST['password']);
+        //$password = md5 ( $_POST['password'] );
+        //var_dump($password);
         $sql = "SELECT 
                     userID,
-                    userName,
-                    password
+                    email,
+                    password,
+                    firstName,
+                    lastName
                 FROM User
-                WHERE userName = '{$_POST['username']}'
-                AND password = '{$password}';
+                WHERE email = '{$_POST['email']}';
         ";
+
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
 
+
         // If a matching user was found set loggedin to true, and get the user's ID
-        if(count($result) > 0) {
-            $loggedin = true;
-            $id = $result[0]['userID'];
-        }
-    }
+        // if(count($result) > 0) {
+        //     $loggedin = true;
+        //     $id = $result[0]['userID'];
+        // }
+
+        //var_dump($result[0]['password']);
+        //var_dump(md5($_POST['password']));
+
+        if ($result[0]['password'] == md5($_POST['password'])) //Remember to encrypt our value
+			{
+				//var_dump($loggedin);
+			//Login success - set session cookie
+			$loggedin = true;	
+			$id = $result[0]['userID'];
+			//$_SESSION['userID']=$result[0]['userID'];
+			//$_SESSION['password']=$cookie_value;
+			//header ("Location: home.php"); //Redirect the user to a logged in page
+			//exit; //Do not display any more script for this page
+			//return;
+			}
+        
+        
+        
+   }
+
 }
+//var_dump($_SESSION);
 
 // Set a cookie for maintaining the session with the user. Expires in a day.
 if($loggedin) { 
+	global $id;
     setcookie('loggedin', $id, time() + (86400 * 7)); // 86400 = 1 day
-    header('Location: index.php');
+    header('Location: profile.php');
     return;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -131,82 +126,42 @@ if($loggedin) {
   <link rel="stylesheet" href="css/normalize.css" />
   
   <link rel="stylesheet" href="css/login.css" />
-  
+  <!-- 
+  <link rel="stylesheet" src="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+   -->
 
   <script src="js/vendor/custom.modernizr.js"></script>
+ 
 
 </head>
 <body>
-
-<!--
-	<div id="topnav">
-		<div class="row">
-		    
-		    <div class="large-8 columns">
-		    	<a href="/">
-		    		<img src="img/CarSpyGray.png" style="height:60px;margin-top:10px;">
-		    	</a>
-		    </div>
-		    <div class="large-4 columns"><a href="/"><h3>username</h3></a></div>
-		    
-		   
-		</div>  
-	</div>
-
--->
 	
 	<div class= "shadowbox">
 		    
 		    <div class="large-3 ">
 		    	
-		    	<!--
-	                <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="login">
-	                    <h2 style="text-align:center; color:white;">Login</h2>
-	                            <div>
-	                                <label for="username">Username</label>	                                
-	                                    
-	                                    <input id="username" type="text" name="username" />	                                
-	                            </div>
-	                            <div>
-	                                <label for="password">Password</label>	                               
-	                                    
-	                                    <input id="password" type="password" name="password" />	                                
-	                            </div>
-	                                       
-	                        <input type='submit' name="submit" value="Login"  />
-	            	</form>
-	            
-	            
-
-			      <form class="form-signin">
-			        <h2 class="form-signin-heading">Login</h2>
-			        <input type="text" class="input-block-level" placeholder="Email address">
-			        <input type="password" class="input-block-level" placeholder="Password">
-			        
-			        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-			      </form>
-			      -->
-
 			    <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="login" class="form-signin">
 	                    
 	                <!--<h2 class="form-signin-heading">Enter CarSpy</h2> -->
 	                <img src="img/CarSpy_black.png" style="margin-bottom:25px;">
 	                
-			        <input type="text" class="input-block-level" placeholder="Email">
-			        <input type="password" class="input-block-level" placeholder="Password">
+			        <!--<input type="text" class="input-block-level" placeholder="Email" required="required">-->
+			        <input id="email" class="input-block-level" name="email" type="email" placeholder="Email" required="required">
+			        <!--<input type="password" class="input-block-level" placeholder="Password" required="required">-->
+			        <input type="password" class="input-block-level" id="password" name="password" placeholder="Password" required="required">
 			        
 			        <div class="btn-group" >
 				        
 			        	<!-- Button to trigger modal -->
 						<a href="#register" role="button" class="btn btn-large" data-toggle="modal">Register</a>
-				        <button class="btn btn-large btn-warning btn-primary" type="submit">Sign in</button>
+				        <button class="btn btn-large btn-warning btn-primary" type='submit' name="submit" value="Login" >Sign in</button>
 				        
 					</div>
 					 
 					<!-- Modal -->
 					
 	            </form>
-	            <form class="form-horizontal">
+	            <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="create-user">
 					<div id="register" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						 <div class="modal-header">
 						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -214,25 +169,63 @@ if($loggedin) {
 						  </div>
 
 						  <div class="modal-body">
-						    	
-							  <div class="control-group">
-							    <label class="control-label" for="inputEmail">Email</label>
+						    
+						    <div class="control-group">
+							    <label class="control-label" for="firstName">First Name</label>
 							    <div class="controls">
-							      <input type="text" id="inputEmail" placeholder="Email">
+							      <input type="text" id="firstName" name="firstName" placeholder="First Name" required="required">
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="inputPassword">Password</label>
+							    <label class="control-label" for="lastName">Last Name</label>
 							    <div class="controls">
-							      <input type="password" id="inputPassword" placeholder="Password">
+							      <input type="text" id="lastName" name="lastName" placeholder="Last Name" required="required">
+							    </div>
+							  </div>	
+							  <div class="control-group">
+							    <label class="control-label" for="email">Email</label>
+							    <div class="controls">
+							      <input id="email" name="email" type="email" placeholder="example@email.com" required="required">
+							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
 							    </div>
 							  </div>
-							  
-							
+							  <div class="control-group">
+							    <label class="control-label" for="password">Password</label>
+							    <div class="controls">
+							      <input type="password" id="password" name="password" placeholder="Password" required="required">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="gender">Gender</label>
+							    <div class="controls">
+							    	<select name="gender" id="gender" name="gender">
+                                        <option value='Male'>Male</option>
+                                        <option value='Female'>Female</option>
+                                    </select>
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="phone">Phone</label>
+							    <div class="controls">
+							      <input type="tel" id="phone" name="phone" placeholder="787 123 4567">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="date">Date of Birth</label>
+							    <div class="controls">
+							      <input type="text" id="date" name="date" placeholder="YYYY-MM-DD"/>
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="address">Address</label>
+							    <div class="controls">
+							      <input type="text" id="address" name="address" placeholder="#Street City, State Zip">
+							    </div>
+							  </div>
 						  </div>
 						  <div class="modal-footer">
 						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-						    <button type="submit" class="btn btn-warning btn-primary">Register</button>
+						    <button type='submit' name="submit" value="Register" class="btn btn-warning btn-primary">Register</button>
 						  </div>
 					</div>
 				</form>
@@ -244,14 +237,24 @@ if($loggedin) {
 
 	 <!-- /container --> 
 
-
+<!-- 
   <script>
   document.write('<script src=' +
-  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  ('__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery') +
   '.js><\/script>')
   </script>
-  
-  	<script src="js/foundation/foundation.js"></script>
+ -->
+  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<!-- 
+  	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+     <script>
+        $(function() {
+            $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2Y" });
+            $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+        });
+    </script>
+  	 -->
+  	<script src="js/foundation/foundation.js"></script><!--
 	
 	<script src="js/foundation/foundation.alerts.js"></script>
 	
@@ -278,8 +281,9 @@ if($loggedin) {
 	<script src="js/foundation/foundation.tooltips.js"></script>
 	
 	<script src="js/foundation/foundation.topbar.js"></script>
+-->
 
-	<script src="http://code.jquery.com/jquery.js"></script>
+	
     <script src="js/bootstrap.min.js"></script>
 
 	

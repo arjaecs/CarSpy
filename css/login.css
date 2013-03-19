@@ -5624,3 +5624,8 @@ body {
 .btn-large {
   width: 50%;
 }
+
+/* line 160, ../scss/login.scss */
+#myModalLabel {
+  text-align: center;
+}
