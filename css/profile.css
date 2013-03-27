@@ -5632,3 +5632,8 @@ table tbody tr > :first-child {
 table {
   width: 100%;
 }
+
+/* line 190, ../scss/profile.scss */
+#username {
+  color: #ff7b0d;
+}

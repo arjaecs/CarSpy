@@ -24,7 +24,7 @@ if (!$loggedin && !isset($id)) {
                     lastName,
                     email,
                     phone,
-                    birth,
+                    DATE_FORMAT(birth, '%W, %M %e, %Y') as birth,
                     address,
                     gender
             FROM User
@@ -43,8 +43,86 @@ if(!isset($user)){
     header('Location: login.php');
     return;
 }
+	$manyCars = false;
+
+   $carsql = "SELECT
+                V.vehicleID,
+                V.userID,
+                V.make,
+                V.model,
+                V.color,
+                V.year,
+                V.licensePlate,
+                V.owner
+                FROM Vehicle V
+                WHERE V.userID = {$user['userID']};";
+
+    $stmt = $db->prepare($carsql);
+    $stmt->execute();
+
+    $vehicles = $stmt->fetchAll();
+    $car = $vehicles[0];
+
+    if(count($vehicles)>1){
+    	$manyCars = true;
+    	$car2 = $vehicles[1];
+    }
 
 
+    //var_dump($vehicles['make']);
+
+if(!isset($vehicles)){
+    header('Location: login.php');
+    return;
+}
+
+if (count($_POST) > 0) {
+
+	$db = db::getInstance();
+
+	if($_POST['submit'] == 'edit'){
+	    
+
+		$sql = "UPDATE User
+	            SET
+	                firstName = '{$_POST['firstName']}',
+	                lastName = '{$_POST['lastName']}',
+	                email = '{$_POST['email']}',
+	                birth = '{$_POST['birth']}',
+	                gender = '{$_POST['gender']}',
+	                phone = '{$_POST['phone']}',
+	                address = '{$_POST['address']}'
+	            WHERE userID = '{$id}'
+	    ";
+
+	    $stmt = $db->prepare($sql);
+	    $stmt->execute();
+
+	    }
+	else{
+
+		$sql = "UPDATE Vehicle
+	            SET
+	                
+                V.userID = '{$id}',
+                V.make = '{$_POST['make']}',
+                V.model = '{$_POST['model']}',
+                V.color = '{$_POST['color']}',
+                V.year = '{$_POST['year']}',
+                V.licensePlate = '{$_POST['licensePlate']}',
+                V.owner = '{$_POST['owner']}'
+                
+                WHERE V.vehicleID = '{$_POST['vehicleID']}';";
+
+	    $stmt = $db->prepare($sql);
+	    $stmt->execute();
+
+
+	
+		
+	}
+	
+}
 
 
 ?>
@@ -74,7 +152,7 @@ if(!isset($user)){
 		 <div id="cslogo">
 		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
 			<span>
-				<h3 style="margin-top:-45px; margin-right:50px; ">Welcome, <a href="/"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				<h3 style="margin-top:-45px; margin-right:50px; ">Welcome <a href="/" id="username"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				
 			</span>
 		</div>
@@ -123,7 +201,7 @@ if(!isset($user)){
 						  <section class="top-bar-section">
 						  		<ul class="right">
 							      <li class="divider"></li>
-							      <li class="active"><a href="#">Edit</a></li>
+							      <li class="active"><a href="#edit" data-toggle="modal" data-target="#edit">Edit</a></li>
 							      <li class="divider"></li>
 							      
 							  </ul>
@@ -170,78 +248,252 @@ if(!isset($user)){
 						</table>
 					</div>
 
-					<div id="vehicle">
-						<nav class="top-bar">
-						  <ul class="title-area">
-						    <!-- Title Area -->
-						    <li class="name">
-						      <h1><a href="#">Vehicle Info</a></h1>
-						    </li>
-						    <li class="divider"></li>
-						    <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone 
-						    <li class="toggle-topbar menu-icon"><a href="#"><span>INFO</span></a></li>-->
-						  </ul>
+					
+                        <div id="vehicle">
+                        <nav class="top-bar">
+                          <ul class="title-area">
+                            <!-- Title Area -->
+                            <li class="name">
+                              <h1><a href="#">Device ID</a></h1>
+                            </li>
+                            <li class="divider"></li>
+                            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone 
+                            <li class="toggle-topbar menu-icon"><a href="#"><span>INFO</span></a></li>-->
+                          </ul>
 
-						  <section class="top-bar-section">
-						  		<ul class="left">
-							      <li class="divider"></li>
-							      <li class="active"><a href="#">LIC-ENS</a></li>
-							      <li class="divider"></li>
-							      <li><a href="#">EPL-ATE</a></li>
-							      <li class="divider"></li>
-							  </ul>
-							  <ul class="right">
-							      <li class="divider"></li>
-							      <li class="active"><a href="#">Edit</a></li>
-							      <li class="divider"></li>
-							      
-							  </ul>
-						  </section>
-						</nav>
-			    		<table>
-							
-							
-							<colgroup title="title" />
-							
-							<tbody>
-								<tr>
-									<td>Make</td>
-									<td>Cadillac</td>
-									
-								</tr>
-								<tr>
-									<td>Model</td>
-									<td>El Dorado</td>
-									
-								</tr>
-								<tr>
-									<td>Color</td>
-									<td>Red</td>
-									
-								</tr>
-								<tr>
-									<td>Year</td>
-									<td>1973</td>
-									
-								</tr>
-								<tr>
-									<td>License</td>
-									<td>SGR DDY</td>
-									
-								</tr>
-								<tr>
-									<td>Owner</td>
-									<td><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></td>
-									
-								</tr>
-							</tbody>
-						</table>
-					</div>
+                          <section class="top-bar-section">
+                                
+                                <ul class="left">
+                                  <li class="divider"></li>
+                                  <li class="active"><a href="#"><?php echo $car['vehicleID'] ?></a></li>
+                                  <li class="divider"></li>
+                                  
+
+                                
+                                    <?php
+                                        if($manyCars){
+                                            echo "<li><a href='#'>{$car2['vehicleID']}</a></li>
+                                  <li class='divider'></li>";}
+                                        
+                                        ?>
+
+                              </ul>
+                            
+                              <ul class="right">
+                                  <li class="divider"></li>
+                                  <li class="active"><a href="#add" data-toggle="modal" data-target="#add">Add</a></li>
+                                  <li class="divider"></li>
+                                  
+                              </ul>
+                          </section>
+                        </nav>
+                        <table>
+                            
+                            
+                            <colgroup title="title" />
+                            
+                            <tbody>
+                                <tr>
+                                    <td>Make</td>
+                                    <td><?php echo $car['make'];?></td>
+                                    <?php
+                                        if($manyCars){
+                                            echo "<td>{$car2['make']}</td>";}
+                                        
+                                        ?>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Model</td>
+                                    <td><?php echo $car['model'];?></td>
+                                    <?php
+                                        if($manyCars){
+                                            echo "<td>{$car2['model']}</td>";}
+                                        
+                                        ?>
+                                </tr>
+                                <tr>
+                                    <td>Color</td>
+                                    <td><?php echo $car['color'];?></td>
+                                    <?php
+                                        if($manyCars){
+                                            echo "<td>{$car2['color']}</td>";}
+                                        
+                                        ?>
+                                </tr>
+                                <tr>
+                                    <td>Year</td>
+                                    <td><?php echo $car['year'];?></td>
+                                    <?php
+                                        if($manyCars){
+                                            echo "<td>{$car2['year']}</td>";}
+                                        
+                                        ?>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>License Plate</td>
+                                    <td><?php echo $car['licensePlate'];?></td>
+                                    <?php
+                                        if($manyCars){
+                                            echo "<td>{$car2['licensePlate']}</td>";}
+                                        
+                                        ?>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>Owner</td>
+                                    <td><?php echo $car['owner'];?></td>
+                                    <?php
+                                        if($manyCars){
+                                            echo "<td>{$car2['owner']}</td>";}
+                                        
+                                        ?>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
 					
 		    	</div> 
 			    
+		    <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="editProfile">
+		    	<div id="edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editProfile" aria-hidden="true">
+						 <div class="modal-header">
+						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						    <h3 id="editProfile">Edit Profile Info</h3>
+						  </div>
 
+						  <div class="modal-body">
+						    
+						    <div class="control-group">
+							    <label class="control-label" for="firstName">First Name</label>
+							    <div class="controls">
+							      <input type="text" id="firstName" name="firstName" value="<?php echo $user['firstName'] ?>" required="required">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="lastName">Last Name</label>
+							    <div class="controls">
+							      <input type="text" id="lastName" name="lastName" placeholder="Last Name" required="required">
+							    </div>
+							  </div>	
+							  <div class="control-group">
+							    <label class="control-label" for="email">Email</label>
+							    <div class="controls">
+							      <input id="email" name="email" type="email" placeholder="example@email.com" required="required">
+							      
+							  	</div>
+								</div>
+
+							  <!-- add button to email password change instead -->
+							  <div class="control-group">
+							    <label class="control-label" for="password">Password</label>
+							    <div class="controls">
+							      <input type="password" id="password" name="password" placeholder="Password" required="required">
+							    </div>
+							  </div>
+
+							  <div class="control-group">
+							    <label class="control-label" for="gender">Gender</label>
+							    <div class="controls">
+							    	<select name="gender" id="gender" name="gender">
+                                        <option value='Male'>Male</option>
+                                        <option value='Female'>Female</option>
+                                    </select>
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="phone">Phone</label>
+							    <div class="controls">
+							      <input type="tel" id="phone" name="phone" placeholder="787 123 4567">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="date">Date of Birth</label>
+							    <div class="controls">
+							      <input type="text" id="date" name="date" placeholder="YYYY-MM-DD"/>
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="address">Address</label>
+							    <div class="controls">
+							      <input type="text" id="address" name="address" placeholder="#Street City, State Zip">
+							    </div>
+							  </div>
+						  </div>
+						  <div class="modal-footer">
+						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						    <button type='submit' name="submit" value="edit" class="btn btn-warning btn-primary">Confirm</button>
+						  </div>
+					</div>
+				</form>
+				<form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="addCar">
+					<div id="add" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addCar" aria-hidden="true">
+						 <div class="modal-header">
+						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						    <h3 id="addCar">Add a Device</h3>
+						  </div>
+
+						  <div class="modal-body">
+						    
+						    <div class="control-group">
+							    <label class="control-label" for="vehicleID">Device ID</label>
+							    <div class="controls">
+							      <input type="text" id="vehicleID" name="vehicleID" placeholder="Device ID" required="required">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="make">Make</label>
+							    <div class="controls">
+							      <input type="text" id="make" name="make" placeholder="Toyota" required="required">
+							    </div>
+							  </div>	
+							  <div class="control-group">
+							    <label class="control-label" for="model">Model</label>
+							    <div class="controls">
+							      <input id="Model" name="Model" type="text" placeholder="Prius" required="required">
+							      
+							  	</div>
+								</div>
+
+							  <!-- add button to email password change instead -->
+							  <div class="control-group">
+							    <label class="control-label" for="color">Color</label>
+							    <div class="controls">
+							      <input type="text" id="color" name="color" placeholder="Green" required="required">
+							    </div>
+							  </div>
+
+							  <div class="control-group">
+							    <label class="control-label" for="year">Year</label>
+							    <div class="controls">
+							    	<input type="text" id="year" name="year" placeholder="2005" required="required">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="licensePlate">License</label>
+							    <div class="controls">
+							      <input type="text" id="licensePlate" name="licensePlate" placeholder="SPR-ING">
+							    </div>
+							  </div>
+							  <div class="control-group">
+							    <label class="control-label" for="owner">Owner</label>
+							    <div class="controls">
+							      <input type="text" id="owner" name="owner" placeholder="Juan del Campo"/>
+							    </div>
+							  </div>
+							  
+						  </div>
+						  <div class="modal-footer">
+						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						    <button type='submit' name="submit" value="add" class="btn btn-warning btn-primary">Add Device</button>
+						  </div>
+					</div>
+
+
+				</form>
 		    </div>
 
 	</div>

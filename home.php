@@ -1,4 +1,107 @@
+<?php
 
+require_once('db.php');
+require_once('checkAuth.php');
+//require_once('logout.php');
+//require_once('times.php');
+
+//$userID = $_GET['userID'];
+//var_dump($id);
+// Checks if user is logged in, otherwise returns index
+if (!$loggedin && !isset($id)) {
+    header('Location: login.php');
+    return;
+}
+
+//$friendProfile = false;
+
+	$db = db::getInstance();
+
+
+    // Query to get the user's info if it's his/her own profile
+    $sql = "SELECT
+    			userID,
+                password,
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    DATE_FORMAT(birth, '%W, %M %e, %Y') as birth,
+                    address,
+                    gender
+            FROM User
+            WHERE userID = {$id};
+    ";
+
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+
+    $user = $result[0];
+
+
+if(!isset($user)){
+    header('Location: login.php');
+    return;
+}
+	$manyCars = false;
+
+   $carsql = "SELECT
+                V.vehicleID,
+                V.userID,
+                V.make,
+                V.model,
+                V.color,
+                V.year,
+                V.licensePlate,
+                V.owner
+                FROM Vehicle V
+                WHERE V.userID = {$user['userID']};";
+
+    $stmt = $db->prepare($carsql);
+    $stmt->execute();
+
+    $vehicles = $stmt->fetchAll();
+    $car = $vehicles[0];
+
+    if(count($vehicles)>1){
+    	$manyCars = true;
+    	$car2 = $vehicles[1];
+    }
+
+
+    //var_dump($vehicles['make']);
+
+	if(!isset($vehicles)){
+    header('Location: login.php');
+    return;
+
+    $sesssql = "SELECT  sessionID,
+    					vehicleID,
+    					DATE_FORMAT(date, '%W, %M %e, %Y') as day,
+    					time,
+    					lat,
+    					long
+    					FROM Session
+    					WHERE vehicleID = {$car['vehicleID']};";
+    $stmt = $db->prepare($sesssql);
+    $stmt->execute();
+
+    $sessions = $stmt->fetchAll();
+    
+
+    if(!isset($sessions)){
+    header('Location: login.php');
+    return;}
+
+   
+    
+
+}
+
+
+?>
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
@@ -19,13 +122,14 @@
 <body onload="initialize()">
 
 	<div id="topnav">
-		<div class="row">
-		    
-		    <div class="large-8 columns"><a href="/"><h1>CarSpy</h1></a></div>
-		    <div class="large-4 columns"><a href="/"><h3>username</h3></a></div>
-		    
-		   
-		</div>  
+		 <div id="cslogo">
+		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
+			<span>
+				<h3 style="margin-top:-45px; margin-right:50px;">Welcome <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				
+			</span>
+		</div> 
+
 	</div>
 	
 	<div class="row">
@@ -35,27 +139,33 @@
 					<h3 align="center">Choose An Event:</h3>
 					
 					
-					<form>
+					
 			
 					<span style="text-align:center; margin-left: 10%; ">
 					
 					
 
-					<select name='make' style="width:40%" class="form-select"  onchange="fillSelect(this.value,this.form['type'])">
-	                  <option value='blank'>Select Date</option>
-	                  <option value='LastDay'>subForLastDay</option>
-	                  <option value='Day1'>Day1</option>
-	                  <option value='Day2'>Day2</option>
-	                  <option value='Day3'>Day3</option>
+					<select id="dates" name='date' style="width:40%" class="form-select">
+	                  
+						<?php 
+
+    						for ($i = count($sessions) - 1; $i >= 0; $i--){
+ 
+						 		echo "<option value={$sessions[$i]['day']}>{$sessions[$i]['day']}</option>";
+							} 
+							?>
+	                  
+	                  
             
 					</select>
-					<select name="type" style="width:40%">
-						<option value="">Select Session</option>	
+					<select id="times" name="time" class='form-select' style="width:40%">
+							
 					</select>
 					
 					
-						</form>
+						
 					</span>
+
 		</div>
 	</div> 
 
@@ -128,17 +238,12 @@
 	</div>
 		
 
-
-
-
-			
-
-
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
-  '.js><\/script>')
-  </script>
+  <!-- Check for Zepto support, load jQuery if necessary -->
+<script>
+  document.write('<script src=/js/vendor/'
+    + ('__proto__' in {} ? 'zepto' : 'jquery')
+    + '.js><\/script>');
+</script>
   
   	<script src="js/foundation/foundation.js"></script> <!--
 	
@@ -168,47 +273,83 @@
 	
 	<script src="js/foundation/foundation.topbar.js"></script> -->
 
+	<script type="text/javascript">
+	    $.ajax({
+		type: 'GET',
+		url: 'times.php',
+		data: {
+		date: '2013-03-29'
+		},
+		dataType: 'json',
+		success: function(data){
+		console.log(data);                
+		}
+		});
+    </script>
+
 	<script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false">
     </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(18.201422, -67.145157),
-          zoom: 12,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
-            mapOptions);
-      }
-    </script>
-    <script type="text/javascript">
+    
+	<script type="text/javascript">// Google Maps code
 
-    </script>
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    var map;
+    function initialize() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
 
-	<script type="text/javascript">
-
-        var type = [];
-        type["blank"] = [""];
-        type["LastDay"] = ["Alternative", "Rock","Pop", "Hip Hop / Rap","Electronic", "Country", "Classical"];
-        type["Day1"] = ["Basketball","Baseball","Soccer","Volleyball","Tennis","Boxing","Swimming","Cycling"];
-        type["Day2"] = ["Culinary","Cinema","Arts","Theater","Comedy","Politics"];
-        type["Day3"] = ["Conferences","Meetings","Seminars","JobFairs","Sales"];
-
-        function fillSelect(nValue,nList){
-
-            nList.options.length = 1;
-            var curr = type[nValue];
-            for (each in curr)
+        var options =
+        {
+            zoom: 10,
+            center: new google.maps.LatLng(geoip_latitude(), geoip_longitude()),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: true,
+            mapTypeControlOptions:
             {
-                var nOption = document.createElement('option');
-                nOption.appendChild(document.createTextNode(curr[each]));
-                nOption.setAttribute("value",curr[each]);
-                nList.appendChild(nOption);
-            }
+                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                position: google.maps.ControlPosition.TOP_RIGHT,
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+                google.maps.MapTypeId.TERRAIN,
+                google.maps.MapTypeId.HYBRID,
+                google.maps.MapTypeId.SATELLITE]
+            },
+            navigationControl: true,
+            navigationControlOptions:
+            {
+                style: google.maps.NavigationControlStyle.ZOOM_PAN
+            },
+            scaleControl: true,
+            disableDoubleClickZoom: true,
+            draggable: true,
+            streetViewControl: true,
+            draggableCursor: 'move'
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), options);
+        directionsDisplay.setMap(map);
+            // Add Marker and Listener
+            var latlng = new google.maps.LatLng(geoip_latitude(), geoip_longitude());
+            calcRoute();
+
         }
 
-    </script>
+        function calcRoute() {
+            var start = new google.maps.LatLng(geoip_latitude(), geoip_longitude());
+                                                //end route on Car location
+            var end = new google.maps.LatLng(18.2014,-67.1452);
+            var request = {
+                origin:start,
+                destination:end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function(result, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(result);
+                }
+            });
+        }
+        window.onload = initialize;
+        </script>
   
   <script>
     $(document).foundation();
