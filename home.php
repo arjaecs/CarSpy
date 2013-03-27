@@ -2,18 +2,15 @@
 
 require_once('db.php');
 require_once('checkAuth.php');
-//require_once('logout.php');
-//require_once('times.php');
+require_once('logout.php');
+require_once('times.php');
 
-//$userID = $_GET['userID'];
-//var_dump($id);
+
 // Checks if user is logged in, otherwise returns index
 if (!$loggedin && !isset($id)) {
     header('Location: login.php');
     return;
 }
-
-//$friendProfile = false;
 
 	$db = db::getInstance();
 
@@ -64,41 +61,43 @@ if(!isset($user)){
 
     $vehicles = $stmt->fetchAll();
     $car = $vehicles[0];
-
-    if(count($vehicles)>1){
-    	$manyCars = true;
-    	$car2 = $vehicles[1];
-    }
-
-
-    //var_dump($vehicles['make']);
+    var_dump($vehicles);
+    
 
 	if(!isset($vehicles)){
     header('Location: login.php');
     return;
+	}
 
-    $sesssql = "SELECT  sessionID,
-    					vehicleID,
-    					DATE_FORMAT(date, '%W, %M %e, %Y') as day,
-    					time,
-    					lat,
-    					long
-    					FROM Session
-    					WHERE vehicleID = {$car['vehicleID']};";
-    $stmt = $db->prepare($sesssql);
-    $stmt->execute();
+ //    $sesssql = "SELECT  sessionID,
+ //    					vehicleID,
+ //    					DATE_FORMAT(date, '%W, %M %e, %Y') as day,
+ //    					time,
+ //    					gps
+ //    					FROM Session
+ //    					WHERE vehicleID = {$car['vehicleID']};";
+ //    $stmt = $db->prepare($sesssql);
+ //    $stmt->execute();
 
-    $sessions = $stmt->fetchAll();
+ //    $sessions = $stmt->fetchAll();
+ //    var_dump($sessions);
+    
+ // //    $dates = array();
+	// // for ($i = count($sessions) - 1; $i >= 0; $i--){
+	 
+	// //  // add each date to the end of the times array
+	// //  $dates[] = $result[$i]['day'];
+	// // }
     
 
-    if(!isset($sessions)){
-    header('Location: login.php');
-    return;}
+ //    if(!isset($sessions)){
+ //    header('Location: login.php');
+ //    return;}
 
    
     
 
-}
+
 
 
 ?>
@@ -146,15 +145,6 @@ if(!isset($user)){
 					
 
 					<select id="dates" name='date' style="width:40%" class="form-select">
-	                  
-						<?php 
-
-    						for ($i = count($sessions) - 1; $i >= 0; $i--){
- 
-						 		echo "<option value={$sessions[$i]['day']}>{$sessions[$i]['day']}</option>";
-							} 
-							?>
-	                  
 	                  
             
 					</select>
@@ -278,14 +268,18 @@ if(!isset($user)){
 		type: 'GET',
 		url: 'times.php',
 		data: {
-		date: '2013-03-29'
+		date: "'2013-03-29'"
 		},
 		dataType: 'json',
 		success: function(data){
 		console.log(data);                
 		}
 		});
+
+		$('#dates').change(function() {
+  		console.log("Change Detected!");});
     </script>
+    
 
 	<script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false">
