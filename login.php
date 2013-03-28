@@ -1,5 +1,5 @@
 <?php // Page for logging in and for registering if you are a new user.
-session_start();
+//session_start();
 
 
 if(isset($_COOKIE['loggedin'])){
@@ -53,8 +53,8 @@ if ( count($_POST) > 0) {
     	//echo "eureka";
     	$db = db::getInstance();
     //     // Query to get the user's info according to the username and password provided
-    	$salt = 'wkjhgkasflkjh';
-		$cookie_value = md5($salt . $_POST['password']);
+    	//$salt = 'wkjhgkasflkjh';
+		//$cookie_value = md5($salt . $_POST['password']);
         //$password = md5 ( $_POST['password'] );
         //var_dump($password);
         $sql = "SELECT 
@@ -93,6 +93,9 @@ if ( count($_POST) > 0) {
 			//exit; //Do not display any more script for this page
 			//return;
 			}
+			else{
+				echo "try again!";
+			}
         
         
         
@@ -103,7 +106,7 @@ if ( count($_POST) > 0) {
 
 // Set a cookie for maintaining the session with the user. Expires in a day.
 if($loggedin) { 
-	global $id;
+	//global $id;
     setcookie('loggedin', $id, time() + (86400 * 7)); // 86400 = 1 day
     header('Location: profile.php');
     return;

@@ -5613,6 +5613,7 @@ default width = 720/3 = 240px;
 /* line 156, ../scss/app.scss */
 .accordian ul:hover li {
   width: 180px;
+  height: 480px;
 }
 
 /*Lets apply hover effects now*/

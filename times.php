@@ -12,9 +12,11 @@ $sql = "SELECT
 			sessionID,
 			vehicleID,
 			date,
-			time
-			FROM Session
-			WHERE date = {$date};";
+			time,
+			lat,
+			`long`
+		FROM Session
+		WHERE date = {$date};";
 
 
 $stmt = $db->prepare($sql);
@@ -26,7 +28,13 @@ $times = array();
 for ($i = count($result) - 1; $i >= 0; $i--){
  //var_dump($result[$i]);
  //var_dump($result[$i]['time']);
- $times[] = $result[$i]['time'];
+ $times[] = array( 
+ 	'time' => $result[$i]['time'],
+ 	'location' => array(
+ 		'latitude' => $result[$i]['lat'],
+ 		'longitude' => $result[$i]['long']
+ 	)
+ );
 }
 
 //var_dump($times);

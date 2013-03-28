@@ -3,103 +3,93 @@
 require_once('db.php');
 require_once('checkAuth.php');
 require_once('logout.php');
-require_once('times.php');
 
 
 // Checks if user is logged in, otherwise returns index
 if (!$loggedin && !isset($id)) {
-    header('Location: login.php');
-    return;
+	header('Location: login.php');
+	return;
 }
 
 	$db = db::getInstance();
 
 
-    // Query to get the user's info if it's his/her own profile
-    $sql = "SELECT
-    			userID,
-                password,
-                    firstName,
-                    lastName,
-                    email,
-                    phone,
-                    DATE_FORMAT(birth, '%W, %M %e, %Y') as birth,
-                    address,
-                    gender
-            FROM User
-            WHERE userID = {$id};
-    ";
+	// Query to get the user's info if it's his/her own profile
+	$sql = "SELECT
+				userID,
+				password,
+					firstName,
+					lastName,
+					email,
+					phone,
+					DATE_FORMAT(birth, '%W, %M %e, %Y') as birth,
+					address,
+					gender
+			FROM User
+			WHERE userID = {$id};
+	";
 
-    $stmt = $db->prepare($sql);
-    $stmt->execute();
+	$stmt = $db->prepare($sql);
+	$stmt->execute();
 
-    $result = $stmt->fetchAll();
+	$result = $stmt->fetchAll();
 
-    $user = $result[0];
+	$user = $result[0];
 
 
 if(!isset($user)){
-    header('Location: login.php');
-    return;
+	header('Location: login.php');
+	return;
 }
 	$manyCars = false;
 
    $carsql = "SELECT
-                V.vehicleID,
-                V.userID,
-                V.make,
-                V.model,
-                V.color,
-                V.year,
-                V.licensePlate,
-                V.owner
-                FROM Vehicle V
-                WHERE V.userID = {$user['userID']};";
+				V.vehicleID,
+				V.userID,
+				V.make,
+				V.model,
+				V.color,
+				V.year,
+				V.licensePlate,
+				V.owner
+				FROM Vehicle V
+				WHERE V.userID = {$user['userID']};";
 
-    $stmt = $db->prepare($carsql);
-    $stmt->execute();
+	$stmt = $db->prepare($carsql);
+	$stmt->execute();
 
-    $vehicles = $stmt->fetchAll();
-    $car = $vehicles[0];
-    var_dump($vehicles);
-    
+	$vehicles = $stmt->fetchAll();
+	$car = $vehicles[0];
+	
+	
 
 	if(!isset($vehicles)){
-    header('Location: login.php');
-    return;
+	header('Location: login.php');
+	return;
 	}
 
- //    $sesssql = "SELECT  sessionID,
- //    					vehicleID,
- //    					DATE_FORMAT(date, '%W, %M %e, %Y') as day,
- //    					time,
- //    					gps
- //    					FROM Session
- //    					WHERE vehicleID = {$car['vehicleID']};";
- //    $stmt = $db->prepare($sesssql);
- //    $stmt->execute();
+	$sesssql = "SELECT DISTINCT
+					vehicleID,
+					date,
+					DATE_FORMAT(date, '%W, %M %e, %Y') as day
+					FROM Session";
+	$stmt = $db->prepare($sesssql);
+	$stmt->execute();
 
- //    $sessions = $stmt->fetchAll();
- //    var_dump($sessions);
-    
- // //    $dates = array();
-	// // for ($i = count($sessions) - 1; $i >= 0; $i--){
+	$sessions = $stmt->fetchAll();
+	
+	$dates = array();
+	for ($i = count($sessions) - 1; $i >= 0; $i--){
 	 
-	// //  // add each date to the end of the times array
-	// //  $dates[] = $result[$i]['day'];
-	// // }
-    
+	 // add each date to the end of the times array
+	 $dates[] = array('date' => $sessions[$i]['date'], 'day' => $sessions[$i]['day'] );
 
- //    if(!isset($sessions)){
- //    header('Location: login.php');
- //    return;}
+	}
 
-   
-    
-
-
-
-
+	if(!isset($sessions)){
+		header('Location: login.php');
+		return;
+	}
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -107,18 +97,31 @@ if(!isset($user)){
 
 <head>
 	<meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>CarSpy</title>
+	<meta name="viewport" content="width=device-width" />
+	<title>CarSpy</title>
 
-  <link rel="stylesheet" href="css/normalize.css" />
-  
-  <link rel="stylesheet" href="css/app.css" />
-  
+	<link rel="stylesheet" href="css/normalize.css" />
 
-  <script src="js/vendor/custom.modernizr.js"></script>
-
+	<link rel="stylesheet" href="css/app.css" />
+	<script src="js/vendor/custom.modernizr.js"></script>
+	<script src="/js/vendor/jquery.js"></script>
+	<script src="js/foundation/foundation.js"></script> <!--
+	<script src="js/foundation/foundation.alerts.js"></script>
+	<script src="js/foundation/foundation.clearing.js"></script>
+	<script src="js/foundation/foundation.cookie.js"></script>
+	<script src="js/foundation/foundation.dropdown.js"></script>
+	<script src="js/foundation/foundation.forms.js"></script>
+	<script src="js/foundation/foundation.joyride.js"></script>
+	<script src="js/foundation/foundation.magellan.js"></script>
+	<script src="js/foundation/foundation.orbit.js"></script>
+	<script src="js/foundation/foundation.placeholder.js"></script>
+	<script src="js/foundation/foundation.reveal.js"></script>
+	<script src="js/foundation/foundation.section.js"></script>
+	<script src="js/foundation/foundation.tooltips.js"></script>
+	<script src="js/foundation/foundation.topbar.js"></script> -->
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false"></script>
 </head>
-<body onload="initialize()">
+<body>
 
 	<div id="topnav">
 		 <div id="cslogo">
@@ -145,8 +148,13 @@ if(!isset($user)){
 					
 
 					<select id="dates" name='date' style="width:40%" class="form-select">
-	                  
-            
+					 	<?php
+					 	for ($i = 0; $i<count($dates); $i++){
+ 
+						 // add each date to the end of the times array
+						 echo "<option value='{$dates[$i]['date']}'>{$dates[$i]['day']}</option>";
+						}
+						?>
 					</select>
 					<select id="times" name="time" class='form-select' style="width:40%">
 							
@@ -226,127 +234,94 @@ if(!isset($user)){
 			</div> 
 		</div>
 	</div>
-		
+<script type="text/javascript">// Google Maps code
+	var directionsDisplay;
+	var directionsService = new google.maps.DirectionsService();
+	var map;
+	function initializeMaps(latitude, longitude) {
+		directionsDisplay = new google.maps.DirectionsRenderer();
+		var options = {
+			zoom: 10,
+			center: new google.maps.LatLng(latitude, longitude),
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+				position: google.maps.ControlPosition.TOP_RIGHT,
+				mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+				google.maps.MapTypeId.TERRAIN,
+				google.maps.MapTypeId.HYBRID,
+				google.maps.MapTypeId.SATELLITE]
+			},
+			navigationControl: true,
+			navigationControlOptions: {
+				style: google.maps.NavigationControlStyle.ZOOM_PAN
+			},
+			scaleControl: true,
+			disableDoubleClickZoom: true,
+			draggable: true,
+			streetViewControl: true,
+			draggableCursor: 'move'
+		};
+		map = new google.maps.Map(document.getElementById("map_canvas"), options);
+		directionsDisplay.setMap(map);
+		calcRoute(latitude, longitude);
+	}
 
-  <!-- Check for Zepto support, load jQuery if necessary -->
-<script>
-  document.write('<script src=/js/vendor/'
-    + ('__proto__' in {} ? 'zepto' : 'jquery')
-    + '.js><\/script>');
-</script>
-  
-  	<script src="js/foundation/foundation.js"></script> <!--
-	
-	<script src="js/foundation/foundation.alerts.js"></script>
-	
-	<script src="js/foundation/foundation.clearing.js"></script>
-	
-	<script src="js/foundation/foundation.cookie.js"></script>
-	
-	<script src="js/foundation/foundation.dropdown.js"></script>
-	
-	<script src="js/foundation/foundation.forms.js"></script>
-	
-	<script src="js/foundation/foundation.joyride.js"></script>
-	
-	<script src="js/foundation/foundation.magellan.js"></script>
-	
-	<script src="js/foundation/foundation.orbit.js"></script>
-	
-	<script src="js/foundation/foundation.placeholder.js"></script>
-	
-	<script src="js/foundation/foundation.reveal.js"></script>
-	
-	<script src="js/foundation/foundation.section.js"></script>
-	
-	<script src="js/foundation/foundation.tooltips.js"></script>
-	
-	<script src="js/foundation/foundation.topbar.js"></script> -->
-
-	<script type="text/javascript">
-	    $.ajax({
-		type: 'GET',
-		url: 'times.php',
-		data: {
-		date: "'2013-03-29'"
-		},
-		dataType: 'json',
-		success: function(data){
-		console.log(data);                
-		}
+	function calcRoute(latitude, longitude) {
+		var start = new google.maps.LatLng(latitude, longitude);
+		//end route on Car location
+		var end = new google.maps.LatLng(18.2014,-67.1452);
+		var request = {
+			origin:start,
+			destination:end,
+			travelMode: google.maps.TravelMode.DRIVING
+		};
+		directionsService.route(request, function(result, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				directionsDisplay.setDirections(result);
+			}
 		});
+	}
+</script>
+<script type="text/javascript">
+	var getTimes = function(date, success) {
+		$.ajax({
+			type: 'GET',
+			url: 'times.php',
+			data: {
+				date: "'"+date+"'"
+			},
+			dataType: 'json',
+			success: success
+		});
+	};
+	
+	var updateSelect = function(data) {
+		$('#times').empty();
+		$.each(data, function(index, value){
+			$('#times').append('<option data-lat="'+ value.location.latitude +'" data-long="'+ value.location.longitude +'">' + value.time +'</option>');
+			
+			updateMap($('#times option:selected'));
 
-		$('#dates').change(function() {
-  		console.log("Change Detected!");});
-    </script>
-    
+			$('#times').change(function(e) {
+				updateMap($(e.currentTarget));
+			});
+		});
+	};
+	
+	var updateMap = function($el) {
+		initializeMaps($el.data().lat, $el.data().long)
+	};
 
-	<script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false">
-    </script>
-    
-	<script type="text/javascript">// Google Maps code
+	getTimes($('#dates option:selected').val(), updateSelect);
 
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    var map;
-    function initialize() {
-        directionsDisplay = new google.maps.DirectionsRenderer();
-
-        var options =
-        {
-            zoom: 10,
-            center: new google.maps.LatLng(geoip_latitude(), geoip_longitude()),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            mapTypeControl: true,
-            mapTypeControlOptions:
-            {
-                style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-                position: google.maps.ControlPosition.TOP_RIGHT,
-                mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-                google.maps.MapTypeId.TERRAIN,
-                google.maps.MapTypeId.HYBRID,
-                google.maps.MapTypeId.SATELLITE]
-            },
-            navigationControl: true,
-            navigationControlOptions:
-            {
-                style: google.maps.NavigationControlStyle.ZOOM_PAN
-            },
-            scaleControl: true,
-            disableDoubleClickZoom: true,
-            draggable: true,
-            streetViewControl: true,
-            draggableCursor: 'move'
-        };
-        map = new google.maps.Map(document.getElementById("map_canvas"), options);
-        directionsDisplay.setMap(map);
-            // Add Marker and Listener
-            var latlng = new google.maps.LatLng(geoip_latitude(), geoip_longitude());
-            calcRoute();
-
-        }
-
-        function calcRoute() {
-            var start = new google.maps.LatLng(geoip_latitude(), geoip_longitude());
-                                                //end route on Car location
-            var end = new google.maps.LatLng(18.2014,-67.1452);
-            var request = {
-                origin:start,
-                destination:end,
-                travelMode: google.maps.TravelMode.DRIVING
-            };
-            directionsService.route(request, function(result, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(result);
-                }
-            });
-        }
-        window.onload = initialize;
-        </script>
-  
-  <script>
-    $(document).foundation();
-  </script>
+	$('#dates').change(function(e) {
+		getTimes($(e.currentTarget).val(), updateSelect);
+	});
+</script>
+<script type="text/javascript">
+	$(document).foundation();
+</script>
 </body>
 </html>
