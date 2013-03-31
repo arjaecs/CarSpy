@@ -1,0 +1,170 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:fontFamily="Calibri"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CarSpy"
+    tools:ignore="ContentDescription,HardcodedText" >
+
+    <ImageView
+        android:id="@+id/imgTextBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/text_bg" />
+
+    <ImageView
+        android:id="@+id/imgCarSpy"
+        android:layout_width="250dp"
+        android:layout_height="132dp"
+        android:layout_above="@+id/btnLostPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="243dp"
+        android:src="@drawable/carspygray"
+        tools:ignore="ContentDescription" />
+
+    <TableLayout
+        android:id="@+id/tblText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLostPassword"
+        android:layout_alignLeft="@+id/imgTextBg"
+        android:layout_marginBottom="147dp" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="right"
+                android:text="Email:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="right"
+                android:text="Password:"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tblInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLostPassword"
+        android:layout_alignRight="@+id/imgTextBg"
+        android:layout_marginBottom="147dp"
+        android:layout_toRightOf="@+id/tblText" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left" >
+
+            <EditText
+                android:id="@+id/txbEmail"
+                android:layout_width="match_parent"
+                android:layout_height="25sp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="9dp"
+                android:background="#F0F0F0"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textEmailAddress"
+                android:textSize="11sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="160sp"
+            android:layout_height="wrap_content"
+            android:gravity="left" >
+
+            <EditText
+                android:id="@+id/txbPassword"
+                android:layout_width="160sp"
+                android:layout_height="25sp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginTop="9dp"
+                android:background="#F0F0F0"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textPassword"
+                android:textSize="11sp" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnLostPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/imgTextBg"
+        android:layout_alignLeft="@+id/imgTextBg"
+        android:layout_alignRight="@+id/imgTextBg"
+        android:layout_marginBottom="35dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="Calibri"
+        android:gravity="center"
+        android:text="Forgot your password?"
+        android:textColor="#F79100"
+        android:textSize="14sp"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_above="@+id/btnLostPassword"
+        android:layout_alignLeft="@+id/imgCarSpy"
+        android:layout_alignRight="@+id/imgCarSpy"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/button"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Login"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnNotRegistered"
+        android:layout_width="wrap_content"
+        android:layout_height="43dp"
+        android:layout_above="@+id/btnLostPassword"
+        android:layout_alignLeft="@+id/imgTextBg"
+        android:layout_alignRight="@+id/imgTextBg"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="Calibri"
+        android:gravity="center"
+        android:text="Not registered?"
+        android:textColor="#F79100"
+        android:textSize="14sp"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>
