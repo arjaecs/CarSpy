@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:fontFamily="Calibri" >
+
+    <ImageView
+        android:id="@+id/imgTopBorder"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/borderbg"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imgTextBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imgMap"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imgButtonDouble"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="45dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/text_bg" />
+
+    <ImageButton
+        android:id="@+id/imgPhoto1"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_alignLeft="@+id/imgMap"
+        android:layout_below="@+id/imgMap"
+        android:background="@android:color/transparent"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/person"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/imgPhoto2"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/imgPhoto1"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/person"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/imgPhoto3"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_alignRight="@+id/imgMap"
+        android:layout_alignTop="@+id/imgPhoto2"
+        android:background="@android:color/transparent"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/person"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/imgMap"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imgButtonDouble"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/map"
+        tools:ignore="ContentDescription" />
+
+    <Spinner
+        android:id="@+id/spnOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:gravity="right"
+        android:textColor="#F0F0F0" />
+
+    <ImageView
+        android:id="@+id/imgCarSpy"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/imgMap"
+        android:src="@drawable/carspygray"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/imgButtonDouble"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imgTopBorder"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/button_double" />
+
+    <TableLayout
+        android:id="@+id/tblGPSText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imgPhoto1"
+        android:layout_alignRight="@+id/imgCarSpy"
+        android:layout_below="@+id/imgPhoto1" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="7dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Longitude:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:padding="5dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Latitude:"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tblGPSInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tblGPSText"
+        android:layout_toRightOf="@+id/tblGPSText" >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="7dp" >
+
+            <TextView
+                android:id="@+id/txtGPSText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="18.22324"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/txtGPSLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="-66.59343"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+    </TableLayout>
+
+    <Spinner
+        android:id="@+id/spnDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imgTextBg"
+        android:layout_alignTop="@+id/imgButtonDouble"
+        android:layout_marginLeft="15dp"
+        android:gravity="left" />
+
+    <Spinner
+        android:id="@+id/spnTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imgTextBg"
+        android:layout_alignTop="@+id/imgButtonDouble"
+        android:layout_marginRight="15dp"
+        android:gravity="right" />
+
+    <ImageView
+        android:id="@+id/imgExpanded"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/borderbg"
+        android:visibility="invisible" />
+
+</RelativeLayout>
