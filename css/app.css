@@ -5564,90 +5564,30 @@ span {
   -webkit-transform: translateZ(0);
 }
 
-/*Time to apply widths for accordian to work
-Width of image = 640px
-total images = 5
-so width of hovered image = 640px
-width of un-hovered image = 180px - you can set this to anything
-so total container width = 640 + 180*2 = 1000px;
-default width = 720/3 = 240px; 
-*/
+/* line 109, ../scss/app.scss */
+.roundabout-holder {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 250px;
+  width: 1000px;
+}
+
 /* line 116, ../scss/app.scss */
-.accordian {
-  width: 100%;
-  overflow: hidden;
-  /*Time for some styling*/
-  padding: 0px;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-  -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
-  -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+.roundabout-moveable-item {
+  height: 240px;
+  width: 320px;
+  cursor: pointer;
+  background-color: #ccc;
+  border: 1px solid #999999;
 }
 
-/*A small hack to prevent flickering on some browsers*/
-/* line 129, ../scss/app.scss */
-.accordian ul {
-  width: 2000px;
-  /*This will give ample space to the last item to move
-  instead of falling down/flickering during hovers.*/
+/* line 123, ../scss/app.scss */
+.roundabout-in-focus {
+  cursor: auto;
 }
 
-/* line 135, ../scss/app.scss */
-.accordian li {
-  position: relative;
-  display: block;
-  width: 333px;
-  float: left;
-  border-left: 1px solid #888888;
-  box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
-  /*Transitions to give animation effect*/
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  /*If you hover on the images now you should be able to 
-  see the basic accordian*/
-}
-
-/*Reduce with of un-hovered elements*/
-/* line 156, ../scss/app.scss */
-.accordian ul:hover li {
-  width: 180px;
-  height: 480px;
-}
-
-/*Lets apply hover effects now*/
-/*The LI hover style should override the UL hover style*/
-/* line 159, ../scss/app.scss */
-.accordian ul li:hover {
-  width: 640px;
-}
-
-/* line 162, ../scss/app.scss */
-.accordian li img {
-  display: block;
-}
-
-/*Image title styles*/
-/* line 167, ../scss/app.scss */
-.image_title {
-  background: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-
-/* line 174, ../scss/app.scss */
-.image_title a {
-  display: block;
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  text-align: center;
-}
-
-/* line 183, ../scss/app.scss */
+/* line 127, ../scss/app.scss */
 .ribbon-before {
   position: absolute;
   left: 1px;
@@ -5657,7 +5597,7 @@ default width = 720/3 = 240px;
   margin-top: -31px;
 }
 
-/* line 192, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .ribbon-after {
   position: absolute;
   left: 1px;
@@ -5669,7 +5609,7 @@ default width = 720/3 = 240px;
   background: url(/img/ribbon-after.png);
 }
 
-/* line 206, ../scss/app.scss */
+/* line 150, ../scss/app.scss */
 .panel {
   -webkit-box-shadow: 0px 0px 5px #333333;
   -moz-box-shadow: 0px 0px 5px #333333;
@@ -5678,7 +5618,7 @@ default width = 720/3 = 240px;
   margin-bottom: 0px;
 }
 
-/* line 214, ../scss/app.scss */
+/* line 158, ../scss/app.scss */
 .firstpanel {
   border-style: solid;
   border-width: 1px;
@@ -5711,7 +5651,7 @@ default width = 720/3 = 240px;
   line-height: 1.4;
 }
 
-/* line 220, ../scss/app.scss */
+/* line 164, ../scss/app.scss */
 .infopanel {
   border-style: solid;
   border-width: 1px;
@@ -5743,20 +5683,20 @@ default width = 720/3 = 240px;
   line-height: 1.4;
 }
 
-/* line 225, ../scss/app.scss */
+/* line 169, ../scss/app.scss */
 #cslogo {
   padding: 11px;
   margin-left: 30px;
 }
 
-/* line 231, ../scss/app.scss */
+/* line 175, ../scss/app.scss */
 select {
   background-color: #2f2f2f;
   height: 30px;
   color: white;
 }
 
-/* line 242, ../scss/app.scss */
+/* line 186, ../scss/app.scss */
 .spacer {
   width: 1020px !important;
   margin-top: -5px;
@@ -5764,13 +5704,18 @@ select {
   margin-right: -10px;
 }
 
-/* line 250, ../scss/app.scss */
+/* line 194, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 256, ../scss/app.scss */
+/* line 200, ../scss/app.scss */
 .user {
   width: 110px;
+}
+
+/* line 206, ../scss/app.scss */
+.panel > :first-child {
+  margin-top: -31px;
 }

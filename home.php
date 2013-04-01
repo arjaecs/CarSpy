@@ -60,8 +60,8 @@ if(!isset($user)){
 
 	$vehicles = $stmt->fetchAll();
 	$car = $vehicles[0];
-	
-	
+
+	$carID = $car[vehicleID];
 
 	if(!isset($vehicles)){
 	header('Location: login.php');
@@ -72,7 +72,8 @@ if(!isset($user)){
 					vehicleID,
 					date,
 					DATE_FORMAT(date, '%W, %M %e, %Y') as day
-					FROM Session";
+					FROM Session 
+					WHERE vehicleID = {$car['vehicleID']};";
 	$stmt = $db->prepare($sesssql);
 	$stmt->execute();
 
@@ -90,6 +91,8 @@ if(!isset($user)){
 		header('Location: login.php');
 		return;
 	}
+
+
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -105,7 +108,9 @@ if(!isset($user)){
 	<link rel="stylesheet" href="css/app.css" />
 	<script src="js/vendor/custom.modernizr.js"></script>
 	<script src="/js/vendor/jquery.js"></script>
-	<script src="js/foundation/foundation.js"></script> <!--
+	<script src="js/foundation/foundation.js"></script> 
+	
+	<!--
 	<script src="js/foundation/foundation.alerts.js"></script>
 	<script src="js/foundation/foundation.clearing.js"></script>
 	<script src="js/foundation/foundation.cookie.js"></script>
@@ -127,9 +132,19 @@ if(!isset($user)){
 		 <div id="cslogo">
 		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
 			<span>
-				<h3 style="margin-top:-45px; margin-right:50px;">Welcome <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				<h3 style="margin-top:-45px; margin-right:50px;">Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				
 			</span>
+			<span style="float: right; margin-right: 50px; margin-top: -20px;">
+				
+			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
+                                <input type="hidden" value="logout" name="loggedOut" />
+                                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
+                                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
+                            </form>
+
+			</span>
+		
 		</div> 
 
 	</div>
@@ -173,7 +188,7 @@ if(!isset($user)){
 				<div id="map_canvas"></div>
 			</div>
 		</div>
-		<div class="large-12 panel" style="width:1020px; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
+		<div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
 			<div class="ribbon-before"></div>
 			<div class="ribbon-after"></div>
 			
@@ -182,58 +197,41 @@ if(!isset($user)){
 	</div>
 
 	<div class="row container">
-		<div class="large-12 accordian" >
-				<ul>
-					<li>
-						<div class="image_title">
-							<a href="#">Spy Pic 1</a>
-						</div>
-						<a href="#">
-							<img src="img/CarSpy2.jpg"/>
-						</a>
-					</li>
-					<li>
-						<div class="image_title">
-							<a href="#">Spy Pic 2</a>
-						</div>
-						<a href="#">
-							<img src="img/CarSpy2.jpg"/>
-						</a>
-					</li>
-					<li>
-						<div class="image_title">
-							<a href="#">Spy Pic 3</a>
-						</div>
-						<a href="#">
-							<img src="img/CarSpy2.jpg"/>
-						</a>
-					</li>
-					
-				</ul>
-		</div>
-		<div class="large-12 panel" style="width:1020px; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
+		
+ 		<div class="large-12">
+
+ 			<ul id="pics" style="padding-left: 1.5%; padding-top: 1.5%;">
+ 				<li style="display:inline"><a href="spypics/jpeg_20130321_230845.jpg"><img src="spypics/jpeg_20130321_230845.jpg"></a></li>
+ 				<li style="display:inline"><a href="spypics/CarSpy2.jpg"><img src="spypics/CarSpy2.jpg"></a></li>
+ 				<li style="display:inline"><a href="spypics/jpeg_20130326_204341.jpg"><img src="spypics/jpeg_20130326_204341.jpg"></a></li>
+			</ul>
+
+ 		</div>
+<!-- 
+		<div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
 			<div class="ribbon-before"></div>
 			<div class="ribbon-after"></div>
 			
 			<h3>Event Info:</h3>
-		</div>
+		</div> -->
 
 	</div>
+	<!-- 
 	<div class="row container">
 		<div class="large-12" >
 		
 			<div class="large-4 columns infopanel" >
-				<h4>Date:</h4>
+				<h4 id="date">Date:</h4>
 				
 			</div> 
 			<div class="large-4 columns infopanel">
-				<h4>Time:</h4>
+				<h4 id="time">Time:</h4>
 			</div> 
 			<div class="large-4 columns infopanel">
-				<h4>GPS:</h4>
+				<h4 id="gps">GPS:</h4>
 			</div> 
 		</div>
-	</div>
+	</div> -->
 <script type="text/javascript">// Google Maps code
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
@@ -290,7 +288,8 @@ if(!isset($user)){
 			type: 'GET',
 			url: 'times.php',
 			data: {
-				date: "'"+date+"'"
+				date: "'"+date+"'",
+				car: <?php echo $carID; ?>
 			},
 			dataType: 'json',
 			success: success
@@ -299,29 +298,82 @@ if(!isset($user)){
 	
 	var updateSelect = function(data) {
 		$('#times').empty();
+		//$('#pics').empty();
 		$.each(data, function(index, value){
 			$('#times').append('<option data-lat="'+ value.location.latitude +'" data-long="'+ value.location.longitude +'">' + value.time +'</option>');
 			
+			
 			updateMap($('#times option:selected'));
+
 
 			$('#times').change(function(e) {
 				updateMap($(e.currentTarget));
+				
+				
 			});
+
+			
 		});
+
+		
+		
+		
 	};
 	
 	var updateMap = function($el) {
 		initializeMaps($el.data().lat, $el.data().long)
 	};
+	// var getPics = function(session, success) {
+	// 		$.ajax({
+	// 			type: 'GET',
+	// 			url: 'pictures.php',
+	// 			data: {
+	// 				sessionID: "'"+session+"'"
+	// 			},
+	// 			dataType: 'json',
+	// 			success: success
+	// 		});
+	// };
 
+	// var updatePics = function(data) {
+	// 	$('#pics').empty();
+		
+	// 	$.each(data, function(index, value){
+	// 		$('#pics').append('<li><img src=' + value.path +'></li>');
+			
+		
+	// 	});
+	// };
+	
 	getTimes($('#dates option:selected').val(), updateSelect);
+	//getPics($('#dates option:selected').val('sessionID'), updatePics);
 
 	$('#dates').change(function(e) {
 		getTimes($(e.currentTarget).val(), updateSelect);
+		//getPics($(e.currentTarget).val(), updatePics);
+		
 	});
+
+
+	
+
+	// getPics($('#dates option:selected').val(), updatePics);
+
+	// $('#dates').change(function(e) {
+	// 	getPics($(e.currentTarget).val(), updatePics);
+		
+	// });
+
+
+
+
+
+
 </script>
 <script type="text/javascript">
+	
 	$(document).foundation();
 </script>
+
 </body>
 </html>

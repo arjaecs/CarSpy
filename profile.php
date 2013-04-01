@@ -1,7 +1,7 @@
 <?php  // This page displays the user's profile
 require_once('db.php');
 require_once('checkAuth.php');
-//require_once('logout.php');
+require_once('logout.php');
 
 //$userID = $_GET['userID'];
 //var_dump($id);
@@ -151,10 +151,26 @@ if (count($_POST) > 0) {
 	<div id="topnav">
 		 <div id="cslogo">
 		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
+
 			<span>
-				<h3 style="margin-top:-45px; margin-right:50px; ">Welcome <a href="/" id="username"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				<h3 style="margin-top:-45px; margin-right:50px; ">Welcome, <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="" href="profile.php" id="username"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				
 			</span>
+			<span style="float: right; margin-right: 50px; margin-top: -20px;">
+				<!-- <a href="#" onclick="this.parentNode.submit()"><p style="text-align: right; size: 6px; color: gray; margin-right: 50px; margin-top: -20px;">Log Out</p>
+
+
+			</a>
+ -->
+			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
+                                <input type="hidden" value="logout" name="loggedOut" />
+                                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
+                                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
+                            </form>
+
+			</span>
+		
+
 		</div>
 		
 		
@@ -507,29 +523,6 @@ if (count($_POST) > 0) {
   '.js><\/script>')
   </script>
 
-  <!-- <script type="text/javascript">
-
-        var type = [];
-        type["blank"] = [""];
-        type["Concert"] = ["Alternative", "Rock","Pop", "Hip Hop / Rap","Electronic", "Country", "Classical"];
-        type["Sports"] = ["Basketball","Baseball","Soccer","Volleyball","Tennis","Boxing","Swimming","Cycling"];
-        type["Entertainment"] = ["Culinary","Cinema","Arts","Theater","Comedy","Politics"];
-        type["Business"] = ["Conferences","Meetings","Seminars","JobFairs","Sales"];
-
-        function fillSelect(nValue,nList){
-
-            nList.options.length = 1;
-            var curr = type[nValue];
-            for (each in curr)
-            {
-                var nOption = document.createElement('option');
-                nOption.appendChild(document.createTextNode(curr[each]));
-                nOption.setAttribute("value",curr[each]);
-                nList.appendChild(nOption);
-            }
-        }
-
-    </script> -->
   
   	<script src="js/foundation/foundation.js"></script>
 

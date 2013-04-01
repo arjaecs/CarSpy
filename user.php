@@ -21,7 +21,7 @@ $sql = "SELECT
 				address,
 				gender
 			FROM User
-			WHERE email = {$email}";
+			WHERE email = {$email};";
 
 	$stmt = $db->prepare($sql);
 	$stmt->execute();
@@ -44,6 +44,7 @@ $sql = "SELECT
 	 	'firstName' => $profile['firstName'],
 	 	'lastName' => $profile['lastName']),
 	 	'email' => $profile['email'],
+	 	'password' => $profile['password'],
 	 	'phone' => $profile['phone'],
 	 	'birthday' => $profile['birth'],
 	 	'address' => $profile['address'],
