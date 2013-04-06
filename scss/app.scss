@@ -211,3 +211,26 @@ select{
 	margin-top: -65px;
 	margin-right: 25px;
 }
+#pics{
+	display: inline-block;
+}
+#pics li{
+	display: inline;
+}
+
+.selects{
+	padding-left: 0px !important;
+	padding-top: 0px;
+	margin-left: 4px;
+	margin-top: 4px;
+	float: left;
+	//background-color: #2f2f2f;
+	width: 25%;
+	height: 295px;
+	@include panel( #2f2f2f,20px);
+}
+.theMap{
+float: right;
+padding: 4px 4px 4px 0px;
+position: relative;
+}
