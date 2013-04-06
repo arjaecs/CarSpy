@@ -60,10 +60,6 @@ if(!isset($user)){
 
 	$vehicles = $stmt->fetchAll();
 	
-	$car = $vehicles[0];
-	$carID = $car[vehicleID];
-
-
 	$cars = array();
 	for ($i = 0; $i < count($vehicles); $i++){
 	 
@@ -81,7 +77,8 @@ if(!isset($user)){
 	return;
 	}
 
-	
+	$car = $vehicles[0];
+	$carID = $car[vehicleID];
 
 	
 
@@ -129,12 +126,12 @@ if(!isset($user)){
 	
 	<!--
 	
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=true"></script>
 	<script type="text/javascript" language="JavaScript" src="http://j.maxmind.com/app/geoip.js"></script>-->
-	
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=false"></script>
 
-</head>
+	
+ --><script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+ 	</head>
 <body>
 
 	<div id="topnav">
@@ -159,11 +156,52 @@ if(!isset($user)){
 		</div> 
 
 	</div>
-	
+	<!--
+	<div class="row">
+		<div class="large-12 columns container">
+			
+		<div class="carSelect">
+					 <h3>Choose An Event:</h3> 
+					 <label for="cars">Choose An Event</label>
+					<ul id="cars" name="cars" class="pagination">
+						  <li class="arrow unavailable"><a href="">&laquo;</a></li>
+						  <li class="current"><a href="">Toyota</a></li>
+						  <li><a href="">Bmw</a></li>
+						  <li class="arrow"><a href="">&raquo;</a></li>
+					</ul>
+		</div>
+					 
+					
+			
+					<div style="text-align:center; margin-left: 10%;float:left; ">
+					
+					
+
+					<select id="dates" name='date' style="width:40%" class="form-select">
+					 	<?php
+					 	for ($i = 0; $i<count($dates); $i++){
+ 
+						 // add each date to the end of the times array
+						 echo "<option value='{$dates[$i]['date']}'>{$dates[$i]['day']}</option>";
+						}
+						?>
+					</select>
+
+					<select id="times" name="time" class='form-select' style="width:40%">
+							
+					</select>
+					
+					
+						
+					</div>
+
+		</div>
+	</div> 
+-->
 	<div class="row container">
 		<div class="large-3 columns" >
 
-			<div style="text-align:center; margin-left: 10%; margin-top:15%;">
+			<div style="text-align:center; margin-left: 10%; margin-top:15%; ">
 					<h5>Choose a Car:</h5> 
 					<select id="car" name='car' class="form-select">
 					 	<?php
@@ -196,8 +234,7 @@ if(!isset($user)){
 			</div>
 		</div>
 	</div>
-
-	<div class="row container">
+	<div class="row">
 		<div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
 			<div class="ribbon-before"></div>
 			<div class="ribbon-after"></div>
@@ -215,31 +252,9 @@ if(!isset($user)){
 			</ul>
 
  		</div>
-<!-- 
-		<div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
-			<div class="ribbon-before"></div>
-			<div class="ribbon-after"></div>
-			
-			<h3>Event Info:</h3>
-		</div> -->
 
 	</div>
-	<!-- 
-	<div class="row container">
-		<div class="large-12" >
-		
-			<div class="large-4 columns infopanel" >
-				<h4 id="date">Date:</h4>
-				
-			</div> 
-			<div class="large-4 columns infopanel">
-				<h4 id="time">Time:</h4>
-			</div> 
-			<div class="large-4 columns infopanel">
-				<h4 id="gps">GPS:</h4>
-			</div> 
-		</div>
-	</div> -->
+
 <script type="text/javascript">// Google Maps code
 	var directionsDisplay;
 	var directionsService = new google.maps.DirectionsService();
@@ -306,14 +321,13 @@ if(!isset($user)){
 			dataType: 'json',
 			success: success
 		});
-
 	};
 	
 	var updateSelect = function(data) {
 		$('#times').empty();
 		$('#pics').empty();
 		$.each(data, function(index, value){
-			console.log("Session ID ="+value);
+			//console.log("Session ID ="+value.sessionID);
 			$('#times').append('<option data-lat="'+ value.location.latitude +'" data-long="'+ value.location.longitude +'" data-session="'+ value.sessionID +'">' + value.time +'</option>');
 			
 			 $('#pics').append('<li><img src="' + value.path1 +'"></li>');
@@ -347,34 +361,6 @@ if(!isset($user)){
 		//updatePics($el.data().session);
 	};
 
-	// var getPics = function(sessionID, success) {
-	// 		console.log(sessionID);
-	// 		$.ajax({
-	// 			type: 'GET',
-	// 			url: 'pictures.php',
-
-	// 			data: {
-	// 				sessionID: "'"+sessionID+"'"
-	// 			},
-	// 			dataType: 'json',
-	// 			success: success
-	// 		});
-	// };
-
-	// var updatePics = function(data) {
-	// 	$('#pics').empty();
-		
-	// 	$.each(data, function(index, value){
-		
-	// 		$('#pics').append('<li><img src="' + value.path +'"></li>');
-
-	// 		//$('#pics').append('<li><img src=' + $el.data().path2 +'></li>');
-	// 		//$('#pics').append('<li><img src=' + $el.data().path3 +'></li>');
-	// 	});
-		
-		
-	// };
-	
 	getTimes($('#dates option:selected').val(),updateSelect);
 	//getPics($('#times option:selected').val(), updatePics);
 
@@ -383,18 +369,6 @@ if(!isset($user)){
 		//getPics($(e.currentTarget).val(), updatePics);
 		
 	});
-
-
-	
-
-	// getPics($('#dates option:selected').val(), updatePics);
-
-	// $('#dates').change(function(e) {
-	// 	getPics($(e.currentTarget).val(), updatePics);
-		
-	// });
-
-
 
 
 

@@ -68,6 +68,7 @@ if(!isset($user)){
     	$car2 = $vehicles[1];
     }
 
+    
 
     //var_dump($vehicles['make']);
 
@@ -104,15 +105,15 @@ if (count($_POST) > 0) {
 		$sql = "UPDATE Vehicle
 	            SET
 	                
-                V.userID = '{$id}',
-                V.make = '{$_POST['make']}',
-                V.model = '{$_POST['model']}',
-                V.color = '{$_POST['color']}',
-                V.year = '{$_POST['year']}',
-                V.licensePlate = '{$_POST['licensePlate']}',
-                V.owner = '{$_POST['owner']}'
+                userID = '{$id}',
+                make = '{$_POST['make']}',
+                model = '{$_POST['model']}',
+                color = '{$_POST['color']}',
+                year = '{$_POST['year']}',
+                licensePlate = '{$_POST['licensePlate']}',
+                owner = '{$_POST['owner']}'
                 
-                WHERE V.vehicleID = '{$_POST['vehicleID']}';";
+                WHERE vehicleID = '{$_POST['vehicleID']}';";
 
 	    $stmt = $db->prepare($sql);
 	    $stmt->execute();
@@ -153,7 +154,7 @@ if (count($_POST) > 0) {
 		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
 
 			<span>
-				<h3 style="margin-top:-45px; margin-right:50px; ">Welcome, <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="" href="profile.php" id="username"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				<h3 >Welcome, <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="" href="profile.php" id="username"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				
 			</span>
 			<span style="float: right; margin-right: 50px; margin-top: -20px;">
@@ -223,7 +224,7 @@ if (count($_POST) > 0) {
 							  </ul>
 						  </section>
 						</nav>
-			    		<table>
+			    		<table class="responsive">
 							
 							
 							<colgroup title="title" />
@@ -297,7 +298,7 @@ if (count($_POST) > 0) {
                             
                               <ul class="right">
                                   <li class="divider"></li>
-                                  <li class="active"><a href="#add" data-toggle="modal" data-target="#add">Add</a></li>
+                                  <li class="active"><a href="#add" data-toggle="modal" data-target="#add">Add/Edit</a></li>
                                   <li class="divider"></li>
                                   
                               </ul>
@@ -392,13 +393,13 @@ if (count($_POST) > 0) {
 							  <div class="control-group">
 							    <label class="control-label" for="lastName">Last Name</label>
 							    <div class="controls">
-							      <input type="text" id="lastName" name="lastName" placeholder="Last Name" required="required">
+							      <input type="text" id="lastName" name="lastName" value="<?php echo $user['lastName'] ?>" required="required">
 							    </div>
 							  </div>	
 							  <div class="control-group">
 							    <label class="control-label" for="email">Email</label>
 							    <div class="controls">
-							      <input id="email" name="email" type="email" placeholder="example@email.com" required="required">
+							      <input id="email" name="email" type="email" value="<?php echo $user['email'] ?>" required="required">
 							      
 							  	</div>
 								</div>
@@ -423,19 +424,19 @@ if (count($_POST) > 0) {
 							  <div class="control-group">
 							    <label class="control-label" for="phone">Phone</label>
 							    <div class="controls">
-							      <input type="tel" id="phone" name="phone" placeholder="787 123 4567">
+							      <input type="tel" id="phone" name="phone" value="<?php echo $user['phone'] ?>">
 							    </div>
 							  </div>
 							  <div class="control-group">
 							    <label class="control-label" for="date">Date of Birth</label>
 							    <div class="controls">
-							      <input type="text" id="date" name="date" placeholder="YYYY-MM-DD"/>
+							      <input type="text" id="date" name="date" value="<?php echo $user['birth'] ?>"/>
 							    </div>
 							  </div>
 							  <div class="control-group">
 							    <label class="control-label" for="address">Address</label>
 							    <div class="controls">
-							      <input type="text" id="address" name="address" placeholder="#Street City, State Zip">
+							      <input type="text" id="address" name="address" value="<?php echo $user['address'] ?>">
 							    </div>
 							  </div>
 						  </div>

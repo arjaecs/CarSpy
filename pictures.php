@@ -1,14 +1,14 @@
 <?php 
 require_once('db.php');
 
-$session = $_GET['sessionID'];
+$session = json_decode($_GET['sessionID']); //$_GET['sessionID'];
 
 $db = db::getInstance();
 
 
 $sql = "SELECT picID,
 						sessionID,
-						path,
+						path
 						FROM Picture
 		WHERE sessionID = {$session};";
 

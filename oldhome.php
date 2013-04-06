@@ -60,28 +60,14 @@ if(!isset($user)){
 
 	$vehicles = $stmt->fetchAll();
 	
-	$car = $vehicles[0];
-	$carID = $car[vehicleID];
 
-
-	$cars = array();
-	for ($i = 0; $i < count($vehicles); $i++){
-	 
-	 // add each date to the end of the times array
-	 $cars[] = array(
-	 	'vehicleID' => $vehicles[$i]['vehicleID'], 
-	 	'make' => $vehicles[$i]['make'], 
-	 	'model' => $vehicles[$i]['model'],
-	 	'licensePlate' => $vehicles[$i]['licensePlate'] 	
-	 	);
-
-	}
 	if(!isset($vehicles)){
 	header('Location: login.php');
 	return;
 	}
 
-	
+	$car = $vehicles[0];
+	$carID = $car[vehicleID];
 
 	
 
@@ -128,7 +114,19 @@ if(!isset($user)){
 	<script src="js/foundation/foundation.js"></script> 
 	
 	<!--
-	
+	<script src="js/foundation/foundation.alerts.js"></script>
+	<script src="js/foundation/foundation.clearing.js"></script>
+	<script src="js/foundation/foundation.cookie.js"></script>
+	<script src="js/foundation/foundation.dropdown.js"></script>
+	<script src="js/foundation/foundation.forms.js"></script>
+	<script src="js/foundation/foundation.joyride.js"></script>
+	<script src="js/foundation/foundation.magellan.js"></script>
+	<script src="js/foundation/foundation.orbit.js"></script>
+	<script src="js/foundation/foundation.placeholder.js"></script>
+	<script src="js/foundation/foundation.reveal.js"></script>
+	<script src="js/foundation/foundation.section.js"></script>
+	<script src="js/foundation/foundation.tooltips.js"></script>
+	<script src="js/foundation/foundation.topbar.js"></script> 
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=true"></script>
 	<script type="text/javascript" language="JavaScript" src="http://j.maxmind.com/app/geoip.js"></script>-->
 	
@@ -160,22 +158,27 @@ if(!isset($user)){
 
 	</div>
 	
-	<div class="row container">
-		<div class="large-3 columns" >
+	<div class="row">
+		<div class="large-12 columns container">
+			
+		<div class="carSelect">
+					<!-- <h3>Choose An Event:</h3> -->
+					<label for="cars">Choose An Event</label>
+					<ul id="cars" name="cars" class="pagination">
+						  <li class="arrow unavailable"><a href="">&laquo;</a></li>
+						  <li class="current"><a href="">Toyota</a></li>
+						  <li><a href="">Bmw</a></li>
+						  <li class="arrow"><a href="">&raquo;</a></li>
+					</ul>
+		</div>
+					
+					
+			
+					<div style="text-align:center; margin-left: 10%;float:left; ">
+					
+					
 
-			<div style="text-align:center; margin-left: 10%; margin-top:15%;">
-					<h5>Choose a Car:</h5> 
-					<select id="car" name='car' class="form-select">
-					 	<?php
-					 	for ($i = 0; $i<count($cars); $i++){
- 
-						 // add each date to the end of the times array
-						 echo "<option value='{$cars[$i]['vehicleID']}'>{$cars[$i]['make']} {$cars[$i]['model']}</option>";
-						}
-						?>
-					</select>
-					<h5>Choose a Date:</h5> 
-					<select id="dates" name='date' class="form-select">
+					<select id="dates" name='date' style="width:40%" class="form-select">
 					 	<?php
 					 	for ($i = 0; $i<count($dates); $i++){
  
@@ -184,20 +187,24 @@ if(!isset($user)){
 						}
 						?>
 					</select>
-					<h5>Choose a Time:</h5> 
-					<select id="times" name="time" class='form-select'>
+
+					<select id="times" name="time" class='form-select' style="width:40%">
 							
-					</select>			
-			</div>
+					</select>
+					
+					
+						
+					</div>
+
 		</div>
-		<div class="large-9 columns">
+	</div> 
+
+	<div class="row container">
+		<div class="large-12">
 			<div style="height:300px; padding:5px; ">
 				<div id="map_canvas"></div>
 			</div>
 		</div>
-	</div>
-
-	<div class="row container">
 		<div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
 			<div class="ribbon-before"></div>
 			<div class="ribbon-after"></div>
@@ -211,7 +218,11 @@ if(!isset($user)){
  		<div class="large-12">
 
  			<ul id="pics" style="padding-left: 1.5%; padding-top: 1.5%;">
-
+<!-- 
+ 				<li style="display:inline"><a href="spypics/jpeg_20130321_230845.jpg"><img src="spypics/jpeg_20130321_230845.jpg"></a></li>
+ 				<li style="display:inline"><a href="spypics/CarSpy2.jpg"><img src="spypics/CarSpy2.jpg"></a></li>
+ 				<li style="display:inline"><a href="spypics/jpeg_20130326_204341.jpg"><img src="spypics/jpeg_20130326_204341.jpg"></a></li>
+			 -->
 			</ul>
 
  		</div>
@@ -306,14 +317,13 @@ if(!isset($user)){
 			dataType: 'json',
 			success: success
 		});
-
 	};
 	
 	var updateSelect = function(data) {
 		$('#times').empty();
 		$('#pics').empty();
 		$.each(data, function(index, value){
-			console.log("Session ID ="+value);
+			//console.log("Session ID ="+value.sessionID);
 			$('#times').append('<option data-lat="'+ value.location.latitude +'" data-long="'+ value.location.longitude +'" data-session="'+ value.sessionID +'">' + value.time +'</option>');
 			
 			 $('#pics').append('<li><img src="' + value.path1 +'"></li>');

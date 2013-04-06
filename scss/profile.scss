@@ -190,3 +190,53 @@ table{
 #username{
 	color: #ff7b0d;
 }
+
+#vehicle{
+	
+	width: 50%;
+}
+#personal{
+	width: 50%;
+}
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+/* Styles */
+
+#vehicle{
+	clear: left;
+	width: 100%;
+}
+#personal{
+	width: 100%;
+}
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+/* Styles */
+#vehicle{
+	clear: left;
+	width: 100%;
+}
+#personal{
+	width: 100%;
+}
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+/* Styles */
+#vehicle{
+	clear: left;
+	width: 100%;
+}
+#personal{
+	width: 100%;
+}
+}
+
+

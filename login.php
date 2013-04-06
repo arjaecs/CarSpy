@@ -17,39 +17,50 @@ if ( count($_POST) > 0) {
     
 
     // If the Register button was pressed run this code
-   if($_POST['submit'] != 'Login'){
+   if($_POST['submit'] == 'Register'){
 
     	$db = db::getInstance();
         // Encrypts the password the user entered
-        $password = md5 ( $_POST['password'] );
+        //$password = md5 ( $_POST['password'] );
 
-        $date = $_POST['date'];
+        //$date = $_POST['date'];
+
+        $data = array(
+
+        	'password' => md5 ( $_POST['password'] ),
+            'firstName' => $_POST['firstName'],
+            'lastName' => $_POST['lastName'],
+            'email' => $_POST['email'],
+            'phone' => $_POST['phone'],
+            'birth' => $_POST['date'],
+            'address' =>  $_POST['address'],
+            'gender' => $_POST['gender']	
+        	);
 
         // Creates a new tuple in the table User with the info entered
         $sql = "INSERT INTO User
                 SET
 
-                    password = '{$password}',
-                    firstName = '{$_POST['firstName']}',
-                    lastName = '{$_POST['lastName']}',
-                    email = '{$_POST['email']}',
-                    phone = '{$_POST['phone']}',
-                    birth = '{$date}',
-                    address =  '{$_POST['address']}',
-                    gender = '{$_POST['gender']}'
-        ";
+                    password = :password,
+                    firstName = :firstName,
+                    lastName = :lastName,
+                    email = :email,
+                    phone = :phone,
+                    birth = :date,
+                    address = :address,
+                    gender = :gender;";
 
         $stmt = $db->prepare($sql);
         // $stmt->bindValue(':vName', , PDO::PARAM_STR);
-        $stmt->execute();
-       $loggedin = true;
+        $stmt->execute($data);
+       	$loggedin = true;
         $id = $db->lastInsertId();
 
         
     }
 
     // If the user pressed the Login button
-    else {
+    elseif($_POST['submit'] == 'Login') {
     	//echo "eureka";
     	$db = db::getInstance();
     //     // Query to get the user's info according to the username and password provided
@@ -57,6 +68,7 @@ if ( count($_POST) > 0) {
 		//$cookie_value = md5($salt . $_POST['password']);
         //$password = md5 ( $_POST['password'] );
         //var_dump($password);
+
         $sql = "SELECT 
                     userID,
                     email,
@@ -64,11 +76,12 @@ if ( count($_POST) > 0) {
                     firstName,
                     lastName
                 FROM User
-                WHERE email = '{$_POST['email']}';
-        ";
+                WHERE email = :email;";
+        
+        $data = array('email' => $_POST['email']);
 
         $stmt = $db->prepare($sql);
-        $stmt->execute();
+        $stmt->execute($data);
         $result = $stmt->fetchAll();
 
 
@@ -80,6 +93,8 @@ if ( count($_POST) > 0) {
 
         //var_dump($result[0]['password']);
         //var_dump(md5($_POST['password']));
+
+        
 
         if ($result[0]['password'] == md5($_POST['password'])) //Remember to encrypt our value
 			{
@@ -93,13 +108,73 @@ if ( count($_POST) > 0) {
 			//exit; //Do not display any more script for this page
 			//return;
 			}
-			else{
-				echo "try again!";
+		else{
+			echo "try again!";
+		}
+
+	}
+	else{
+
+		$db = db::getInstance();
+		$sql = "SELECT
+			userID,
+			password,
+			email
+		FROM User
+		WHERE email = :email;";
+        
+        $data = array('email' => $_POST['email']);
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+
+		$result = $stmt->fetchAll();
+		
+		$profile = $result[0];
+		//var_dump($profile);
+		//$email = $profile["email"];
+		//$mail = mysql_real_escape_string(stripslashes($profile['email']));
+		$pass = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+
+		if(!isset($profile)){
+
+			$reset = 'Email not found';
+
+		}
+		else{
+		
+		$passsql = "UPDATE User
+		            SET
+		                password = '{$pass}'
+		            WHERE email = '{$_POST['email']}';
+		    ";
+
+	    $stmt = $db->prepare($passsql);
+	    $stmt->execute();	
+		//define the receiver of the email
+		$to =  $mail;
+		//define the subject of the email
+		$subject = 'Password Recovery'; 
+		//define the message to be sent. Each line should be separated with \n
+		$message = "Your new temporary Password is: ".$pass.". Please change as soon as possible."; 
+		//define the headers we want passed. Note that they are separated with \r\n
+		$headers = "From: alvaro.calderon@upr.edu\r\nReply-To: alvaro.calderon@upr.edu";
+		//send the email
+		$mail_sent = mail( $to, $subject, $message, $headers );
+		//if the message is sent successfully print "Mail sent". Otherwise print "Mail failed" 
+		//echo $mail_sent ? "Mail sent" : "Mail failed";
+
+			if(isset($mail_sent)){
+				$reset = 'Your email was sent successfully!';
 			}
-        
-        
-        
-   }
+			else{
+				$reset = 'Please try again';
+			}
+		}
+
+	echo $reset;
+
+	}
 
 }
 //var_dump($_SESSION);
@@ -108,7 +183,7 @@ if ( count($_POST) > 0) {
 if($loggedin) { 
 	//global $id;
     setcookie('loggedin', $id, time() + (86400 * 7)); // 86400 = 1 day
-    header('Location: profile.php');
+    header('Location: home.php');
     return;
 }
 
@@ -156,16 +231,20 @@ if($loggedin) {
 			        <div class="btn-group" >
 				        
 			        	<!-- Button to trigger modal -->
-						<a href="#register" role="button" class="btn btn-large" data-toggle="modal">Register</a>
+						<a href="#register" role="button" class="btn btn-large" data-toggle="modal" data-target="#register">Register</a>
 				        <button class="btn btn-large btn-warning btn-primary" type='submit' name="submit" value="Login" >Sign in</button>
 				        
 					</div>
-					 
+					
+					<div id="forgot"><a href="#reset" data-toggle="modal" data-target="#reset">Forgot Password?</a></div>
 					<!-- Modal -->
 					
 	            </form>
+
+	            
+
 	            <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="create-user">
-					<div id="register" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div id="register" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="create-user" aria-hidden="true">
 						 <div class="modal-header">
 						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						    <h3 id="myModalLabel">Register with CarSpy</h3>
@@ -229,6 +308,34 @@ if($loggedin) {
 						  <div class="modal-footer">
 						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 						    <button type='submit' name="submit" value="Register" class="btn btn-warning btn-primary">Register</button>
+						  </div>
+					</div>
+				</form>
+
+				<form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="resetPassword">
+					<div id="reset" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="resetPassword" aria-hidden="true">
+						 <div class="modal-header">
+						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						    <h3 id="resetPassword">Reset Password</h3>
+						  </div>
+
+						  <div class="modal-body">
+						    
+						    <div class="control-group">
+							    <h4>Enter your email to reset password</h4>
+							  </div>
+							  <div class="control-group">
+							    
+							    <div class="controls">
+							      <input id="email" name="email" type="email" placeholder="example@email.com" required="required">
+							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
+							    </div>
+								
+							  
+						  </div>
+						  <div class="modal-footer">
+						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						    <button type='submit' name="submit" value="Reset" class="btn btn-warning btn-primary">Send Email</button>
 						  </div>
 					</div>
 				</form>

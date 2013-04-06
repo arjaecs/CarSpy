@@ -5534,7 +5534,7 @@ body {
   max-width: 320px;
   margin: auto;
   margin-top: 10%;
-  height: 305px;
+  height: 333px;
   padding: 10px;
 }
 
@@ -5628,4 +5628,15 @@ body {
 /* line 160, ../scss/login.scss */
 #myModalLabel {
   text-align: center;
+}
+
+/* line 164, ../scss/login.scss */
+#forgot {
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* line 169, ../scss/login.scss */
+#forgot a {
+  color: #2f2f2f;
 }

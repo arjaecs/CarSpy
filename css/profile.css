@@ -5637,3 +5637,56 @@ table {
 #username {
   color: #ff7b0d;
 }
+
+/* line 194, ../scss/profile.scss */
+#vehicle {
+  width: 50%;
+}
+
+/* line 198, ../scss/profile.scss */
+#personal {
+  width: 50%;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  /* Styles */
+  /* line 207, ../scss/profile.scss */
+  #vehicle {
+    clear: left;
+    width: 100%;
+  }
+
+  /* line 211, ../scss/profile.scss */
+  #personal {
+    width: 100%;
+  }
+}
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width: 321px) {
+  /* Styles */
+  /* line 220, ../scss/profile.scss */
+  #vehicle {
+    clear: left;
+    width: 100%;
+  }
+
+  /* line 224, ../scss/profile.scss */
+  #personal {
+    width: 100%;
+  }
+}
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width: 320px) {
+  /* Styles */
+  /* line 233, ../scss/profile.scss */
+  #vehicle {
+    clear: left;
+    width: 100%;
+  }
+
+  /* line 237, ../scss/profile.scss */
+  #personal {
+    width: 100%;
+  }
+}

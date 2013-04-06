@@ -5719,3 +5719,9 @@ select {
 .panel > :first-child {
   margin-top: -31px;
 }
+
+/* line 210, ../scss/app.scss */
+.welcome {
+  margin-top: -65px;
+  margin-right: 25px;
+}
