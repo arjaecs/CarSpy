@@ -8,6 +8,8 @@ if (!$loggedin && !isset($id)) {
     return;
 }
 
+$newcar = false;
+
 $db = db::getInstance();
 
 $sql = "SELECT
@@ -31,29 +33,22 @@ $sql = "SELECT
 
     $user = $result[0];
 
-
-// if(!isset($user)){
-//     header('Location: login.php');
-//     return;
-// }
-
-// When the user presses the submit button this code will run
 if ( count($_POST) > 0) {
-    
-    
 
 
-	if($_POST['submit'] == 'add'){
 
 		$notfound = false;
-		$car = array('vehicleID' => $_POST['vehicleID']);
+		$car = array('car' => $_POST['vehicleID']);
 
 		$sql = "SELECT make, model, licensePlate FROM Vehicle WHERE vehicleID = :car;";
 
+		
 	    $stmt = $db->prepare($sql);
+
 	    $stmt->execute($car);
 	    $result = $stmt->fetchAll();
-
+	    var_dump($result);
+	    
 	    if (count($result)==1) {
 	    	
 		$data = array(
@@ -86,25 +81,26 @@ if ( count($_POST) > 0) {
 
 	    $stmt = $db->prepare($carsql);
 	    $stmt->execute($data);
-	    if($) { 
+	    
+	    $newcar = true;
 		//global $id;
-	    setcookie('carID', $car, time() + (86400 * 7)); // 86400 = 1 day
-	    header('Location: home.php');
-	    return;
+
 		}
-	}
-	else{
+		else{
 		$notfound = true;
-	}
+		}
+	
+	
 
 
 
 }
-//var_dump($_SESSION);
-
-// Set a cookie for maintaining the session with the user. Expires in a day.
-
-
+if($newcar) { 
+	//global $id;
+    setcookie('carID', $car['vehicleID'], time() + (86400 * 7)); // 86400 = 1 day
+    header('Location: home.php');
+    return;
+}
 
 ?>
 
@@ -115,13 +111,13 @@ if ( count($_POST) > 0) {
 <head>
 	<meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>CarSpy</title>
+  <title>CarSpy - Add Device</title>
 
     <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link rel="stylesheet" href="css/normalize.css" />
   
-  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="css/addcar.css" />
   <!-- 
   <link rel="stylesheet" src="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
    -->
@@ -131,37 +127,87 @@ if ( count($_POST) > 0) {
 
 </head>
 <body>
+	<div id="topnav">
+		 <div id="cslogo">
+		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
+		 </div>
+		 <div class="small-6 columns">
+			<span>
+				<h3 >Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				
+			</span>
+			<span style="float: right; margin-top: -20px; margin-right: 50px;">
+				
+			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
+                                <input type="hidden" value="logout" name="loggedOut" />
+                                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
+                                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
+                            </form>
+
+			</span>
+		
+		</div> 
+
+	</div>
 	
-	<div class= "shadowbox">
+	<div class= "loginshadow">
 		    
 		    <div class="large-3 ">
 		    	
-			    <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="login" class="form-signin">
-	                <h1>Hello <?php echo $user['firstName']?>!</h1>    
-	                <h2 class="form-signin-heading">Please Enter Your CarSpy Info</h2> <!-- 
-	                <img src="img/CarSpy_black.png" style="margin-bottom:25px;">
-	                 -->
-			        <!--<input type="text" class="input-block-level" placeholder="Email" required="required">-->
-			        
-			        <input class="input-block-level" id="vehicleID" name="vehicleID" placeholder="CarSpy ID" required="required">
+			    <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="addCar" class="form-horizontal">
+	                   
+	                <h2 style="color:lightgray; text-align:center">Please Enter Your Car & Device Info</h2> 
+	                
+	               
+			        <div class="control-group">
+					    <label class="control-label" for="vehicleID">CarSpy Key</label>
+					    <div class="controls">
+			        		<input type="text" id="vehicleID" name="vehicleID" placeholder="12345" required="required">
+			        	</div>
+					</div>
+					<div class="control-group">
+					    <label class="control-label" for="make">Car Make</label>
+					    <div class="controls">
+			        		<input type="text" id="make" name="make" placeholder="DeLorean">
+		        		</div>
+				    </div>
+				    <div class="control-group">
+					    <label class="control-label" for="model">Car Model</label>
+					    <div class="controls">
+			        		<input type="text" id="model" name="model" placeholder="Prius">
+			        	</div>
+			        </div>
+			        <div class="control-group">
+					    <label class="control-label" for="color">Car Color</label>
+					    <div class="controls">
+			        		<input type="text" id="color" name="color" placeholder="Silver">
+			        	</div>
+			        </div>
+			        <div class="control-group">
+					    <label class="control-label" for="year">Car Year</label>
+					    <div class="controls">
+			        		<input type="text" id="year" name="year" placeholder="1984">
+			        	</div>
+			        </div>
+			        <div class="control-group">
+					    <label class="control-label" for="licensePlate">License Plate</label>
+					    <div class="controls">
+			        		<input type="text" id="licensePlate" name="licensePlate" placeholder="123-456">
+			        	</div>
+			        </div>
+			        <div class="control-group">
+					    <label class="control-label" for="owner">Car Owner</label>
+					    <div class="controls">
+			        		<input type="text" id="owner" name="owner" placeholder="Juan del Pueblo">
+			        	</div>
+			        </div>
 
-			        <input class="input-block-level" id="make" name="make" placeholder="DeLorean">
-			        <input class="input-block-level" id="model" name="model" placeholder="Prius">
-			        <input class="input-block-level" id="color" name="color" placeholder="Silver">
-			        <input class="input-block-level" id="year" name="year" placeholder="1984">
-			        <input class="input-block-level" id="licensePlate" name="licensePlate" placeholder="123-456">
-			        <input class="input-block-level" id="owner" name="owner" placeholder="Juan del Pueblo">
 
-
-			        <?php if($notfound){
-						echo "<p id='response'>Your Device was not found</p>";
-					}
-						?>
 			        
 				        
 			        	<!-- Button to trigger modal 
 						<a href="#register" role="button" class="btn btn-large" data-toggle="modal" data-target="#register">Register</a>-->
-				    <button class="btn btn-large btn-warning btn-primary" type='submit' name="submit" value="add" >Enter CarSpy</button>
+				    <button class="btn btn-large btn-warning" type='submit' name="submit" value="add" >Enter CarSpy</button>
 				        
 					
 					

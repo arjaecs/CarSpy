@@ -25,36 +25,46 @@ if ( count($_POST) > 0) {
 
         //$date = $_POST['date'];
 
-        $data = array(
-
-        	'password' => md5 ( $_POST['password'] ),
-            'firstName' => $_POST['firstName'],
-            'lastName' => $_POST['lastName'],
-            'email' => $_POST['email'],
-            'phone' => $_POST['phone'],
-            'birth' => $_POST['date'],
-            'address' =>  $_POST['address'],
-            'gender' => $_POST['gender']	
-        	);
+        // 
+        		
 
         // Creates a new tuple in the table User with the info entered
+        // $sql = "INSERT INTO User
+        //         SET
+
+        //             password = :password,
+        //             firstName = :firstName,
+        //             lastName = :lastName,
+        //             email = :email,
+        //             phone = :phone,
+        //             birth = :date,
+        //             address = :address,
+        //             gender = :gender;";
+
+		$psw= md5 ( $_POST['pass'] );
+        
         $sql = "INSERT INTO User
                 SET
 
-                    password = :password,
-                    firstName = :firstName,
-                    lastName = :lastName,
-                    email = :email,
-                    phone = :phone,
-                    birth = :date,
-                    address = :address,
-                    gender = :gender;";
+                    password = '{$psw}',
+                    firstName = '{$_POST['firstName']}',
+                    lastName = '{$_POST['lastName']}',
+                    email = '{$_POST['mail']}',
+                    phone = '{$_POST['phone']}',
+                    birth = '{$_POST['date']}',
+                    address =  '{$_POST['address']}',
+                    gender = '{$_POST['gender']}'
+        ";
+
 
         $stmt = $db->prepare($sql);
         // $stmt->bindValue(':vName', , PDO::PARAM_STR);
         $stmt->execute($data);
        	$loggedin = true;
         $id = $db->lastInsertId();
+        setcookie('loggedin', $id, time() + (86400 * 7)); // 86400 = 1 day
+	    header('Location: addcar.php');
+	    return;
 
         
     }
@@ -276,7 +286,7 @@ if($loggedin) {
 							  <div class="control-group">
 							    <label class="control-label" for="mail">Email</label>
 							    <div class="controls">
-							      <input id="email" name="mail" type="mail" placeholder="example@email.com" required="required">
+							      <input id="mail" name="mail" type="mail" placeholder="example@email.com" required="required">
 							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
 							    </div>
 							  </div>

@@ -14,58 +14,87 @@ body{
 
 }
 
+
 #topnav
 {
-	z-index:999;width:100%;
-	background:#232323 url(/img/linenbg.jpg);
-	-moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
-	-o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
-	box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5)
+  z-index:999;width:100%;
+  background:#232323 url(/img/linenbg.jpg);
+  -moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+  -o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+  box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+  height: 85px;
 }
-	
+  
 
 
 #topnav h1
 {
-	
-	
-	color: #ffffff; /* Old browsers */
-	color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-	color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-	color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-	color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
-	color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-	color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-	
+  
+  
+  color: #ffffff; /* Old browsers */
+  color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+  color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+  color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+  color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
+  color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+  color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  
 
 }
 #topnav h3
 {
-	
-	margin-top: 25px;
-	text-align: right;
-	color: #ffffff; /* Old browsers */
-	color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
-	color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-	color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-	color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
-	color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
-	color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-	
-
+  
+  //margin-top: 25px;
+  text-align: right;
+  color: #ffffff; /* Old browsers */
+  color: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+  color: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+  color: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+  color: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* Opera 12+ */
+  color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+  color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  //font-size: 1.35em;
+  //margin-top: 1%;
+  margin-top:-60px; 
+  margin-right:50px;
 }
 
 #topnav #buttonnav-col
 {
-	background:url(/img/linenbg.jpg)
+  background:url(/img/linenbg.jpg)
 }
 
 #topnav #buttonnav
 {
-	width:285px;margin:0 auto
+  width:285px;margin:0 auto
+}
+
+#cslogo{
+  
+  padding: 11px;
+margin-left: 30px;
+}
+
+
+#topnav #buttonnav
+{
+  width:285px;margin:0 auto
+}
+
+
+
+.user{
+  width:110px;
+
+
+}
+
+.welcome{
+  margin-top: -65px;
+  margin-right: 25px;
 }
 
 .shadowbox{
@@ -157,6 +186,7 @@ padding: 7px 9px;
 }
 .btn-large{
 	width:50%;
+  margin-left: 25%;
 }
 
 #myModalLabel{
@@ -197,6 +227,16 @@ height: auto;
 padding: 10px;
 padding-bottom: 1px;
 padding-top: 12px;
+width: 60%;
 }
 
-
+label{
+  text-align: left !important;
+  width: auto !important;
+}
+.controls{
+  margin-left: 0px !important;
+}
+.control-group{
+  margin-bottom: 0px !important;
+}

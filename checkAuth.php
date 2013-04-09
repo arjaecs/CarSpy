@@ -5,4 +5,10 @@ if(isset($_COOKIE['loggedin'])){
 	$id = $_COOKIE['loggedin'];
 }
 
+if(isset($_COOKIE['carID'])){
+	$hasCar = true;
+
+	$car = $_COOKIE['carID'];
+}
+
 ?>
