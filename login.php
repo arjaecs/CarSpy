@@ -84,87 +84,85 @@ if ( count($_POST) > 0) {
         $stmt->execute($data);
         $result = $stmt->fetchAll();
 
-
+        $nope = false;
+        $reset = "";
         // If a matching user was found set loggedin to true, and get the user's ID
-        // if(count($result) > 0) {
-        //     $loggedin = true;
-        //     $id = $result[0]['userID'];
-        // }
-
-        //var_dump($result[0]['password']);
-        //var_dump(md5($_POST['password']));
-
-        
 
         if ($result[0]['password'] == md5($_POST['password'])) //Remember to encrypt our value
 			{
-				//var_dump($loggedin);
+				
 			//Login success - set session cookie
 			$loggedin = true;	
 			$id = $result[0]['userID'];
-			//$_SESSION['userID']=$result[0]['userID'];
-			//$_SESSION['password']=$cookie_value;
-			//header ("Location: home.php"); //Redirect the user to a logged in page
-			//exit; //Do not display any more script for this page
-			//return;
+
+			setcookie('loggedin', $id, time() + (86400 * 7)); // 86400 = 1 day
+		    header('Location: home.php');
+		    return;
+			
 			}
 		else{
-			echo "try again!";
+			//echo "<p>User/Password Combination Incorrect</p>";
+			$nope = true;
+			$reset = 'Email/Password Combination Incorrect';
 		}
 
 	}
 	else{
 
 		$db = db::getInstance();
+
+		//$email = $_POST['mail'];
+		//var_dump($email);
+
 		$sql = "SELECT
 			userID,
 			password,
 			email
 		FROM User
-		WHERE email = :email;";
+		WHERE email = :mail;";
         
-        $data = array('email' => $_POST['email']);
-
+		$notfound = false;
+        $data = array('mail' => $_POST['mail']);
         $stmt = $db->prepare($sql);
         $stmt->execute($data);
-
 		$result = $stmt->fetchAll();
-		
 		$profile = $result[0];
-		//var_dump($profile);
-		//$email = $profile["email"];
-		//$mail = mysql_real_escape_string(stripslashes($profile['email']));
+		
 		$pass = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+		$mdpass = md5($pass);
 
 		if(!isset($profile)){
 
+			//Email sent to recover password is not found within the databases
+			$notfound = true;
 			$reset = 'Email not found';
 
 		}
 		else{
 		
-		$passsql = "UPDATE User
-		            SET
-		                password = '{$pass}'
-		            WHERE email = '{$_POST['email']}';
-		    ";
+			$passsql = "UPDATE User
+			            SET
+			                password = '{$mdpass}'
+			            WHERE email = '{$_POST['mail']}';";
 
-	    $stmt = $db->prepare($passsql);
-	    $stmt->execute();	
-		//define the receiver of the email
-		$to =  $mail;
-		//define the subject of the email
-		$subject = 'Password Recovery'; 
-		//define the message to be sent. Each line should be separated with \n
-		$message = "Your new temporary Password is: ".$pass.". Please change as soon as possible."; 
-		//define the headers we want passed. Note that they are separated with \r\n
-		$headers = "From: alvaro.calderon@upr.edu\r\nReply-To: alvaro.calderon@upr.edu";
-		//send the email
-		$mail_sent = mail( $to, $subject, $message, $headers );
-		//if the message is sent successfully print "Mail sent". Otherwise print "Mail failed" 
-		//echo $mail_sent ? "Mail sent" : "Mail failed";
+		    $stmt = $db->prepare($passsql);
+		    $stmt->execute();	
+			//define the receiver of the email
+			$to =  $data['mail'];
+			//define the subject of the email
+			$subject = 'Password Recovery'; 
+			//define the message to be sent. Each line should be separated with \n
+			$message = "Your temporary Password is: ".$pass.". Please change as soon as possible."; 
+			//define the headers we want passed. Note that they are separated with \r\n
+			$headers = "From: alvaro@carspy.com\r\nReply-To: alvaro.calderon@upr.edu";
+			
+			//send the email
+			$mail_sent = mail( $to, $subject, $message, $headers );
+			
 
+			$email_sent = false;
 			if(isset($mail_sent)){
+				$email_sent = true;
 				$reset = 'Your email was sent successfully!';
 			}
 			else{
@@ -172,14 +170,13 @@ if ( count($_POST) > 0) {
 			}
 		}
 
-	echo $reset;
+	//echo $reset;
 
 	}
 
 }
-//var_dump($_SESSION);
 
-// Set a cookie for maintaining the session with the user. Expires in a day.
+//Set a cookie for maintaining the session with the user. Expires in a day.
 if($loggedin) { 
 	//global $id;
     setcookie('loggedin', $id, time() + (86400 * 7)); // 86400 = 1 day
@@ -227,7 +224,18 @@ if($loggedin) {
 			        <input id="email" class="input-block-level" name="email" type="email" placeholder="Email" required="required">
 			        <!--<input type="password" class="input-block-level" placeholder="Password" required="required">-->
 			        <input type="password" class="input-block-level" id="password" name="password" placeholder="Password" required="required">
-			        
+			        <?php if($nope){
+						echo "<p id='response'>".$reset."</p>";
+						}elseif ($notfound) {
+							echo "<p id='response'>".$reset."</p>";
+						}
+						elseif ($email_sent) {
+							echo "<p id='response' style='color:green'>".$reset."</p>";
+						}
+							else{
+								echo "<p id='response'>".$reset."</p>";
+							}
+						?>
 			        <div class="btn-group" >
 				        
 			        	<!-- Button to trigger modal -->
@@ -238,6 +246,7 @@ if($loggedin) {
 					
 					<div id="forgot"><a href="#reset" data-toggle="modal" data-target="#reset">Forgot Password?</a></div>
 					<!-- Modal -->
+					
 					
 	            </form>
 
@@ -265,16 +274,16 @@ if($loggedin) {
 							    </div>
 							  </div>	
 							  <div class="control-group">
-							    <label class="control-label" for="email">Email</label>
+							    <label class="control-label" for="mail">Email</label>
 							    <div class="controls">
-							      <input id="email" name="email" type="email" placeholder="example@email.com" required="required">
+							      <input id="email" name="mail" type="mail" placeholder="example@email.com" required="required">
 							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
 							    </div>
 							  </div>
 							  <div class="control-group">
 							    <label class="control-label" for="password">Password</label>
 							    <div class="controls">
-							      <input type="password" id="password" name="password" placeholder="Password" required="required">
+							      <input type="password"  name="pass" placeholder="Password" required="required">
 							    </div>
 							  </div>
 							  <div class="control-group">
@@ -316,23 +325,22 @@ if($loggedin) {
 					<div id="reset" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="resetPassword" aria-hidden="true">
 						 <div class="modal-header">
 						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						    <h3 id="resetPassword">Reset Password</h3>
+						    <h3 id="resetPassword" style="text-align:center;">Reset Password</h3>
 						  </div>
 
 						  <div class="modal-body">
 						    
-						    <div class="control-group">
-							    <h4>Enter your email to reset password</h4>
-							  </div>
-							  <div class="control-group">
+						    
+							  
 							    
-							    <div class="controls">
-							      <input id="email" name="email" type="email" placeholder="example@email.com" required="required">
+							    
+							    
+							      <input name="mail" type="mail" class="input-block-level" placeholder="example@email.com" required="required">
 							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
-							    </div>
+							   
 								
 							  
-						  </div>
+						  
 						  <div class="modal-footer">
 						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 						    <button type='submit' name="submit" value="Reset" class="btn btn-warning btn-primary">Send Email</button>

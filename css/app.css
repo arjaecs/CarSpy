@@ -4694,7 +4694,10 @@ kbd {
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6, .panel p {
   color: #333333;
 }
-
+/* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
+.panel > :first-child {
+  margin-top: 0;
+}
 /* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
 .panel > :last-child {
   margin-bottom: 0;
@@ -5452,7 +5455,7 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 9, ../scss/app.scss */
+/* line 27, ../scss/app.scss */
 body {
   background: #ffa84c;
   /* Old browsers */
@@ -5472,12 +5475,12 @@ body {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 21, ../scss/app.scss */
+/* line 39, ../scss/app.scss */
 span {
   display: inline;
 }
 
-/* line 26, ../scss/app.scss */
+/* line 44, ../scss/app.scss */
 #topnav {
   z-index: 999;
   width: 100%;
@@ -5489,7 +5492,7 @@ span {
   height: 85px;
 }
 
-/* line 39, ../scss/app.scss */
+/* line 57, ../scss/app.scss */
 #topnav h1 {
   color: #ffffff;
   /* Old browsers */
@@ -5509,7 +5512,7 @@ span {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 54, ../scss/app.scss */
+/* line 72, ../scss/app.scss */
 #topnav h3 {
   text-align: right;
   color: #ffffff;
@@ -5528,20 +5531,22 @@ span {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
   /* IE6-9 fallback on horizontal gradient */
+  margin-top: -60px;
+  margin-right: 50px;
 }
 
-/* line 71, ../scss/app.scss */
+/* line 91, ../scss/app.scss */
 #topnav #buttonnav-col {
   background: url(/img/linenbg.jpg);
 }
 
-/* line 76, ../scss/app.scss */
+/* line 96, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 80, ../scss/app.scss */
+/* line 100, ../scss/app.scss */
 .container {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
@@ -5550,12 +5555,12 @@ span {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* line 90, ../scss/app.scss */
+/* line 110, ../scss/app.scss */
 .mapcase {
   padding: 5px;
 }
 
-/* line 97, ../scss/app.scss */
+/* line 117, ../scss/app.scss */
 #map_canvas {
   height: 290px;
   position: relative;
@@ -5564,7 +5569,7 @@ span {
   -webkit-transform: translateZ(0);
 }
 
-/* line 109, ../scss/app.scss */
+/* line 129, ../scss/app.scss */
 .roundabout-holder {
   list-style: none;
   padding: 0;
@@ -5573,7 +5578,7 @@ span {
   width: 1000px;
 }
 
-/* line 116, ../scss/app.scss */
+/* line 136, ../scss/app.scss */
 .roundabout-moveable-item {
   height: 240px;
   width: 320px;
@@ -5582,12 +5587,12 @@ span {
   border: 1px solid #999999;
 }
 
-/* line 123, ../scss/app.scss */
+/* line 143, ../scss/app.scss */
 .roundabout-in-focus {
   cursor: auto;
 }
 
-/* line 127, ../scss/app.scss */
+/* line 147, ../scss/app.scss */
 .ribbon-before {
   position: absolute;
   left: 1px;
@@ -5597,7 +5602,7 @@ span {
   margin-top: -31px;
 }
 
-/* line 136, ../scss/app.scss */
+/* line 156, ../scss/app.scss */
 .ribbon-after {
   position: absolute;
   left: 1px;
@@ -5609,7 +5614,7 @@ span {
   background: url(/img/ribbon-after.png);
 }
 
-/* line 150, ../scss/app.scss */
+/* line 170, ../scss/app.scss */
 .panel {
   -webkit-box-shadow: 0px 0px 5px #333333;
   -moz-box-shadow: 0px 0px 5px #333333;
@@ -5618,7 +5623,7 @@ span {
   margin-bottom: 0px;
 }
 
-/* line 158, ../scss/app.scss */
+/* line 178, ../scss/app.scss */
 .firstpanel {
   border-style: solid;
   border-width: 1px;
@@ -5651,7 +5656,7 @@ span {
   line-height: 1.4;
 }
 
-/* line 164, ../scss/app.scss */
+/* line 184, ../scss/app.scss */
 .infopanel {
   border-style: solid;
   border-width: 1px;
@@ -5683,20 +5688,21 @@ span {
   line-height: 1.4;
 }
 
-/* line 169, ../scss/app.scss */
+/* line 189, ../scss/app.scss */
 #cslogo {
   padding: 11px;
   margin-left: 30px;
 }
 
-/* line 175, ../scss/app.scss */
+/* line 195, ../scss/app.scss */
 select {
   background-color: #2f2f2f;
   height: 30px;
   color: white;
+  margin-bottom: 10px;
 }
 
-/* line 186, ../scss/app.scss */
+/* line 207, ../scss/app.scss */
 .spacer {
   width: 1020px !important;
   margin-top: -5px;
@@ -5704,79 +5710,69 @@ select {
   margin-right: -10px;
 }
 
-/* line 194, ../scss/app.scss */
+/* line 215, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 200, ../scss/app.scss */
+/* line 221, ../scss/app.scss */
 .user {
   width: 110px;
 }
 
-/* line 206, ../scss/app.scss */
+/* line 227, ../scss/app.scss */
 .panel > :first-child {
-  margin-top: -31px;
+  margin-top: -31px !important;
 }
 
-/* line 210, ../scss/app.scss */
+/* line 231, ../scss/app.scss */
 .welcome {
   margin-top: -65px;
   margin-right: 25px;
 }
 
-/* line 214, ../scss/app.scss */
+/* line 235, ../scss/app.scss */
 #pics {
   display: inline-block;
+  background-color: #A5BFDD;
+  margin-top: 25px;
+  margin-left: 12px;
 }
 
-/* line 217, ../scss/app.scss */
+/* line 247, ../scss/app.scss */
 #pics li {
   display: inline;
+  margin-left: 5px;
 }
 
-/* line 221, ../scss/app.scss */
+/* line 253, ../scss/app.scss */
 .selects {
-  padding-left: 0px !important;
-  padding-top: 0px;
-  margin-left: 4px;
+  background-color: #2f2f2f;
   margin-top: 4px;
+  margin-left: 4px;
+  height: 290px;
+  padding-right: 2%;
+  border-right-color: gray;
+  border-right-style: solid;
   float: left;
-  width: 25%;
-  height: 295px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #161616;
-  margin-bottom: 1.25em;
-  padding: 20px;
-  background: #2f2f2f;
-}
-/* line 44, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.selects h1, .selects h2, .selects h3, .selects h4, .selects h5, .selects h6, .selects p {
-  color: white;
-}
-/* line 47, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.selects > :first-child {
-  margin-top: 0;
-}
-/* line 48, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.selects > :last-child {
-  margin-bottom: 0;
-}
-/* line 51, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.selects h1, .selects h2, .selects h3, .selects h4, .selects h5, .selects h6 {
-  line-height: 1;
-  margin-bottom: 0.625em;
-}
-/* line 53, ../../../../Library/Ruby/Gems/1.8/gems/zurb-foundation-4.0.5/scss/foundation/components/_panels.scss */
-.selects h1.subheader, .selects h2.subheader, .selects h3.subheader, .selects h4.subheader, .selects h5.subheader, .selects h6.subheader {
-  line-height: 1.4;
+  padding-left: 2%;
+  padding-top: 3%;
 }
 
-/* line 232, ../scss/app.scss */
+/* line 267, ../scss/app.scss */
 .theMap {
-  float: right;
-  padding: 4px 4px 4px 0px;
-  position: relative;
+  width: 74% !important;
+  margin: 4px 0px 0px 0px;
+  padding: 0px !important;
+}
+
+/* line 274, ../scss/app.scss */
+.dynamo {
+  margin-bottom: -8px;
+}
+
+/* line 277, ../scss/app.scss */
+h5 {
+  color: lightgray;
 }

@@ -5534,11 +5534,13 @@ body {
   max-width: 320px;
   margin: auto;
   margin-top: 10%;
-  height: 333px;
+  height: auto;
   padding: 10px;
+  padding-bottom: 1px;
+  padding-top: 12px;
 }
 
-/* line 85, ../scss/login.scss */
+/* line 87, ../scss/login.scss */
 .loginBox {
   max-width: 25em;
   display: -webkit-box;
@@ -5561,12 +5563,12 @@ body {
   margin: auto;
 }
 
-/* line 109, ../scss/login.scss */
+/* line 111, ../scss/login.scss */
 .loginBox .container, .loginBox .sidebar {
   padding: 20px;
 }
 
-/* line 112, ../scss/login.scss */
+/* line 114, ../scss/login.scss */
 .loginBox .content {
   -webkit-box-flex: 4;
   -moz-box-flex: 4;
@@ -5575,7 +5577,7 @@ body {
   background-color: #c5c1b4;
 }
 
-/* line 119, ../scss/login.scss */
+/* line 121, ../scss/login.scss */
 .loginBox .sidebar {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
@@ -5585,11 +5587,11 @@ body {
   margin-right: 1px;
 }
 
-/* line 128, ../scss/login.scss */
+/* line 130, ../scss/login.scss */
 .form-signin {
   max-width: 300px;
-  padding: 19px 29px 29px;
-  margin: 0 auto 20px;
+  padding: 19px 29px 0px;
+  margin: 0 auto -5px;
   background-color: #fff;
   border: 1px solid #e5e5e5;
   -webkit-border-radius: 5px;
@@ -5600,13 +5602,13 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* line 142, ../scss/login.scss */
+/* line 144, ../scss/login.scss */
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;
 }
 
-/* line 146, ../scss/login.scss */
+/* line 148, ../scss/login.scss */
 .form-signin input[type="text"],
 .form-signin input[type="password"] {
   font-size: 16px;
@@ -5615,28 +5617,42 @@ body {
   padding: 7px 9px;
 }
 
-/* line 153, ../scss/login.scss */
+/* line 155, ../scss/login.scss */
 .btn-group {
   width: 100%;
 }
 
-/* line 156, ../scss/login.scss */
+/* line 158, ../scss/login.scss */
 .btn-large {
   width: 50%;
 }
 
-/* line 160, ../scss/login.scss */
+/* line 162, ../scss/login.scss */
 #myModalLabel {
   text-align: center;
 }
 
-/* line 164, ../scss/login.scss */
+/* line 166, ../scss/login.scss */
 #forgot {
   margin-top: 15px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
-/* line 169, ../scss/login.scss */
+/* line 172, ../scss/login.scss */
 #forgot a {
   color: #2f2f2f;
+}
+
+/* line 176, ../scss/login.scss */
+#response {
+  font-size: 11px;
+  text-align: center;
+  font-style: italic;
+  color: red;
+}
+
+/* line 183, ../scss/login.scss */
+.large-3 {
+  padding-bottom: 1px;
 }

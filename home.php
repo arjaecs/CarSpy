@@ -141,12 +141,12 @@ if(!isset($user)){
 		 <div id="cslogo">
 		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
 		 </div>
-		 <div class="small-6 columns welcome">
+		 <div class="small-6 columns">
 			<span>
 				<h3 >Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				
 			</span>
-			<span style="float: right; margin-top: -20px;">
+			<span style="float: right; margin-top: -20px; margin-right: 50px;">
 				
 			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
                                 <input type="hidden" value="logout" name="loggedOut" />
@@ -160,10 +160,10 @@ if(!isset($user)){
 
 	</div>
 	
-	<div class="row container">
-		<div class="large-3 columns" >
+	<div class="row container dynamo">
+		<div class="large-3 selects" >
 
-			<div style="text-align:center; margin-left: 10%; margin-top:15%;">
+			<div style="text-align:center;">
 					<h5>Choose a Car:</h5> 
 					<select id="car" name='car' class="form-select">
 					 	<?php
@@ -190,8 +190,8 @@ if(!isset($user)){
 					</select>			
 			</div>
 		</div>
-		<div class="large-9 columns">
-			<div style="height:300px; padding:5px; ">
+		<div class="large-9 theMap columns">
+			<div style="height:300px;  ">
 				<div id="map_canvas"></div>
 			</div>
 		</div>
@@ -210,7 +210,7 @@ if(!isset($user)){
 		
  		<div class="large-12">
 
- 			<ul id="pics" style="padding-left: 1.5%; padding-top: 1.5%;">
+ 			<ul id="pics">
 
 			</ul>
 
@@ -240,60 +240,36 @@ if(!isset($user)){
 			</div> 
 		</div>
 	</div> -->
-<script type="text/javascript">// Google Maps code
-	var directionsDisplay;
-	var directionsService = new google.maps.DirectionsService();
-	var map;
-	function initializeMaps(latitude, longitude) {
-		directionsDisplay = new google.maps.DirectionsRenderer();
-		var options = {
-			zoom: 10,
-			center: new google.maps.LatLng(18.2014,-67.1452),
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			mapTypeControl: true,
-			mapTypeControlOptions: {
-				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-				position: google.maps.ControlPosition.TOP_RIGHT,
-				mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-				google.maps.MapTypeId.TERRAIN,
-				google.maps.MapTypeId.HYBRID,
-				google.maps.MapTypeId.SATELLITE]
-			},
-			navigationControl: true,
-			navigationControlOptions: {
-				style: google.maps.NavigationControlStyle.ZOOM_PAN
-			},
-			scaleControl: true,
-			disableDoubleClickZoom: true,
-			draggable: true,
-			streetViewControl: true,
-			draggableCursor: 'move'
-		};
-		map = new google.maps.Map(document.getElementById("map_canvas"), options);
-		directionsDisplay.setMap(map);
-		calcRoute(latitude, longitude);
-	}
-
-	function calcRoute(latitude, longitude) {
-		var start = new google.maps.LatLng(18.2014,-67.1452);
-		//end route on Car location
-		var end = new google.maps.LatLng(latitude, longitude);
-		var request = {
-			origin:start,
-			destination:end,
-			travelMode: google.maps.TravelMode.DRIVING
-		};
-		directionsService.route(request, function(result, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				directionsDisplay.setDirections(result);
-			}
-		});
-	}
 
 
-	
+<script>
+function initializeMaps(position) {
+  
+  var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  var options = {
+    zoom: 15,
+    center: coords,
+    mapTypeControl: false,
+    navigationControlOptions: {
+    	style: google.maps.NavigationControlStyle.SMALL
+    },
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  var map = new google.maps.Map(document.getElementById("map_canvas"), options);
+  var marker = new google.maps.Marker({
+      position: coords,
+      map: map,
+      title:"You are here!"
+  });
+}
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(initializeMaps);
+} else {
+  error('Geo Location is not supported');
+}
 </script>
-<script type="text/javascript">
+
+<script>
 	var getTimes = function(date, success) {
 		$.ajax({
 			type: 'GET',
@@ -314,7 +290,7 @@ if(!isset($user)){
 		$('#pics').empty();
 		$.each(data, function(index, value){
 			console.log("Session ID ="+value);
-			$('#times').append('<option data-lat="'+ value.location.latitude +'" data-long="'+ value.location.longitude +'" data-session="'+ value.sessionID +'">' + value.time +'</option>');
+			$('#times').append('<option data-latitude="'+ value.location.latitude +'" data-longitude="'+ value.location.longitude +'" data-session="'+ value.sessionID +'">' + value.time +'</option>');
 			
 			 $('#pics').append('<li><img src="' + value.path1 +'"></li>');
 
@@ -343,7 +319,8 @@ if(!isset($user)){
 	};
 	
 	var updateMap = function($el) {
-		initializeMaps($el.data().lat, $el.data().long);
+		//initializeMaps($el.data().lat, $el.data().long);
+		initializeMaps($el.data());
 		//updatePics($el.data().session);
 	};
 

@@ -78,8 +78,10 @@ background-color: rgba(0, 0, 0, 0.3);
 max-width: 320px;
 margin:auto;
 margin-top: 10%;
-height: 333px;
+height: auto;
 padding: 10px;
+padding-bottom: 1px;
+padding-top: 12px;
 }
 
 .loginBox{
@@ -127,8 +129,8 @@ padding: 10px;
 
 .form-signin {
         max-width: 300px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
+        padding: 19px 29px 0px;
+        margin: 0 auto -5px;
         background-color: #fff;
         border: 1px solid #e5e5e5;
         -webkit-border-radius: 5px;
@@ -163,11 +165,23 @@ padding: 7px 9px;
 
 #forgot{
   margin-top: 15px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
 #forgot a{
   color: #2f2f2f;
+}
+
+#response{
+  font-size: 11px;
+text-align: center;
+font-style: italic;
+color: red;
+}
+
+.large-3{
+  padding-bottom: 1px;
 }
 
 
