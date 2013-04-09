@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imgButtonDouble"
         android:layout_width="180dp"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:layout_alignLeft="@+id/btnEditInfo"
         android:layout_alignRight="@+id/btnEditInfo"
         android:layout_alignTop="@+id/btnEditInfo"
@@ -57,7 +57,7 @@
     <ImageView
         android:id="@+id/imgButtonVehicleInfo"
         android:layout_width="180dp"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:layout_alignLeft="@+id/btnUserInfo"
         android:layout_alignRight="@+id/btnVehicleInfo"
         android:layout_alignTop="@+id/btnVehicleInfo"
@@ -68,7 +68,7 @@
     <ImageView
         android:id="@+id/imgButtonUserInfo"
         android:layout_width="180dp"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:layout_alignLeft="@+id/btnUserInfo"
         android:layout_alignRight="@+id/btnVehicleInfo"
         android:layout_alignTop="@+id/btnVehicleInfo"
@@ -99,7 +99,7 @@
     <Button
         android:id="@+id/btnVehicleInfo"
         android:layout_width="130dp"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:layout_alignBaseline="@+id/btnUserInfo"
         android:layout_alignBottom="@+id/btnUserInfo"
         android:layout_alignRight="@+id/spnOptions"
@@ -112,7 +112,7 @@
     <Button
         android:id="@+id/btnUserInfo"
         android:layout_width="130dp"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:layout_alignLeft="@+id/imgCarSpy"
         android:layout_below="@+id/imgTopBorder"
         android:layout_marginTop="30dp"
@@ -133,7 +133,7 @@
     <Button
         android:id="@+id/btnEditInfo"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="32dp"
         android:layout_alignLeft="@+id/imgTextBg"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/imgTextBg"
@@ -141,19 +141,6 @@
         android:background="@drawable/button"
         android:scaleType="fitXY"
         android:text="Edit Info" />
-    
-    <Button
-        android:id="@+id/btnAddNewVehicle"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_alignLeft="@+id/imgTextBg"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/imgTextBg"
-        android:layout_marginBottom="37dp"
-        android:background="@drawable/button"
-        android:scaleType="fitXY"
-        android:text="Add New Vehicle"
-        android:visibility="invisible" />
 
     <TableLayout
         android:id="@+id/tblUserText"
@@ -161,7 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imgTextBg"
         android:layout_alignLeft="@+id/imgTextBg"
-        android:layout_alignRight="@+id/tblVehicleText"
+        android:layout_alignRight="@+id/btnCancel"
         android:layout_alignTop="@+id/imgTextBg" >
 
         <TableRow
@@ -296,246 +283,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="Password:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-    </TableLayout>
-
-    <TableLayout
-        android:id="@+id/tblVehicleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imgTextBg"
-        android:layout_alignLeft="@+id/imgTextBg"
-        android:layout_alignRight="@+id/btnCancel"
-        android:layout_alignTop="@+id/imgTextBg"
-        android:visibility="invisible" >
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Device ID:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Make:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Model:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Year:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Color:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="License Plate:"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-    </TableLayout>
-
-    <TableLayout
-        android:id="@+id/tblVehicleInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imgTextBg"
-        android:layout_alignRight="@+id/imgTextBg"
-        android:layout_alignTop="@+id/imgTextBg"
-        android:layout_toRightOf="@+id/tblUserText"
-        android:visibility="invisible" >
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp" >
-
-            <TextView
-                android:id="@+id/txtDeviceID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Device ID"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp" >
-
-            <TextView
-                android:id="@+id/txtMake"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Make"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/txtModel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Model"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/txtYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Year"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/txtColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="Color"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/txtLicensePlate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="License Plate"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#F0F0F0"
                 android:textSize="16sp"
@@ -860,152 +607,5 @@
                 android:textSize="12sp" />
         </TableRow>
     </TableLayout>
-
-    <TableLayout
-        android:id="@+id/tblVehicleTextBoxes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imgTextBg"
-        android:layout_alignRight="@+id/imgTextBg"
-        android:layout_alignTop="@+id/imgTextBg"
-        android:layout_toRightOf="@+id/tblUserText"
-        android:visibility="invisible" >
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp" >
-
-            <EditText
-                android:id="@+id/txbDeviceID"
-                android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:background="#F0F0F0"
-                android:editable="false"
-                android:ems="10"
-                android:gravity="center"
-                android:textColor="#ABABAB"
-                android:textSize="11sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="4dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp" >
-
-            <EditText
-                android:id="@+id/txbMake"
-                android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:background="#F0F0F0"
-                android:ems="10"
-                android:gravity="center"
-                android:textSize="11sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp" >
-
-            <EditText
-                android:id="@+id/txbModel"
-                android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:background="#F0F0F0"
-                android:ems="10"
-                android:gravity="center"
-                android:textSize="11sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="4dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp" >
-
-            <EditText
-                android:id="@+id/txbYear"
-                android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:background="#F0F0F0"
-                android:ems="10"
-                android:gravity="center"
-                android:textSize="11sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp" >
-
-            <EditText
-                android:id="@+id/txbColor"
-                android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:background="#F0F0F0"
-                android:ems="10"
-                android:gravity="center"
-                android:textSize="11sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingBottom="4dp"
-            android:paddingRight="5dp"
-            android:paddingTop="5dp" >
-
-            <EditText
-                android:id="@+id/txbLicensePlate"
-                android:layout_width="match_parent"
-                android:layout_height="20sp"
-                android:background="#F0F0F0"
-                android:ems="10"
-                android:gravity="center"
-                android:textSize="11sp" />
-        </TableRow>
-    </TableLayout>
-
-    <ImageButton
-        android:id="@+id/btnRightArrow"
-        android:layout_width="20dp"
-        android:layout_height="35dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/transparent"
-        android:padding="2dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/arrow_right"
-        android:visibility="invisible"
-        tools:ignore="ContentDescription" />
-
-    <ImageButton
-        android:id="@+id/btnLeftArrow"
-        android:layout_width="20dp"
-        android:layout_height="35dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/transparent"
-        android:padding="2dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/arrow_left"
-        android:visibility="invisible"
-        tools:ignore="ContentDescription" />
 
 </RelativeLayout>

@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:fontFamily="Calibri"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -15,10 +17,37 @@
         android:id="@+id/imgTextBg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:src="@drawable/text_bg" />
+
+    <TextView
+        android:id="@+id/txtIntro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imgVigilantech"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:fontFamily="Calibri"
+        android:gravity="center"
+        android:text="powered by:"
+        android:textColor="#F0F0F0"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText,SmallSp" />
+
+    <ImageView
+        android:id="@+id/imgVigilantech"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dp"
+        android:src="@drawable/vigilantech"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/imgCarSpy"
@@ -26,7 +55,7 @@
         android:layout_height="132dp"
         android:layout_above="@+id/btnLostPassword"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="243dp"
+        android:layout_marginBottom="182dp"
         android:src="@drawable/carspygray"
         tools:ignore="ContentDescription" />
 
@@ -36,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnLostPassword"
         android:layout_alignLeft="@+id/imgTextBg"
-        android:layout_marginBottom="147dp" >
+        android:layout_marginBottom="100dp" >
 
         <TableRow
             android:layout_width="wrap_content"
@@ -79,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnLostPassword"
         android:layout_alignRight="@+id/imgTextBg"
-        android:layout_marginBottom="147dp"
+        android:layout_marginBottom="100dp"
         android:layout_toRightOf="@+id/tblText" >
 
         <TableRow
@@ -126,7 +155,7 @@
         android:layout_alignBottom="@+id/imgTextBg"
         android:layout_alignLeft="@+id/imgTextBg"
         android:layout_alignRight="@+id/imgTextBg"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="110dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:fontFamily="Calibri"
@@ -143,7 +172,7 @@
         android:layout_above="@+id/btnLostPassword"
         android:layout_alignLeft="@+id/imgCarSpy"
         android:layout_alignRight="@+id/imgCarSpy"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/button"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -154,7 +183,7 @@
     <Button
         android:id="@+id/btnNotRegistered"
         android:layout_width="wrap_content"
-        android:layout_height="43dp"
+        android:layout_height="32dp"
         android:layout_above="@+id/btnLostPassword"
         android:layout_alignLeft="@+id/imgTextBg"
         android:layout_alignRight="@+id/imgTextBg"

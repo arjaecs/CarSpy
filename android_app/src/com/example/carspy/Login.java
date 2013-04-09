@@ -1,27 +1,38 @@
 package com.example.carspy;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import static com.example.carspy.Constants.*;
 
 public class Login extends Activity implements OnClickListener {
-	Button btnLogin;
-	Button btnNotRegistered;
-	Button btnLostPassword;
-	EditText txbEmail;
-	EditText txbPassword;
+	private Button btnLogin;
+	private Button btnNotRegistered;
+	private Button btnLostPassword;
+	private EditText txbEmail;
+	private EditText txbPassword;
+	private ProgressDialog pDialog;
+	private JSONParser jsonParser;
+
+	private String email;
+	private String password;
+	private String newPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,63 +53,276 @@ public class Login extends Activity implements OnClickListener {
 
 		btnLostPassword = (Button) findViewById(R.id.btnLostPassword);
 		btnLostPassword.setOnClickListener(this);
+		
+		jsonParser = new JSONParser();
+	}
+
+
+	class VerifyUserCredentials extends AsyncTask<String, String, JSONObject> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = new ProgressDialog(Login.this); 
+			pDialog.setCanceledOnTouchOutside(false);
+			pDialog.setMessage("Verifying user credentials.");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		protected JSONObject doInBackground(String... params) {
+			int success;
+			JSONObject userJObj = new JSONObject();
+
+			try {
+				List<NameValuePair> tempParam= new ArrayList<NameValuePair>();
+				tempParam.add(new BasicNameValuePair(EMAIL, email));
+				JSONObject json = jsonParser.makeHttpRequest(GET_USER_CREDENTIALS, "GET", tempParam);
+
+				success = json.getInt(TAG_SUCCESS);
+				if (success == 1) {
+					// successfully received product details
+					JSONArray userJObjArray = json.getJSONArray(TAG_USER); // JSON Array
+
+					// get first product object from JSON Array
+					userJObj = userJObjArray.getJSONObject(0);
+				}
+				else {
+					// User with that email not found.
+					return userJObj;
+				}
+			} 
+			catch (JSONException e) {
+				e.printStackTrace();
+				Log.d(getClass().getName(), e.getMessage());
+				return userJObj;
+			}
+
+			return userJObj;
+		}
+
+		protected void onPostExecute(JSONObject jObj) {
+			pDialog.dismiss();
+
+			try {
+				String dbEmail = "";
+				String dbPassword = "";
+
+				if (jObj.has(EMAIL) && jObj.has(PASSWORD)) {
+					dbEmail = jObj.getString(EMAIL);
+					dbPassword = jObj.getString(PASSWORD);
+				}
+
+				password = Miscellaneous.getMD5(password);
+
+				if (dbEmail.isEmpty() || !password.equals(dbPassword))  {
+					txbPassword.setText("");
+
+					pDialog = new ProgressDialog(Login.this); 
+					pDialog.setCanceledOnTouchOutside(false);
+					pDialog.setMessage("Incorrect email or password.");
+					pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					pDialog.show();
+				}
+				else {
+					Intent mainActivity = new Intent(Login.this, Main.class);
+					startActivity(mainActivity);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	class LostPasswordConfirmation extends AsyncTask<String, String, JSONObject> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = new ProgressDialog(Login.this); 
+			pDialog.setCanceledOnTouchOutside(false);
+			pDialog.setMessage("Verifying user email.");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		protected JSONObject doInBackground(String... params) {
+			int success;
+			JSONObject userJObj = new JSONObject();
+
+			try {
+				List<NameValuePair> tempParam= new ArrayList<NameValuePair>();
+				tempParam.add(new BasicNameValuePair(EMAIL, email));
+				JSONObject json = jsonParser.makeHttpRequest(GET_USER_CREDENTIALS, "GET", tempParam);
+
+				success = json.getInt(TAG_SUCCESS);
+				if (success == 1) {
+					// successfully received product details
+					JSONArray userJObjArray = json.getJSONArray(TAG_USER); // JSON Array
+
+					// get first product object from JSON Array
+					userJObj = userJObjArray.getJSONObject(0);
+				}
+				else {
+					// User with that email not found.
+					return userJObj;
+				}
+			} 
+			catch (JSONException e) {
+				e.printStackTrace();
+				return userJObj;
+			}
+
+			return userJObj;
+		}
+
+		protected void onPostExecute(JSONObject jObj) {
+			pDialog.dismiss();
+
+			try {
+				String dbEmail = "";
+
+				if (jObj.has(EMAIL)) {
+					dbEmail = jObj.getString(EMAIL);
+				}
+
+				if (dbEmail.isEmpty())  {
+					txbPassword.setText("");
+
+					pDialog = new ProgressDialog(Login.this); 
+					pDialog.setCanceledOnTouchOutside(false);
+					pDialog.setMessage("Please provide a registered email to reset your password.");
+					pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					pDialog.show();
+				}
+				else {
+					pDialog = new ProgressDialog(Login.this); 
+					pDialog.setCanceledOnTouchOutside(false);
+					pDialog.setMessage("Do you want to reset your password?");
+					pDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							newPassword = Miscellaneous.generatePassword();
+							Log.d(getClass().getName(), newPassword);
+							//TODO: Send email with new password BEFORE saving in DB.
+							newPassword = Miscellaneous.getMD5(newPassword);
+							Log.d(getClass().getName(), newPassword);
+							new ResetPassword().execute();
+
+							dialog.dismiss();
+						}
+					});
+					pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "No", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+					pDialog.show();
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	class ResetPassword extends AsyncTask<String, String, String> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = new ProgressDialog(Login.this); 
+			pDialog.setCanceledOnTouchOutside(false);
+			pDialog.setMessage("Resetting password.");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		protected String doInBackground(String... params) {
+			int success;
+			String result = "0";
+
+			try {
+				List<NameValuePair> tempParam= new ArrayList<NameValuePair>();
+				tempParam.add(new BasicNameValuePair(EMAIL, email));
+				tempParam.add(new BasicNameValuePair(PASSWORD, newPassword));
+
+				JSONObject json = jsonParser.makeHttpRequest(UPDATE_PASSWORD, "POST", tempParam);
+
+				success = json.getInt(TAG_SUCCESS);
+				if (success == 1) {
+					result = "1";
+				}
+			} 
+			catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+		protected void onPostExecute(String result) {
+			pDialog.dismiss();
+
+			if (result.equals("1")) {
+				pDialog = new ProgressDialog(Login.this); 
+				pDialog.setCanceledOnTouchOutside(false);
+				pDialog.setMessage("An email has been sent with the resetted password.");
+				pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				pDialog.show();
+			}
+			else {
+				pDialog = new ProgressDialog(Login.this); 
+				pDialog.setCanceledOnTouchOutside(false);
+				pDialog.setMessage("Password could not be resetted. Please try again later.");
+				pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				pDialog.show();
+			}
+		}
 	}
 
 	public void onClick(View v) {
 		if (v.getId() == R.id.btnLogin) {
-			String username = Login.this.txbEmail.getText().toString();
-			String password = Login.this.txbPassword.getText().toString();
+			email = Login.this.txbEmail.getText().toString();
+			password = Login.this.txbPassword.getText().toString();
 
-			//TODO: Search username in DB, then search that username's password, return true if both are found.
-			//if (username.equals("santiago") && password.equals("temetito"))  {
-			Intent mainActivity = new Intent(Login.this, Main.class);
-			startActivity(mainActivity);
-			//}
-			//else {
-			//	Toast.makeText(this, "Incorrect Email Or Password.", Toast.LENGTH_LONG).show();
-			//}
+			new VerifyUserCredentials().execute();
 		}
+
 		else if (v.getId() == R.id.btnNotRegistered) {
 			Intent registerUserActivity = new Intent(Login.this, RegisterUser.class);
 			startActivity(registerUserActivity);
 		}
 		else if (v.getId() == R.id.btnLostPassword) {
-			//TODO: Verify email exist in DB.
-			if(true /*emailExists*/) {
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				
-				builder.setMessage("Did you forget your password?");
-				builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int which) {
-						//TODO: Reset password and email it to the given email.
-						ProgressDialog tempDialog = new ProgressDialog(Login.this);
-						tempDialog.setMessage("An email has been sent with the reseted password.");
-						tempDialog.setCancelable(true);
-						tempDialog.setIndeterminate(false);
-						tempDialog.show();
-
-						dialog.dismiss();
-					}
-
-				});
-
-				builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// Do nothing
-						dialog.dismiss();
-					}
-				});
-
-				AlertDialog alert = builder.create();
-				alert.show();
-			}
-			else {
-				Toast.makeText(this, "Please provide a registered email to reset your password.", Toast.LENGTH_LONG).show();
-			}
+			email = Login.this.txbEmail.getText().toString();
+			new LostPasswordConfirmation().execute();
 		}
 	}
 
