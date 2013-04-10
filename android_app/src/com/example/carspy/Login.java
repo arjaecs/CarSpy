@@ -33,6 +33,7 @@ public class Login extends Activity implements OnClickListener {
 	private String email;
 	private String password;
 	private String newPassword;
+	private String newEPassword;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -220,8 +221,8 @@ public class Login extends Activity implements OnClickListener {
 							newPassword = Miscellaneous.generatePassword();
 							Log.d(getClass().getName(), newPassword);
 							//TODO: Send email with new password BEFORE saving in DB.
-							newPassword = Miscellaneous.getMD5(newPassword);
-							Log.d(getClass().getName(), newPassword);
+							newEPassword = Miscellaneous.getMD5(newPassword);
+							Log.d(getClass().getName(), newEPassword);
 							new ResetPassword().execute();
 
 							dialog.dismiss();
@@ -241,18 +242,11 @@ public class Login extends Activity implements OnClickListener {
 		}
 	}
 
-	class ResetPassword extends AsyncTask<String, String, String> {
+	class SendEmail extends AsyncTask<String, String, String> {
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-
-			pDialog = new ProgressDialog(Login.this); 
-			pDialog.setCanceledOnTouchOutside(false);
-			pDialog.setMessage("Resetting password.");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
-			pDialog.show();
 		}
 
 		protected String doInBackground(String... params) {
@@ -264,7 +258,7 @@ public class Login extends Activity implements OnClickListener {
 				tempParam.add(new BasicNameValuePair(EMAIL, email));
 				tempParam.add(new BasicNameValuePair(PASSWORD, newPassword));
 
-				JSONObject json = jsonParser.makeHttpRequest(UPDATE_PASSWORD, "POST", tempParam);
+				JSONObject json = jsonParser.makeHttpRequest(SEND_EMAIL, "POST", tempParam);
 
 				success = json.getInt(TAG_SUCCESS);
 				if (success == 1) {
@@ -272,7 +266,7 @@ public class Login extends Activity implements OnClickListener {
 				}
 			} 
 			catch (JSONException e) {
-				e.printStackTrace();
+				Log.d(getClass().getName(), e.getMessage());
 			}
 
 			return result;
@@ -282,28 +276,58 @@ public class Login extends Activity implements OnClickListener {
 			pDialog.dismiss();
 
 			if (result.equals("1")) {
-				pDialog = new ProgressDialog(Login.this); 
-				pDialog.setCanceledOnTouchOutside(false);
-				pDialog.setMessage("An email has been sent with the resetted password.");
-				pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+				pDialog = Miscellaneous.OKProgressDialog(Login.this, "An email has been sent with the resetted password.");
 				pDialog.show();
 			}
 			else {
-				pDialog = new ProgressDialog(Login.this); 
-				pDialog.setCanceledOnTouchOutside(false);
-				pDialog.setMessage("Password could not be resetted. Please try again later.");
-				pDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+				pDialog = Miscellaneous.OKProgressDialog(Login.this, "Password could not be sent. Please try again later.");
 				pDialog.show();
+			}
+		}
+	}
+	
+	class ResetPassword extends AsyncTask<String, String, String> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = Miscellaneous.NormalProgressDialog(Login.this, "Sending email with temporary password.");
+			pDialog.show();
+		}
+
+		protected String doInBackground(String... params) {
+			int success;
+			String result = "0";
+
+			try {
+				List<NameValuePair> tempParam= new ArrayList<NameValuePair>();
+				tempParam.add(new BasicNameValuePair(EMAIL, email));
+				tempParam.add(new BasicNameValuePair(PASSWORD, newEPassword));
+
+				JSONObject json = jsonParser.makeHttpRequest(UPDATE_PASSWORD, "POST", tempParam);
+
+				success = json.getInt(TAG_SUCCESS);
+				if (success == 1) {
+					result = "1";
+				}
+			} 
+			catch (JSONException e) {
+				Log.d(getClass().getName(), e.getMessage());
+			}
+
+			return result;
+		}
+
+		protected void onPostExecute(String result) {
+			pDialog.dismiss();
+
+			if (result.equals("1")) {
+				Log.d(getClass().getName(), "Password resetted");
+				new SendEmail().execute();
+			}
+			else {
+				Log.d(getClass().getName(), "Password could not be resetted.");
 			}
 		}
 	}
@@ -321,7 +345,7 @@ public class Login extends Activity implements OnClickListener {
 			startActivity(registerUserActivity);
 		}
 		else if (v.getId() == R.id.btnLostPassword) {
-			email = Login.this.txbEmail.getText().toString();
+			email = "santiago.castrodad@upr.edu"; //Login.this.txbEmail.getText().toString();
 			new LostPasswordConfirmation().execute();
 		}
 	}

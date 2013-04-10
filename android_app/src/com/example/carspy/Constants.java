@@ -8,6 +8,7 @@ public final class Constants {
 	public static final String INSERT_USER = "http://136.145.116.58/android_connect/insert_user.php";
 	public static final String GET_USER_ID = "http://136.145.116.58/android_connect/get_user_id.php";
 	public static final String INSERT_VEHICLE = "http://136.145.116.58/android_connect/insert_vehicle.php";
+	public static final String SEND_EMAIL = "http://136.145.116.58/android_connect/send_email.php";
 	
 	//JSON Constants
 	public static final String TAG_SUCCESS = "success";
