@@ -99,7 +99,7 @@ public class RegisterUser extends Activity implements OnClickListener {
 			phone = "1234"; //txbPhone.getText().toString();
 			address = "1234"; //txbAddress.getText().toString();
 			password = "1234"; //txbPassword.getText().toString();
-			vehicleID = "0 "; //txbDeviceID.getText().toString();
+			vehicleID = "4"; //txbDeviceID.getText().toString();
 			make = "1234"; //txbMake.getText().toString();
 			model = "1234"; //txbModel.getText().toString();
 			year = "1234"; //txbYear.getText().toString();
@@ -261,6 +261,8 @@ public class RegisterUser extends Activity implements OnClickListener {
 			String result = "0";
 
 			try {
+				password = Miscellaneous.getMD5(password);
+				
 				List<NameValuePair> tempParam= new ArrayList<NameValuePair>();
 				tempParam.add(new BasicNameValuePair(FIRST_NAME, firstName));
 				tempParam.add(new BasicNameValuePair(LAST_NAME, lastName));
