@@ -20,26 +20,19 @@ if ( count($_POST) > 0) {
    if($_POST['submit'] == 'Register'){
 
     	$db = db::getInstance();
-        // Encrypts the password the user entered
-        //$password = md5 ( $_POST['password'] );
 
-        //$date = $_POST['date'];
+    	$prev = "SELECT email FROM User WHERE email = '{$_POST['mail']}'";
 
-        // 
-        		
+    	$stmt = $db->prepare($prev);
+        $stmt->execute();
+        $existing = $stmt->fetchAll();
 
-        // Creates a new tuple in the table User with the info entered
-        // $sql = "INSERT INTO User
-        //         SET
-
-        //             password = :password,
-        //             firstName = :firstName,
-        //             lastName = :lastName,
-        //             email = :email,
-        //             phone = :phone,
-        //             birth = :date,
-        //             address = :address,
-        //             gender = :gender;";
+        $exists = false;
+        if(count($existing)>0){
+        	$exists = true;
+        	$reset = 'Existing account found, try again!';
+        }
+        else{
 
 		$psw= md5 ( $_POST['pass'] );
         
@@ -66,19 +59,16 @@ if ( count($_POST) > 0) {
 	    header('Location: addcar.php');
 	    return;
 
-        
+        }
     }
 
     // If the user pressed the Login button
     elseif($_POST['submit'] == 'Login') {
-    	//echo "eureka";
+    	
     	$db = db::getInstance();
-    //     // Query to get the user's info according to the username and password provided
-    	//$salt = 'wkjhgkasflkjh';
-		//$cookie_value = md5($salt . $_POST['password']);
-        //$password = md5 ( $_POST['password'] );
-        //var_dump($password);
 
+    	// Query to get the user's info according to the username and password provided
+    	
         $sql = "SELECT 
                     userID,
                     email,
@@ -96,6 +86,7 @@ if ( count($_POST) > 0) {
 
         $nope = false;
         $reset = "";
+
         // If a matching user was found set loggedin to true, and get the user's ID
 
         if ($result[0]['password'] == md5($_POST['password'])) //Remember to encrypt our value
@@ -111,7 +102,7 @@ if ( count($_POST) > 0) {
 			
 			}
 		else{
-			//echo "<p>User/Password Combination Incorrect</p>";
+
 			$nope = true;
 			$reset = 'Email/Password Combination Incorrect';
 		}
@@ -120,9 +111,6 @@ if ( count($_POST) > 0) {
 	else{
 
 		$db = db::getInstance();
-
-		//$email = $_POST['mail'];
-		//var_dump($email);
 
 		$sql = "SELECT
 			userID,
@@ -157,14 +145,18 @@ if ( count($_POST) > 0) {
 
 		    $stmt = $db->prepare($passsql);
 		    $stmt->execute();	
-			//define the receiver of the email
+
+			//Email receiver
 			$to =  $data['mail'];
+
 			//define the subject of the email
 			$subject = 'Password Recovery'; 
+
 			//define the message to be sent. Each line should be separated with \n
-			$message = "Your temporary Password is: ".$pass.". Please change as soon as possible."; 
+			$message = "Your temporary Password is: ".$pass.". \n\nPlease change as soon as possible."; 
+
 			//define the headers we want passed. Note that they are separated with \r\n
-			$headers = "From: alvaro@carspy.com\r\nReply-To: alvaro.calderon@upr.edu";
+			$headers = "From: PasswordRecovery@carspy.com\r\nReply-To: alvaro.calderon@upr.edu";
 			
 			//send the email
 			$mail_sent = mail( $to, $subject, $message, $headers );
@@ -179,8 +171,6 @@ if ( count($_POST) > 0) {
 				$reset = 'Please try again';
 			}
 		}
-
-	//echo $reset;
 
 	}
 
@@ -211,9 +201,6 @@ if($loggedin) {
   <link rel="stylesheet" href="css/normalize.css" />
   
   <link rel="stylesheet" href="css/login.css" />
-  <!-- 
-  <link rel="stylesheet" src="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-   -->
 
   <script src="js/vendor/custom.modernizr.js"></script>
  
@@ -232,9 +219,14 @@ if($loggedin) {
 	                
 			        <!--<input type="text" class="input-block-level" placeholder="Email" required="required">-->
 			        <input id="email" class="input-block-level" name="email" type="email" placeholder="Email" required="required">
+
 			        <!--<input type="password" class="input-block-level" placeholder="Password" required="required">-->
 			        <input type="password" class="input-block-level" id="password" name="password" placeholder="Password" required="required">
-			        <?php if($nope){
+			        <?php 
+			        	if($exists){
+			        		echo "<p id='response'>".$reset."</p>";
+			        	}
+			        	elseif($nope){
 						echo "<p id='response'>".$reset."</p>";
 						}elseif ($notfound) {
 							echo "<p id='response'>".$reset."</p>";
@@ -286,7 +278,7 @@ if($loggedin) {
 							  <div class="control-group">
 							    <label class="control-label" for="mail">Email</label>
 							    <div class="controls">
-							      <input id="mail" name="mail" type="mail" placeholder="example@email.com" required="required">
+							      <input id="mail" name="mail" type="email" placeholder="example@email.com" required="required">
 							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
 							    </div>
 							  </div>
@@ -346,7 +338,7 @@ if($loggedin) {
 							    
 							    
 							      <input name="mail" type="mail" class="input-block-level" placeholder="example@email.com" required="required">
-							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
+							      
 							   
 								
 							  
@@ -365,51 +357,9 @@ if($loggedin) {
 
 	 <!-- /container --> 
 
-<!-- 
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? '/js/vendor/zepto' : '/js/vendor/jquery') +
-  '.js><\/script>')
-  </script>
- -->
   	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  	<!-- 
-  	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-     <script>
-        $(function() {
-            $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2Y" });
-            $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-        });
-    </script>
-  	 -->
-  	<script src="js/foundation/foundation.js"></script><!--
-	
-	<script src="js/foundation/foundation.alerts.js"></script>
-	
-	<script src="js/foundation/foundation.clearing.js"></script>
-	
-	<script src="js/foundation/foundation.cookie.js"></script>
-	
-	<script src="js/foundation/foundation.dropdown.js"></script>
-	
-	<script src="js/foundation/foundation.forms.js"></script>
-	
-	<script src="js/foundation/foundation.joyride.js"></script>
-	
-	<script src="js/foundation/foundation.magellan.js"></script>
-	
-	<script src="js/foundation/foundation.orbit.js"></script>
-	
-	<script src="js/foundation/foundation.placeholder.js"></script>
-	
-	<script src="js/foundation/foundation.reveal.js"></script>
-	
-	<script src="js/foundation/foundation.section.js"></script>
-	
-	<script src="js/foundation/foundation.tooltips.js"></script>
-	
-	<script src="js/foundation/foundation.topbar.js"></script>
--->
+
+  	<script src="js/foundation/foundation.js"></script>
 
 	
     <script src="js/bootstrap.min.js"></script>

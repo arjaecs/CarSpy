@@ -4,7 +4,6 @@ require_once('db.php');
 require_once('checkAuth.php');
 require_once('logout.php');
 
-
 // Checks if user is logged in, otherwise returns index
 if (!$loggedin && !isset($id)) {
 	header('Location: login.php');
@@ -108,8 +107,6 @@ if(!isset($user)){
 		header('Location: login.php');
 		return;
 	}
-
-
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -126,13 +123,11 @@ if(!isset($user)){
 	<script src="js/vendor/custom.modernizr.js"></script>
 	<script src="/js/vendor/jquery.js"></script>
 	<script src="js/foundation/foundation.js"></script> 
-	
-	<!--
-	
-	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBYeihJGidZ-x1D2gtw7gy02hC-gNDdW2U&sensor=true"></script>
-	<script type="text/javascript" language="JavaScript" src="http://j.maxmind.com/app/geoip.js"></script>-->
-	
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+	<script type="text/javascript">
+		window.cars = <?php echo json_encode($cars); ?>;
+	</script>
 
 </head>
 <body>
@@ -149,10 +144,10 @@ if(!isset($user)){
 			<span style="float: right; margin-top: -20px; margin-right: 50px;">
 				
 			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
-                                <input type="hidden" value="logout" name="loggedOut" />
-                                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
-                                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
-                            </form>
+                <input type="hidden" value="logout" name="loggedOut" />
+                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
+                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
+            </form>
 
 			</span>
 		
@@ -166,24 +161,15 @@ if(!isset($user)){
 			<div style="text-align:center;">
 					<h5>Choose a Car:</h5> 
 					<select id="car" name='car' class="form-select">
-					 	<?php
+				 	<?php
 					 	for ($i = 0; $i<count($cars); $i++){
- 
-						 // add each date to the end of the times array
-						 echo "<option value='{$cars[$i]['vehicleID']}'>{$cars[$i]['make']} {$cars[$i]['model']}</option>";
+							// add each date to the end of the times array
+							echo "<option value='{$cars[$i]['vehicleID']}'>{$cars[$i]['make']} {$cars[$i]['model']}</option>";
 						}
-						?>
+					?>
 					</select>
 					<h5>Choose a Date:</h5> 
-					<select id="dates" name='date' class="form-select">
-					 	<?php
-					 	for ($i = 0; $i<count($dates); $i++){
- 
-						 // add each date to the end of the times array
-						 echo "<option value='{$dates[$i]['date']}'>{$dates[$i]['day']}</option>";
-						}
-						?>
-					</select>
+					<select id="dates" name='date' class="form-select"></select>
 					<h5>Choose a Time:</h5> 
 					<select id="times" name="time" class='form-select'>
 							
@@ -208,7 +194,7 @@ if(!isset($user)){
 
 	<div class="row container">
 		
- 		<div class="large-12">
+ 		<div class="large-12" >
 
  			<ul id="pics">
 
@@ -224,163 +210,158 @@ if(!isset($user)){
 		</div> -->
 
 	</div>
-	<!-- 
-	<div class="row container">
-		<div class="large-12" >
-		
-			<div class="large-4 columns infopanel" >
-				<h4 id="date">Date:</h4>
-				
-			</div> 
-			<div class="large-4 columns infopanel">
-				<h4 id="time">Time:</h4>
-			</div> 
-			<div class="large-4 columns infopanel">
-				<h4 id="gps">GPS:</h4>
-			</div> 
-		</div>
-	</div> -->
-
+	<div class="footer" style="height: 200px;
+width: 100%;margin-bottom:0px;
+background-color: #2f2f2f;padding-left:40%;">
+		<img style="margin-top: 4%;height: 70%;" src="img/VigilanTECH2gray.png">
+	</div>
 
 <script>
-function initializeMaps(position) {
-  
-  var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-  var options = {
-    zoom: 15,
-    center: coords,
-    mapTypeControl: false,
-    navigationControlOptions: {
-    	style: google.maps.NavigationControlStyle.SMALL
-    },
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById("map_canvas"), options);
-  var marker = new google.maps.Marker({
-      position: coords,
-      map: map,
-      title:"You are here!"
-  });
-}
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(initializeMaps);
-} else {
-  error('Geo Location is not supported');
-}
-</script>
+	var drawMap = function(latitude, longitude) {
+		var coords = new google.maps.LatLng(latitude, longitude);
+		var options = {
+			zoom: 15,
+			center: coords,
+			mapTypeControl: false,
+			navigationControlOptions: {
+				style: google.maps.NavigationControlStyle.SMALL
+			},
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
 
-<script>
-	var getTimes = function(date, success) {
+		var map = new google.maps.Map(document.getElementById("map_canvas"), options);
+		var geocoder = new google.maps.Geocoder();
+		var infowindow = new google.maps.InfoWindow();
+//testy
+		var contentString = function(address) {
+
+			var where = '<div id="infoBOX">'+
+			    '<div id="siteNotice">'+
+			    '</div>'+
+			    '<h2 id="firstHeading" class="firstHeading">CarSpy Location</h2>'+
+			    '<div id="bodyContent">'+
+			    '<p>'+address+'</p>'+
+			    '</div>'+
+			    '</div>';
+
+    	return where;}
+
+
+
+//endtesty
+		geocoder.geocode({'latLng': coords}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				if (results[1]) {
+					map.setZoom(11);
+					marker = new google.maps.Marker({
+						position: coords,
+						map: map
+					});
+					//infowindow.setContent(results[1].formatted_address);
+					infowindow.setContent(contentString(results[1].formatted_address));
+					infowindow.open(map, marker);
+				}
+			} else {
+				alert("Geocoder failed due to: " + status);
+			}
+		});
+	};
+
+	var updateMap = function($el) {
+		drawMap($el.data().latitude, $el.data().longitude);
+	};
+
+	// Dates - calls times when finished
+
+	var getDates = function(car, success) {
+		$.ajax({
+			type: 'GET',
+			url: 'dates.php',
+			data: {
+				vehicleID: car				
+			},
+			dataType: 'json',
+			success: success
+		});
+	};
+	
+	var updateDates = function(data) {
+		$.each(data, function(index, value){
+			$('#dates').append('<option value="'+ value.date +'">' + value.day +'</option>');
+		});
+
+		getTimes($('#car option:selected').val(), $('#dates option:selected').val(), updateTimes);
+	};
+
+	// Times - calls pictures when finished
+
+	var getTimes = function(car, date, success) {
 		$.ajax({
 			type: 'GET',
 			url: 'times.php',
 			data: {
 				date: "'"+date+"'",
-				car: <?php echo $carID; ?>
-				
+				car: car
 			},
 			dataType: 'json',
 			success: success
 		});
-
 	};
-	
-	var updateSelect = function(data) {
-		$('#times').empty();
-		$('#pics').empty();
+
+	var updateTimes = function(data) {
 		$.each(data, function(index, value){
-			console.log("Session ID ="+value);
-			$('#times').append('<option data-latitude="'+ value.location.latitude +'" data-longitude="'+ value.location.longitude +'" data-session="'+ value.sessionID +'">' + value.time +'</option>');
-			
-			 $('#pics').append('<li><img src="' + value.path1 +'"></li>');
-
-			$('#pics').append('<li><img src=' + value.path2 +'></li>');
-			$('#pics').append('<li><img src=' + value.path3 +'></li>');
-	
-			
-			updateMap($('#times option:selected'));
-			//updatePics($('#times option:selected'));
-
-
-			$('#times').change(function(e) {
-				//console.log(e.currentTarget);
-				updateMap($(e.currentTarget));
-				//updatePics($(e.currentTarget));
-				
-				
-			});
-
-			
+			$('#times').append('<option data-latitude="'+ value.location.latitude +'" data-longitude="'+ value.location.longitude +'" data-session="'+ value.session +'">' + value.time +'</option>');
 		});
 
-		
-		
-		
+		updateMap($('#times option:selected'));
+
+		getPictures($('#times option:selected').data().session, updatePictures);
 	};
 	
-	var updateMap = function($el) {
-		//initializeMaps($el.data().lat, $el.data().long);
-		initializeMaps($el.data());
-		//updatePics($el.data().session);
+	// Pictures - end of the road
+
+	var getPictures = function(sessionID, success) {
+		$.ajax({
+			type: 'GET',
+			url: 'pictures.php',
+			data: {
+				sessionID: sessionID
+			},
+			dataType: 'json',
+			success: success
+		});
 	};
 
-	// var getPics = function(sessionID, success) {
-	// 		console.log(sessionID);
-	// 		$.ajax({
-	// 			type: 'GET',
-	// 			url: 'pictures.php',
+	var updatePictures = function(data) {
+		$.each(data, function(index, value){
+			$('#pics').append('<li><img src="' + value.path +'"></li>');
+		});
+	};
 
-	// 			data: {
-	// 				sessionID: "'"+sessionID+"'"
-	// 			},
-	// 			dataType: 'json',
-	// 			success: success
-	// 		});
-	// };
-
-	// var updatePics = function(data) {
-	// 	$('#pics').empty();
-		
-	// 	$.each(data, function(index, value){
-		
-	// 		$('#pics').append('<li><img src="' + value.path +'"></li>');
-
-	// 		//$('#pics').append('<li><img src=' + $el.data().path2 +'></li>');
-	// 		//$('#pics').append('<li><img src=' + $el.data().path3 +'></li>');
-	// 	});
-		
-		
-	// };
+	//Setup event listeners
 	
-	getTimes($('#dates option:selected').val(),updateSelect);
-	//getPics($('#times option:selected').val(), updatePics);
-
-	$('#dates').change(function(e) {
-		getTimes($(e.currentTarget).val(),updateSelect);
-		//getPics($(e.currentTarget).val(), updatePics);
-		
+	$('#car').change(function(e) {
+		$('#dates, #times, #pics').empty();
+		getDates($(e.currentTarget).val(), updateDates);		
 	});
 
+	$('#times').change(function(e) {
+		$('#pics').empty();
+		var $el = $('#times option:selected');
+		updateMap($el);
+		getPictures($el.data().session, updatePictures);
+	});
 
-	
+	$('#dates').change(function(e) {
+		$('#times, #pics').empty();
+		getTimes($('#car option:selected').val(), $(e.currentTarget).val(), updateTimes);		
+	});
 
-	// getPics($('#dates option:selected').val(), updatePics);
+	//Kick it off
 
-	// $('#dates').change(function(e) {
-	// 	getPics($(e.currentTarget).val(), updatePics);
-		
-	// });
+	getDates($('#car option:selected').val(), updateDates);
 
-
-
-
-
-
-</script>
-<script type="text/javascript">
-	
 	$(document).foundation();
 </script>
-
 </body>
 </html>

@@ -1,7 +1,9 @@
 <?php 
 require_once('db.php');
 
-$session = json_decode($_GET['sessionID']); //$_GET['sessionID'];
+$session = $_GET['sessionID']; //$_GET['sessionID'];
+
+
 
 $db = db::getInstance();
 
@@ -22,9 +24,9 @@ $pics = array();
 for ($i = 0; $i <count($result); $i++){
 
  $pics[] = array( 
- 	'sessionID' => $result[$i]['sessionID'],
+ 	
  	'path' => $result[$i]['path']
- 	)
+ 	
  );
 }
 

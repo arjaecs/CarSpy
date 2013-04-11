@@ -7,6 +7,7 @@ if (!$loggedin && !isset($id)) {
     header('Location: login.php');
     return;
 }
+var_dump($id);
 
 $newcar = false;
 
@@ -81,7 +82,7 @@ if ( count($_POST) > 0) {
 
 	    $stmt = $db->prepare($carsql);
 	    $stmt->execute($data);
-	    
+	    $lastID=$db->lastInsertId();
 	    $newcar = true;
 		//global $id;
 
@@ -97,8 +98,8 @@ if ( count($_POST) > 0) {
 }
 if($newcar) { 
 	//global $id;
-    setcookie('carID', $car['vehicleID'], time() + (86400 * 7)); // 86400 = 1 day
-    header('Location: home.php');
+    //setcookie('carID', $lastID, time() + (86400 * 7)); // 86400 = 1 day
+    header('Location: profile.php');
     return;
 }
 

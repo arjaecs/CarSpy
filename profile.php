@@ -298,7 +298,8 @@ if (count($_POST) > 0) {
                             
                               <ul class="right">
                                   <li class="divider"></li>
-                                  <li class="active"><a href="#add" data-toggle="modal" data-target="#add">Add/Edit</a></li>
+                                  <!-- <li class="active"><a href="#add" data-toggle="modal" data-target="#add">Add/Edit</a></li> -->
+                                  <li class="active"><a href="addcar.php">Add/Edit</a></li>
                                   <li class="divider"></li>
                                   
                               </ul>
