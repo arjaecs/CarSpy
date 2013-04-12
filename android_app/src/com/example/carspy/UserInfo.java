@@ -20,33 +20,36 @@ import android.content.Intent;
 import android.graphics.Color;
 
 public class UserInfo extends Activity implements OnClickListener {
-	boolean startUp = false;
-	Button btnSave;
-	Button btnCancel;
-	Button btnEditInfo;
-	Button btnUserInfo;
-	Button btnVehicleInfo;
-	ImageView imgButtonDouble;
-	ImageView imgButtonUserInfo;
-	TableLayout tblUserText;
-	TableLayout tblUserInfo;
-	TableLayout tblUserTextBoxes;
-	TextView txtFName;
-	TextView txtLName;
-	TextView txtEmail;
-	TextView txtGender;
-	TextView txtBDay;
-	TextView txtPhone;
-	TextView txtAddress;
-	TextView txtPassword;
-	EditText txbFName;
-	EditText txbLName;
-	EditText txbEmail;
-	EditText txbGender;
-	EditText txbBDay;
-	EditText txbPhone;
-	EditText txbAddress;
-	EditText txbPassword;
+	private Button btnSave;
+	private Button btnCancel;
+	private Button btnEditInfo;
+	private Button btnUserInfo;
+	private Button btnVehicleInfo;
+
+	private ImageView imgButtonDouble;
+	private ImageView imgButtonUserInfo;
+	private TableLayout tblUserText;
+	private TableLayout tblUserInfo;
+	private TableLayout tblUserTextBoxes;
+
+	private TextView txtFName;
+	private TextView txtLName;
+	private TextView txtEmail;
+	private TextView txtGender;
+	private TextView txtBDay;
+	private TextView txtPhone;
+	private TextView txtAddress;
+	private TextView txtPassword;
+
+	private EditText txbFName;
+	private EditText txbLName;
+	private EditText txbEmail;
+	private EditText txbGender;
+	private EditText txbBDay;
+	private EditText txbPhone;
+	private EditText txbAddress;
+	private EditText txbPassword;
+	private User user;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,6 +67,10 @@ public class UserInfo extends Activity implements OnClickListener {
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(new OptionOnItemSelectedListener());
 		spinner.setSelection(1);
+
+		user = new User("email@host.com", "********", "fname", "lname", "Male", "2012-02-10", "888-888-8888", "home address");
+
+		updateTxtTable();
 	}
 
 	private class OptionOnItemSelectedListener implements OnItemSelectedListener {
@@ -71,7 +78,7 @@ public class UserInfo extends Activity implements OnClickListener {
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 			Spinner spinner = (Spinner) findViewById(R.id.spnOptions);
 			String chosenOption = (String) spinner.getSelectedItem();
-			
+
 			if (chosenOption.equals("Home")) {
 				Intent mainActivity = new Intent(UserInfo.this, Main.class);
 				startActivity(mainActivity);
@@ -90,10 +97,12 @@ public class UserInfo extends Activity implements OnClickListener {
 	}
 
 	public void onNothingSelected(AdapterView<?> parent) {
+		
 	}
 
 	public void onClick(View v) {
 		if (v.getId() == R.id.btnEditInfo) {
+			setTextBoxes();
 			btnEditInfo.setVisibility(View.INVISIBLE);
 			btnSave.setVisibility(View.VISIBLE);
 			btnCancel.setVisibility(View.VISIBLE);
@@ -101,8 +110,7 @@ public class UserInfo extends Activity implements OnClickListener {
 			btnUserInfo.setClickable(false);
 			btnVehicleInfo.setClickable(false);
 			tblUserInfo.setVisibility(View.INVISIBLE);
-
-			setEditableInfo();
+			tblUserTextBoxes.setVisibility(View.VISIBLE);
 		}
 		else if (v.getId() == R.id.btnCancel) {
 			btnSave.setVisibility(View.INVISIBLE);
@@ -112,13 +120,13 @@ public class UserInfo extends Activity implements OnClickListener {
 			tblUserTextBoxes.setVisibility(View.INVISIBLE);
 			btnUserInfo.setClickable(true);
 			btnVehicleInfo.setClickable(true);
-
 			tblUserInfo.setVisibility(View.VISIBLE);
-
 		}
 		else if (v.getId() == R.id.btnSave) {
 			//TODO: Update information in DB.
 			//TODO: Extract info from DB to display again.
+			setTxtInfo();
+			updateTxtTable();
 			Toast.makeText(this, "New information has been updated.", Toast.LENGTH_LONG).show();
 			btnSave.setVisibility(View.INVISIBLE);
 			btnCancel.setVisibility(View.INVISIBLE);
@@ -127,69 +135,12 @@ public class UserInfo extends Activity implements OnClickListener {
 			tblUserTextBoxes.setVisibility(View.INVISIBLE);
 			btnUserInfo.setClickable(true);
 			btnVehicleInfo.setClickable(true);
-
 			tblUserInfo.setVisibility(View.VISIBLE);
 
-		}
-		else if (v.getId() == R.id.btnUserInfo) {
-			btnUserInfo.setTextColor(Color.BLACK);
-			btnVehicleInfo.setTextColor(Color.GRAY);
-			imgButtonUserInfo.setVisibility(View.VISIBLE);
-			tblUserText.setVisibility(View.VISIBLE);
-			tblUserInfo.setVisibility(View.VISIBLE);
 		}
 		else if (v.getId() == R.id.btnVehicleInfo) {
 			Intent vehicleInfoActivity = new Intent(UserInfo.this, VehicleInfo.class);
 			startActivity(vehicleInfoActivity);
-		}
-		else if (v.getId() == R.id.btnRightArrow) {
-			//			btnLeftArrow.setVisibility(View.VISIBLE);
-			//
-			//			//TODO: If user has multiple vehicles (DB).8
-			//			if (false/*user has many vehicles*/) {
-			//				//TODO: Show info of next vehicle (DB).
-			//			}
-			//			else {
-			//				btnUserInfo.setClickable(false);
-			//				btnVehicleInfo.setClickable(false);
-			//				btnRightArrow.setVisibility(View.INVISIBLE);
-			//				tblVehicleInfo.setVisibility(View.INVISIBLE);
-			//				tblVehicleTextBoxes.setVisibility(View.VISIBLE);
-			//				btnEditInfo.setVisibility(View.INVISIBLE);
-			//				btnAddNewVehicle.setVisibility(View.VISIBLE);
-			//			}
-		}
-		else if (v.getId() == R.id.btnLeftArrow) {
-			//			btnUserInfo.setClickable(true);
-			//			btnVehicleInfo.setClickable(true);
-			//			
-			//			if (tblVehicleTextBoxes.isShown()) {
-			//				tblVehicleTextBoxes.setVisibility(View.INVISIBLE);
-			//				btnEditInfo.setVisibility(View.INVISIBLE);
-			//				btnAddNewVehicle.setVisibility(View.VISIBLE);
-			//			}
-			//			btnRightArrow.setVisibility(View.VISIBLE);
-			//			btnEditInfo.setVisibility(View.VISIBLE);
-			//			btnAddNewVehicle.setVisibility(View.INVISIBLE);
-			//			//TODO: Get data from previous vehicle information (DB).
-			//			tblVehicleInfo.setVisibility(View.VISIBLE);
-			//			tblVehicleTextBoxes.setVisibility(View.INVISIBLE);
-			//			if (true/*first vehicle in users vehicle list*/) {
-			//				btnLeftArrow.setVisibility(View.INVISIBLE);
-			//			}
-
-		}
-		else if (v.getId() == R.id.btnAddNewVehicle) {
-			//TODO: Verify Device ID.
-			//Toast.makeText(this, "Device ID does not exist.", Toast.LENGTH_LONG).show();
-			//TODO: Verify if all fields are filled (Toast if not).
-			//Toast.makeText(this, "All fields must be filled.", Toast.LENGTH_LONG).show();
-			//TODO: Save information in new line of vehicle table.
-			btnUserInfo.setClickable(false);
-			btnVehicleInfo.setClickable(false);
-			//SAVE BUTON Toast.makeText(this, "New vehicle has been added to your profile.", Toast.LENGTH_LONG).show();
-			//TODO: Extract newly added info and put it in this table.
-			btnEditInfo.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -232,7 +183,7 @@ public class UserInfo extends Activity implements OnClickListener {
 		btnVehicleInfo.setOnClickListener(this);
 	}
 
-	private void setEditableInfo() {
+	private void setTextBoxes() {
 		txbFName.setText(txtFName.getText());
 		txbLName.setText(txtLName.getText());
 		txbEmail.setText(txtEmail.getText());
@@ -241,8 +192,103 @@ public class UserInfo extends Activity implements OnClickListener {
 		txbPhone.setText(txtPhone.getText());
 		txbAddress.setText(txtAddress.getText());
 		txbPassword.setText(txtPassword.getText());
+	}
 
-		tblUserTextBoxes.setVisibility(View.VISIBLE);
+	private void updateTxtTable() {
+		txtFName.setText(user.getFirstName());
+		txtLName.setText(user.getLastName());
+		txtEmail.setText(user.getEmail());
+		txtGender.setText(user.getGender());
+		txtBDay.setText(user.getBirth());
+		txtPhone.setText(user.getPhone());
+		txtAddress.setText(user.getAddress());
+		txtPassword.setText("********");
+	}
+	
+	private void setTxtInfo() {
+		user.setFirstName(txbFName.getText().toString());
+		user.setLastName(txbLName.getText().toString());
+		user.setEmail(txbEmail.getText().toString());
+		user.setGender(txbGender.getText().toString());
+		user.setBirth(txbBDay.getText().toString());
+		user.setPhone(txbPhone.getText().toString());
+		user.setAddress(txbAddress.getText().toString());
+		user.setPassword(txbPassword.getText().toString());
+	}
+
+	private class User {
+		private String email;
+		private String password;
+		private String firstName;
+		private String lastName;
+		private String gender;
+		private String birth;
+		private String phone;
+		private String address;
+
+
+		public User(String email, String password, String firstName, String lastName,
+				String gender, String birth, String phone, String address) {
+			super();
+			this.email = email;
+			this.password = password;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.gender = gender;
+			this.birth = birth;
+			this.phone = phone;
+			this.address = address;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+		public void setGender(String gender) {
+			this.gender = gender;
+		}
+		public void setBirth(String birth) {
+			this.birth = birth;
+		}
+		public void setPhone(String phone) {
+			this.phone = phone;
+		}
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public String getFirstName() {
+			return firstName;
+		}
+		public String getLastName() {
+			return lastName;
+		}
+		public String getGender() {
+			return gender;
+		}
+		public String getBirth() {
+			return birth;
+		}
+		public String getPhone() {
+			return phone;
+		}
+		public String getAddress() {
+			return address;
+		}
 
 	}
 }

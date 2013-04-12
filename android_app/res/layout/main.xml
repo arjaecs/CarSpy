@@ -21,7 +21,7 @@
         android:id="@+id/imgTextBg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imgMap"
+        android:layout_alignLeft="@+id/mapFragment"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/imgButtonDouble"
@@ -47,8 +47,8 @@
         android:id="@+id/imgPhoto1"
         android:layout_width="88dp"
         android:layout_height="70dp"
-        android:layout_alignLeft="@+id/imgMap"
-        android:layout_below="@+id/imgMap"
+        android:layout_alignLeft="@+id/mapFragment"
+        android:layout_below="@+id/mapFragment"
         android:layout_marginRight="3dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
@@ -71,15 +71,15 @@
         android:id="@+id/imgPhoto3"
         android:layout_width="88dp"
         android:layout_height="70dp"
-        android:layout_alignRight="@+id/imgMap"
+        android:layout_alignRight="@+id/mapFragment"
         android:layout_alignTop="@+id/imgPhoto2"
         android:layout_marginLeft="3dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription" />
 
-    <ImageButton
-        android:id="@+id/imgMap"
+    <fragment
+        android:id="@+id/mapFragment"
         android:layout_width="280dp"
         android:layout_height="180dp"
         android:layout_alignParentLeft="true"
@@ -89,9 +89,8 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="18dp"
-        android:background="@android:color/transparent"
+        class="com.google.android.gms.maps.MapFragment"
         android:scaleType="fitXY"
-        android:src="@drawable/map"
         tools:ignore="ContentDescription" />
 
     <Spinner
@@ -109,7 +108,7 @@
         android:id="@+id/imgCarSpy"
         android:layout_width="110dp"
         android:layout_height="50dp"
-        android:layout_alignLeft="@+id/imgMap"
+        android:layout_alignLeft="@+id/mapFragment"
         android:src="@drawable/carspygray"
         tools:ignore="ContentDescription" />
 
@@ -136,15 +135,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="7dp" >
+            android:padding="5dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="Longitude:"
+                android:text="Latitude:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#F0F0F0"
                 android:textSize="20sp"
@@ -155,13 +152,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:padding="5dp" >
+            android:paddingBottom="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="7dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:text="Latitude:"
+                android:text="Longitude:"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#F0F0F0"
                 android:textSize="20sp"
@@ -180,6 +179,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/txtGPSLat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="-66.59343"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#F0F0F0"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingTop="7dp" >
@@ -190,25 +207,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="18.22324"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#F0F0F0"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/TableRow01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dp" >
-
-            <TextView
-                android:id="@+id/txtGPSLat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:text="-66.59343"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#F0F0F0"
                 android:textSize="20sp"
@@ -242,7 +240,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imgButtonDoubleBlack"
         android:layout_alignLeft="@+id/imgCarSpy"
-        android:layout_alignRight="@+id/imgMap"
+        android:layout_alignRight="@+id/mapFragment"
         android:layout_below="@+id/imgTopBorder"
         android:layout_marginTop="12dp"
         android:gravity="center"

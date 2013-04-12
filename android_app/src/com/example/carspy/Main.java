@@ -1,6 +1,16 @@
 package com.example.carspy;
 
 import java.util.ArrayList;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -17,14 +27,18 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-public class Main extends FragmentActivity {
+public class Main extends Activity {
 	private Animator mCurrentAnimator;
 	private int mShortAnimationDuration;
+	private GoogleMap map;
+	private MapFragment mapFragment;
 
 	private ArrayList<CustomList> vehicleList;
 	private ArrayList<CustomList> dateList;
@@ -51,10 +65,14 @@ public class Main extends FragmentActivity {
 
 		txtGPSLong = (TextView) findViewById(R.id.txtGPSLong);
 		txtGPSLat = (TextView) findViewById(R.id.txtGPSLat);
-		imgPhoto1 = (ImageButton) findViewById(R.id.imgPhoto1);;
-		imgPhoto2 = (ImageButton) findViewById(R.id.imgPhoto2);;
-		imgPhoto3 = (ImageButton) findViewById(R.id.imgPhoto3);;
+		imgPhoto1 = (ImageButton) findViewById(R.id.imgPhoto1);
+		imgPhoto2 = (ImageButton) findViewById(R.id.imgPhoto2);
+		imgPhoto3 = (ImageButton) findViewById(R.id.imgPhoto3);
 
+		//mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment));
+		FragmentManager myFragmentManager = getFragmentManager();
+		mapFragment = (MapFragment) myFragmentManager.findFragmentById(R.id.mapFragment);
+		map = mapFragment.getMap();
 
 		spnOptions = (Spinner) findViewById(R.id.spnOptions);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource (this,
@@ -110,16 +128,20 @@ public class Main extends FragmentActivity {
 		//updateTimeSpinner(times1);
 		spnTime.setOnItemSelectedListener(new TimeOnItemSelectedListener());
 
-		final View thumbViewMap = findViewById(R.id.imgMap);
-		thumbViewMap.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				zoomImageFromThumb(thumbViewMap, R.drawable.map);
-			}
-		});
-
 		mShortAnimationDuration = getResources().getInteger(
 				android.R.integer.config_shortAnimTime);
+	}
+
+	private void updateMap(double latitude, double longitude) {
+		map.clear();
+		LatLng position = new LatLng(latitude, longitude);
+
+		CameraUpdate center = CameraUpdateFactory.newLatLng(position);
+		CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+
+		map.moveCamera(center);
+		map.animateCamera(zoom);
+		map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 	}
 
 	private void updateDateSpinner(String date[]) {
@@ -171,8 +193,9 @@ public class Main extends FragmentActivity {
 			for (int i = 0; size > i; i++) {
 				if (chosenOption.equals(sessions.get(i).getHour())) {
 					//TODO: Update map.
-					txtGPSLong.setText(sessions.get(i).getLongitude());
+					
 					txtGPSLat.setText(sessions.get(i).getLatitude());
+					txtGPSLong.setText(sessions.get(i).getLongitude());
 
 					String picName = sessions.get(i).getPicPath1();
 					picName = picName.replace(".jpeg", "");
@@ -209,7 +232,11 @@ public class Main extends FragmentActivity {
 							zoomImageFromThumb(thumbView3, picId);
 						}
 					});
-					
+
+					double latitude = Double.parseDouble(sessions.get(i).getLatitude());
+					double longitude = Double.parseDouble(sessions.get(i).getLongitude());
+					updateMap(latitude, longitude);
+
 					break;
 				}
 			}
@@ -424,13 +451,13 @@ public class Main extends FragmentActivity {
 		private String picPath2;
 		private String picPath3;
 
-		public Session(String vehicle, String date, String hour, String longitude, String latitude, 
+		public Session(String vehicle, String date, String hour, String latitude, String longitude, 
 				String picPath1, String picPath2, String picPath3) {
 			this.vehicle = vehicle;
 			this.date = date;
 			this.hour = hour;
-			this.longitude = longitude;
 			this.latitude = latitude;
+			this.longitude = longitude;
 			this.picPath1 = picPath1;
 			this.picPath2 = picPath2;
 			this.picPath3 = picPath3;

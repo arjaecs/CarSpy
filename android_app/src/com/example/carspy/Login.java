@@ -334,8 +334,8 @@ public class Login extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 		if (v.getId() == R.id.btnLogin) {
-			email = Login.this.txbEmail.getText().toString();
-			password = Login.this.txbPassword.getText().toString();
+			email = "hector.tosado@gmail.com";//Login.this.txbEmail.getText().toString();
+			password = "carspy";//Login.this.txbPassword.getText().toString();
 
 			new VerifyUserCredentials().execute();
 		}
