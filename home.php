@@ -4,7 +4,7 @@ require_once('db.php');
 require_once('checkAuth.php');
 require_once('logout.php');
 
-// Checks if user is logged in, otherwise returns index
+// Checks if user is logged in, otherwise returns to login.php
 if (!$loggedin && !isset($id)) {
 	header('Location: login.php');
 	return;
@@ -123,7 +123,7 @@ if(!isset($user)){
 	<script src="js/vendor/custom.modernizr.js"></script>
 	<script src="/js/vendor/jquery.js"></script>
 	<script src="js/foundation/foundation.js"></script> 
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 	<script type="text/javascript">
 		window.cars = <?php echo json_encode($cars); ?>;
@@ -201,46 +201,40 @@ if(!isset($user)){
 			</ul>
 
  		</div>
-<!-- 
-		<div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
-			<div class="ribbon-before"></div>
-			<div class="ribbon-after"></div>
-			
-			<h3>Event Info:</h3>
-		</div> -->
+
 
 	</div>
-	<div class="footer" style="height: 200px;
-width: 100%;margin-bottom:0px;
-background-color: #2f2f2f;padding-left:40%;">
+	<div class="footer" style="height: 200px; width: 100%;margin-bottom:0px; background-color: #2f2f2f;padding-left:40%;">
 		<img style="margin-top: 4%;height: 70%;" src="img/VigilanTECH2gray.png">
 	</div>
 
 <script>
-	var drawMap = function(latitude, longitude) {
-		var coords = new google.maps.LatLng(latitude, longitude);
-		var options = {
-			zoom: 15,
-			center: coords,
-			mapTypeControl: false,
-			navigationControlOptions: {
-				style: google.maps.NavigationControlStyle.SMALL
-			},
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+		var drawMap = function(latitude, longitude) {
+			var coords = new google.maps.LatLng(latitude, longitude);
+			var options = {
+				zoom: 15,
+				center: coords,
+				mapTypeControl: false,
+				navigationControlOptions: {
+					style: google.maps.NavigationControlStyle.SMALL
+				},
+				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
 		var map = new google.maps.Map(document.getElementById("map_canvas"), options);
 		var geocoder = new google.maps.Geocoder();
 		var infowindow = new google.maps.InfoWindow();
-//testy
-		var contentString = function(address) {
+
+		// Map marker label content
+		var contentString = function(address,coords) {
 
 			var where = '<div id="infoBOX">'+
 			    '<div id="siteNotice">'+
 			    '</div>'+
-			    '<h2 id="firstHeading" class="firstHeading">CarSpy Location</h2>'+
+			    '<h4 id="firstHeading" class="firstHeading" style="text-align:center;">CarSpy Location</h4>'+
 			    '<div id="bodyContent">'+
-			    '<p>'+address+'</p>'+
+			    '<a src="http://maps.google.com/?q='+coords+'">'+address+'</a>'+
+
 			    '</div>'+
 			    '</div>';
 
@@ -248,7 +242,7 @@ background-color: #2f2f2f;padding-left:40%;">
 
 
 
-//endtesty
+    	// Maps' reverse GeoCoder for human-readable directions to given the coordinates
 		geocoder.geocode({'latLng': coords}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				if (results[1]) {
@@ -258,7 +252,7 @@ background-color: #2f2f2f;padding-left:40%;">
 						map: map
 					});
 					//infowindow.setContent(results[1].formatted_address);
-					infowindow.setContent(contentString(results[1].formatted_address));
+					infowindow.setContent(contentString(results[1].formatted_address,coords));
 					infowindow.open(map, marker);
 				}
 			} else {

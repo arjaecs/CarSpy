@@ -97,21 +97,6 @@ margin-left: 30px;
   margin-right: 25px;
 }
 
-.shadowbox{
--webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
--moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
-background: #202020;
-background-color: rgba(0, 0, 0, 0.3);
-//margin-top:5px;
-max-width: 320px;
-margin:auto;
-margin-top: 10%;
-height: auto;
-padding: 10px;
-padding-bottom: 1px;
-padding-top: 12px;
-}
 
 .loginBox{
 	
@@ -222,12 +207,12 @@ background: #202020;
 background-color: rgba(0, 0, 0, 0.3);
 
 margin:auto;
-margin-top: 10%;
+margin-top: 1%;
 height: auto;
 padding: 10px;
 padding-bottom: 1px;
 padding-top: 12px;
-width: 60%;
+width: 25%;
 }
 
 label{

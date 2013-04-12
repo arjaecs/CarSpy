@@ -5549,23 +5549,7 @@ body {
   margin-right: 25px;
 }
 
-/* line 100, ../scss/addcar.scss */
-.shadowbox {
-  -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
-  -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
-  box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
-  background: #202020;
-  background-color: rgba(0, 0, 0, 0.3);
-  max-width: 320px;
-  margin: auto;
-  margin-top: 10%;
-  height: auto;
-  padding: 10px;
-  padding-bottom: 1px;
-  padding-top: 12px;
-}
-
-/* line 116, ../scss/addcar.scss */
+/* line 101, ../scss/addcar.scss */
 .loginBox {
   max-width: 25em;
   display: -webkit-box;
@@ -5588,12 +5572,12 @@ body {
   margin: auto;
 }
 
-/* line 140, ../scss/addcar.scss */
+/* line 125, ../scss/addcar.scss */
 .loginBox .container, .loginBox .sidebar {
   padding: 20px;
 }
 
-/* line 143, ../scss/addcar.scss */
+/* line 128, ../scss/addcar.scss */
 .loginBox .content {
   -webkit-box-flex: 4;
   -moz-box-flex: 4;
@@ -5602,7 +5586,7 @@ body {
   background-color: #c5c1b4;
 }
 
-/* line 150, ../scss/addcar.scss */
+/* line 135, ../scss/addcar.scss */
 .loginBox .sidebar {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
@@ -5612,7 +5596,7 @@ body {
   margin-right: 1px;
 }
 
-/* line 159, ../scss/addcar.scss */
+/* line 144, ../scss/addcar.scss */
 .form-signin {
   max-width: 300px;
   padding: 19px 29px 0px;
@@ -5627,13 +5611,13 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* line 173, ../scss/addcar.scss */
+/* line 158, ../scss/addcar.scss */
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;
 }
 
-/* line 177, ../scss/addcar.scss */
+/* line 162, ../scss/addcar.scss */
 .form-signin input[type="text"],
 .form-signin input[type="password"] {
   font-size: 16px;
@@ -5642,35 +5626,35 @@ body {
   padding: 7px 9px;
 }
 
-/* line 184, ../scss/addcar.scss */
+/* line 169, ../scss/addcar.scss */
 .btn-group {
   width: 100%;
 }
 
-/* line 187, ../scss/addcar.scss */
+/* line 172, ../scss/addcar.scss */
 .btn-large {
   width: 50%;
   margin-left: 25%;
 }
 
-/* line 192, ../scss/addcar.scss */
+/* line 177, ../scss/addcar.scss */
 #myModalLabel {
   text-align: center;
 }
 
-/* line 196, ../scss/addcar.scss */
+/* line 181, ../scss/addcar.scss */
 #forgot {
   margin-top: 15px;
   margin-bottom: 15px;
   text-align: center;
 }
 
-/* line 202, ../scss/addcar.scss */
+/* line 187, ../scss/addcar.scss */
 #forgot a {
   color: #2f2f2f;
 }
 
-/* line 206, ../scss/addcar.scss */
+/* line 191, ../scss/addcar.scss */
 #response {
   font-size: 11px;
   text-align: center;
@@ -5678,12 +5662,12 @@ body {
   color: red;
 }
 
-/* line 213, ../scss/addcar.scss */
+/* line 198, ../scss/addcar.scss */
 .large-3 {
   padding-bottom: 1px;
 }
 
-/* line 217, ../scss/addcar.scss */
+/* line 202, ../scss/addcar.scss */
 .loginshadow {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
@@ -5691,26 +5675,26 @@ body {
   background: #202020;
   background-color: rgba(0, 0, 0, 0.3);
   margin: auto;
-  margin-top: 10%;
+  margin-top: 1%;
   height: auto;
   padding: 10px;
   padding-bottom: 1px;
   padding-top: 12px;
-  width: 60%;
+  width: 25%;
 }
 
-/* line 233, ../scss/addcar.scss */
+/* line 218, ../scss/addcar.scss */
 label {
   text-align: left !important;
   width: auto !important;
 }
 
-/* line 237, ../scss/addcar.scss */
+/* line 222, ../scss/addcar.scss */
 .controls {
   margin-left: 0px !important;
 }
 
-/* line 240, ../scss/addcar.scss */
+/* line 225, ../scss/addcar.scss */
 .control-group {
   margin-bottom: 0px !important;
 }

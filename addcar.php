@@ -7,7 +7,7 @@ if (!$loggedin && !isset($id)) {
     header('Location: login.php');
     return;
 }
-var_dump($id);
+//var_dump($id);
 
 $newcar = false;
 
@@ -41,16 +41,17 @@ if ( count($_POST) > 0) {
 		$notfound = false;
 		$car = array('car' => $_POST['vehicleID']);
 
-		$sql = "SELECT make, model, licensePlate FROM Vehicle WHERE vehicleID = :car;";
+		$sql = "SELECT userID, make, model, licensePlate FROM Vehicle WHERE vehicleID = :car;";
 
 		
 	    $stmt = $db->prepare($sql);
 
 	    $stmt->execute($car);
 	    $result = $stmt->fetchAll();
-	    var_dump($result);
-	    
-	    if (count($result)==1) {
+
+	    var_dump($result[0]['userID']);
+	    if (count($result)>0 && $result[0]['userID']==1) {
+	    	
 	    	
 		$data = array(
 
@@ -159,7 +160,13 @@ if($newcar) {
 	                   
 	                <h2 style="color:lightgray; text-align:center">Please Enter Your Car & Device Info</h2> 
 	                
-	               
+	               <?php if($notfound){ ?>
+
+	               		<h4 style="color:red; background-color:lightgray; text-align:center">Please check your CarSpy Key and try again.</h4>
+
+
+
+	               <?php }?>
 			        <div class="control-group">
 					    <label class="control-label" for="vehicleID">CarSpy Key</label>
 					    <div class="controls">

@@ -16,10 +16,7 @@ $sql = "SELECT
 			date,
 			time,
 			lat,
-			`long`,
-			path1,
-			path2,
-			path3
+			`long`
 		FROM Session
 		WHERE vehicleID = {$car} AND date = {$date};";
 
@@ -38,10 +35,7 @@ for ($i = count($result) - 1; $i >= 0; $i--){
  	'time' => $result[$i]['time'],
  	'location' => array(
  		'latitude' => $result[$i]['lat'],
- 		'longitude' => $result[$i]['long']),
- 	'path1' => $result[$i]['path1'],
- 	'path2' => $result[$i]['path2'],
- 	'path3' => $result[$i]['path3']
+ 		'longitude' => $result[$i]['long'])
  	// ,
  	// 'path1' => $result[$i]['path1'],
  	// 'path2' => $result[$i]['path2'],

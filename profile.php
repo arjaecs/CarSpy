@@ -271,7 +271,7 @@ if (count($_POST) > 0) {
                           <ul class="title-area">
                             <!-- Title Area -->
                             <li class="name">
-                              <h1><a href="#">Device ID</a></h1>
+                              <h1><a href="#">CarSpy Key</a></h1>
                             </li>
                             <li class="divider"></li>
                             <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone 
@@ -281,17 +281,24 @@ if (count($_POST) > 0) {
                           <section class="top-bar-section">
                                 
                                 <ul class="left">
-                                  <li class="divider"></li>
+                                  <!-- <li class="divider"></li>
                                   <li class="active"><a href="#"><?php echo $car['vehicleID'] ?></a></li>
                                   <li class="divider"></li>
-                                  
+                                   -->
 
                                 
                                     <?php
                                         if($manyCars){
-                                            echo "<li><a href='#'>{$car2['vehicleID']}</a></li>
-                                  <li class='divider'></li>";}
-                                        
+                                           // echo "<li><a href='#'>{$car2['vehicleID']}</a></li>
+                                 // <li class='divider'></li>";}
+                                  			foreach ($vehicles as $key) {
+                                  				echo "<li class='divider'></li>
+                                  				<li class='active'><a href='#'>{$key['vehicleID']}</a></li>
+                                  <li class='divider'></li>
+
+                                  ";
+                                  			}
+                                        }
                                         ?>
 
                               </ul>
