@@ -3,7 +3,7 @@ require_once('db.php');
 
 $session = $_GET['sessionID']; //$_GET['sessionID'];
 
-
+$data = array('session' => $session);
 
 $db = db::getInstance();
 
@@ -12,11 +12,12 @@ $sql = "SELECT picID,
 						sessionID,
 						path
 						FROM Picture
-		WHERE sessionID = {$session};";
+		WHERE sessionID = :session;";				
+		//WHERE sessionID = {$session};
 
 
 $stmt = $db->prepare($sql);
-$stmt->execute();
+$stmt->execute($data);
 
 $result = $stmt->fetchAll();
 

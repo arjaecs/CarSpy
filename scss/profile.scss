@@ -12,6 +12,7 @@ $graybg: #2f2f2f;
 
 body{
 	  background: $graybg; 
+	  font-family: 'Belleza';
 
 
 }
@@ -21,13 +22,16 @@ span{
 
 #topnav
 {
-	z-index:999;width:100%;
+	z-index:999;
+	width:100%;
 	background:#232323 url(/img/linenbg.jpg);
 	-moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
 	-webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
 	-o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
 	box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
-	height: 85px;
+	height: 100%;
+	padding-top: 1px;
+	padding-bottom: 1%;
 }
 	
 
@@ -60,9 +64,19 @@ span{
 	color: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
 	color: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-	margin-top:-45px; margin-right:50px;
-	
+	//font-size: 1.35em;
+	//margin-top: 1%;
+	 
+	margin-right:50px;
+	margin-top: -50px;
+	font-size: 24px;
+	margin-bottom: 5px;
+	font-family: 'Belleza', sans-serif;
+}
 
+#topnav h3:hover
+{
+	font-style: underline;
 }
 
 #topnav #buttonnav-col
@@ -81,7 +95,7 @@ span{
 box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
 background: #202020;
 background-color: rgba(0, 0, 0, 0.3);
-margin-top:5%;
+margin-top:3%;
 padding: 10px;
 
 }
@@ -173,6 +187,12 @@ select{
 	padding:10px;
 }
 
+table tbody tr{
+
+font-family: 'Gruppo';
+font-weight: bold;
+}
+
 table tbody tr> :first-child {
 
 color: #999;
@@ -182,9 +202,20 @@ word-wrap: break-word;
 
 
 }
+li h1{
+	font-family: 'Gruppo';
+font-weight: bold;
+}
+
+
 
 table{
 	width:100%;
+}
+#modalHeader{
+	font-family: 'Gruppo';
+font-weight: bold;
+text-align: center;
 }
 
 #username{

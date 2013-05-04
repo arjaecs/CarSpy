@@ -5455,7 +5455,7 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 27, ../scss/app.scss */
+/* line 28, ../scss/app.scss */
 body {
   background: #ffa84c;
   /* Old browsers */
@@ -5473,14 +5473,15 @@ body {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=1 );
   /* IE6-9 fallback on horizontal gradient */
+  font-family: 'Gruppo';
 }
 
-/* line 39, ../scss/app.scss */
+/* line 40, ../scss/app.scss */
 span {
   display: inline;
 }
 
-/* line 44, ../scss/app.scss */
+/* line 45, ../scss/app.scss */
 #topnav {
   z-index: 999;
   width: 100%;
@@ -5489,10 +5490,12 @@ span {
   -webkit-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
   -o-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
-  height: 85px;
+  height: 100%;
+  padding-top: 1px;
+  padding-bottom: 1%;
 }
 
-/* line 57, ../scss/app.scss */
+/* line 61, ../scss/app.scss */
 #topnav h1 {
   color: #ffffff;
   /* Old browsers */
@@ -5512,7 +5515,7 @@ span {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 72, ../scss/app.scss */
+/* line 76, ../scss/app.scss */
 #topnav h3 {
   text-align: right;
   color: #ffffff;
@@ -5531,36 +5534,54 @@ span {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
   /* IE6-9 fallback on horizontal gradient */
-  margin-top: -60px;
   margin-right: 50px;
+  margin-top: -50px;
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-family: "Gruppo", sans-serif;
 }
 
-/* line 91, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
+#topnav h3:hover {
+  font-style: underline;
+}
+
+/* line 103, ../scss/app.scss */
+#topnav h3 a {
+  color: #ff7b0d;
+}
+
+/* line 107, ../scss/app.scss */
+#username:hover {
+  font-style: underline;
+}
+
+/* line 112, ../scss/app.scss */
 #topnav #buttonnav-col {
   background: url(/img/linenbg.jpg);
 }
 
-/* line 96, ../scss/app.scss */
+/* line 117, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 100, ../scss/app.scss */
+/* line 121, ../scss/app.scss */
 .container {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   background: #202020;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: black;
 }
 
-/* line 110, ../scss/app.scss */
+/* line 131, ../scss/app.scss */
 .mapcase {
   padding: 5px;
 }
 
-/* line 117, ../scss/app.scss */
+/* line 138, ../scss/app.scss */
 #map_canvas {
   height: 290px;
   position: relative;
@@ -5569,30 +5590,7 @@ span {
   -webkit-transform: translateZ(0);
 }
 
-/* line 129, ../scss/app.scss */
-.roundabout-holder {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  height: 250px;
-  width: 1000px;
-}
-
-/* line 136, ../scss/app.scss */
-.roundabout-moveable-item {
-  height: 240px;
-  width: 320px;
-  cursor: pointer;
-  background-color: #ccc;
-  border: 1px solid #999999;
-}
-
-/* line 143, ../scss/app.scss */
-.roundabout-in-focus {
-  cursor: auto;
-}
-
-/* line 147, ../scss/app.scss */
+/* line 149, ../scss/app.scss */
 .ribbon-before {
   position: absolute;
   left: 1px;
@@ -5602,7 +5600,7 @@ span {
   margin-top: -31px;
 }
 
-/* line 156, ../scss/app.scss */
+/* line 158, ../scss/app.scss */
 .ribbon-after {
   position: absolute;
   left: 1px;
@@ -5614,7 +5612,7 @@ span {
   background: url(/img/ribbon-after.png);
 }
 
-/* line 170, ../scss/app.scss */
+/* line 172, ../scss/app.scss */
 .panel {
   -webkit-box-shadow: 0px 0px 5px #333333;
   -moz-box-shadow: 0px 0px 5px #333333;
@@ -5623,7 +5621,7 @@ span {
   margin-bottom: 0px;
 }
 
-/* line 178, ../scss/app.scss */
+/* line 180, ../scss/app.scss */
 .firstpanel {
   border-style: solid;
   border-width: 1px;
@@ -5656,7 +5654,7 @@ span {
   line-height: 1.4;
 }
 
-/* line 184, ../scss/app.scss */
+/* line 186, ../scss/app.scss */
 .infopanel {
   border-style: solid;
   border-width: 1px;
@@ -5688,13 +5686,13 @@ span {
   line-height: 1.4;
 }
 
-/* line 189, ../scss/app.scss */
+/* line 191, ../scss/app.scss */
 #cslogo {
   padding: 11px;
   margin-left: 30px;
 }
 
-/* line 195, ../scss/app.scss */
+/* line 197, ../scss/app.scss */
 select {
   background-color: #2f2f2f;
   height: 30px;
@@ -5702,7 +5700,7 @@ select {
   margin-bottom: 10px;
 }
 
-/* line 207, ../scss/app.scss */
+/* line 209, ../scss/app.scss */
 .spacer {
   width: 1020px !important;
   margin-top: -5px;
@@ -5710,43 +5708,41 @@ select {
   margin-right: -10px;
 }
 
-/* line 215, ../scss/app.scss */
+/* line 217, ../scss/app.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 221, ../scss/app.scss */
+/* line 223, ../scss/app.scss */
 .user {
   width: 110px;
 }
 
-/* line 227, ../scss/app.scss */
+/* line 229, ../scss/app.scss */
 .panel > :first-child {
   margin-top: -31px !important;
 }
 
-/* line 231, ../scss/app.scss */
+/* line 233, ../scss/app.scss */
 .welcome {
   margin-top: -65px;
   margin-right: 25px;
 }
 
-/* line 235, ../scss/app.scss */
+/* line 237, ../scss/app.scss */
 #pics {
   display: inline-block;
-  background-color: #A5BFDD;
-  margin-top: 25px;
-  margin-left: 12px;
+  margin-bottom: 0px;
 }
 
-/* line 247, ../scss/app.scss */
+/* line 243, ../scss/app.scss */
 #pics li {
   display: inline;
-  margin-left: 5px;
+  margin-left: 7px;
 }
 
-/* line 253, ../scss/app.scss */
+/* line 249, ../scss/app.scss */
 .selects {
   background-color: #2f2f2f;
   margin-top: 4px;
@@ -5758,21 +5754,72 @@ select {
   float: left;
   padding-left: 2%;
   padding-top: 3%;
+  font-family: 'Gruppo';
+  text-align: center;
 }
 
-/* line 267, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 .theMap {
   width: 74% !important;
   margin: 4px 0px 0px 0px;
   padding: 0px !important;
 }
 
-/* line 274, ../scss/app.scss */
+/* line 272, ../scss/app.scss */
 .dynamo {
   margin-bottom: -8px;
 }
 
-/* line 277, ../scss/app.scss */
+/* line 275, ../scss/app.scss */
 h5 {
   color: lightgray;
+  font-family: 'Gruppo';
+}
+
+/* line 281, ../scss/app.scss */
+#firstHeading {
+  font-family: 'Gruppo';
+}
+
+/* line 285, ../scss/app.scss */
+.footer {
+  height: 30%;
+  width: 100%;
+  margin-bottom: 0px;
+  background-color: #2f2f2f;
+  position: absolute;
+  padding-top: 3%;
+}
+
+/* line 293, ../scss/app.scss */
+.footer span {
+  margin-top: 1.5%;
+  width: 50%;
+  float: right;
+}
+
+/* line 299, ../scss/app.scss */
+.footer div ul li {
+  display: inline;
+}
+
+/* line 303, ../scss/app.scss */
+.footer div ul li:hover {
+  text-decoration: underline;
+}
+
+/* line 308, ../scss/app.scss */
+#vigilogo {
+  float: right;
+  margin-right: 4%;
+}
+
+/* line 313, ../scss/app.scss */
+#bodyContent a {
+  font-family: 'Belleza';
+}
+
+/* line 316, ../scss/app.scss */
+#bodyContent a:hover {
+  text-decoration: underline;
 }

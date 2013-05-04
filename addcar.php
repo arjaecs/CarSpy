@@ -10,9 +10,11 @@ if (!$loggedin && !isset($id)) {
 //var_dump($id);
 
 $newcar = false;
+$errors = array();
 
 $db = db::getInstance();
 
+// Grab Currently logged user
 $sql = "SELECT
     			userID,
                 password,
@@ -49,11 +51,11 @@ if ( count($_POST) > 0) {
 	    $stmt->execute($car);
 	    $result = $stmt->fetchAll();
 
-	    var_dump($result[0]['userID']);
-	    if (count($result)>0 && $result[0]['userID']==1) {
-	    	
-	    	
-		$data = array(
+	    
+
+	    if ((count($result)>0 && $result[0]['userID']==1) || ($result[0]['userID'] == $user['userID'])) {
+
+	    	$data = array(
 
         	'vehicleID' => $_POST['vehicleID'],
             'userID' => $id,
@@ -68,28 +70,95 @@ if ( count($_POST) > 0) {
         	);
 
 
-		$carsql = "UPDATE Vehicle
-	            SET
-	                
-                userID = :userID,
-                make = :make,
-                model = :model,
-                color = :color,
-                year = :year,
-                licensePlate = :licensePlate,
-                owner = :owner
-                
-                WHERE vehicleID = :vehicleID;";
+	    	if ($data['make'] != "") {  
+			    $data['make'] = filter_var($data['make'], FILTER_SANITIZE_STRING);  
+			    if ($data['make'] == "") {  
+			        $errors[] = 'Please enter a valid Car Make.';  
+			    }  
+			} else {  
+			    $errors[] = 'Please enter a Car Make.';  
+			}  
+			  
+			if ($data['model'] != "") {  
+			    $data['model'] = filter_var($data['model'], FILTER_SANITIZE_STRING);  
+			    if ($data['model'] == "") {  
+			        $errors[] = 'Please enter a valid Car Model.';  
+			    }  
+			} else {  
+			    $errors[] = 'Please enter a Car Model.';  
+			} 
 
-	    $stmt = $db->prepare($carsql);
-	    $stmt->execute($data);
-	    $lastID=$db->lastInsertId();
-	    $newcar = true;
-		//global $id;
+			if ($data['color'] != "") {  
+			    $data['color'] = filter_var($data['color'], FILTER_SANITIZE_STRING);  
+			    if ($data['color'] == "") {  
+			        $errors[] = 'Please enter a valid Car Color.';  
+			    }  
+			} else {  
+			    $errors[] = 'Please enter a Car Color.';  
+			} 
+
+			if ($data['year'] != "") {  
+			    $data['year'] = filter_var($data['year'], FILTER_SANITIZE_NUMBER_INT);  
+			    $num_length = strlen((string)$data['year']);
+				if($num_length > 4 || $num_length < 2 ) {
+				    $errors[] = 'Please enter a Car Year.'; 
+				} 
+
+			} else {  
+			    $errors[] = 'Please enter a Car Year.';  
+			} 
+
+			if ($data['licensePlate'] != "") {  
+			    $data['licensePlate'] = filter_var($data['licensePlate'], FILTER_SANITIZE_STRING);  
+			    if ($data['licensePlate'] == "") {  
+			        $errors[] = 'Please enter a valid License Plate.';  
+			    }  
+			} else {  
+			    $errors[] = 'Please enter a License Plate.';  
+			} 
+
+			if ($data['owner'] != "") {  
+			    $data['owner'] = filter_var($data['owner'], FILTER_SANITIZE_STRING);  
+			    if ($data['owner'] == "") {  
+			        $errors[] = 'Please enter a valid Car Owner.';  
+			    }  
+			} else {  
+			    $errors[] = 'Please enter a Car Owner.';  
+			} 
+			
+		
+			if (empty($errors)) {
+			    
+
+				$carsql = "UPDATE Vehicle
+			            SET
+			                
+		                userID = :userID,
+		                make = :make,
+		                model = :model,
+		                color = :color,
+		                year = :year,
+		                licensePlate = :licensePlate,
+		                owner = :owner
+		                
+		                WHERE vehicleID = :vehicleID;";
+
+			    $stmt = $db->prepare($carsql);
+			    $stmt->execute($data);
+			    $lastID=$db->lastInsertId();
+			    $newcar = true;
+			}
+			// else {
+			//     // otherwise display validation errors
+			//     $errors = array_map(function($v){return '<p class="error">' . $v . '</p>';}, $errors);
+			//     echo implode('', $errors);
+			// }
+		
 
 		}
 		else{
 		$notfound = true;
+		$errors[]= 'Please check your CarSpy Key and try again.';
 		}
 	
 	
@@ -117,6 +186,7 @@ if($newcar) {
 
     <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Metrophobic|Belleza|Gruppo' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="css/normalize.css" />
   
   <link rel="stylesheet" href="css/addcar.css" />
@@ -129,22 +199,25 @@ if($newcar) {
 
 </head>
 <body>
+	
 	<div id="topnav">
 		 <div id="cslogo">
-		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
+		 	<a href="/"><img  src="img/CarSpyGray3.png"></a>
 		 </div>
 		 <div class="small-6 columns">
 			<span>
-				<h3 >Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
-				
+				<h3 style="margin-bottom: 5px;">Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				 
+				 <!-- <h3 ><a href="profile.php" class="namebutton"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				 -->
 			</span>
-			<span style="float: right; margin-top: -20px; margin-right: 50px;">
+			<span style="float: right; margin-top: -15px; margin-right: 50px;">
 				
 			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
-                                <input type="hidden" value="logout" name="loggedOut" />
-                                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
-                                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
-                            </form>
+                <input type="hidden" value="logout" name="loggedOut" />
+                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
+                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; font-size: 12px; color: gray; ">Log Out</a>
+            </form>
 
 			</span>
 		
@@ -152,21 +225,29 @@ if($newcar) {
 
 	</div>
 	
+	
 	<div class= "loginshadow">
 		    
 		    <div class="large-3 ">
 		    	
 			    <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="addCar" class="form-horizontal">
 	                   
-	                <h2 style="color:lightgray; text-align:center">Please Enter Your Car & Device Info</h2> 
+	                <h2 style="color:lightgray; font-family: 'Gruppo';font-weight: bold;text-align: center;">Please Enter Your Car & Device Info</h2> 
 	                
-	               <?php if($notfound){ ?>
-
-	               		<h4 style="color:red; background-color:lightgray; text-align:center">Please check your CarSpy Key and try again.</h4>
+	               
 
 
 
-	               <?php }?>
+	               <?php 
+
+	               		if (!empty($errors)) {
+	               			foreach ($errors as $msg ) {
+	               				echo "<h6 style='color:red; background-color:lightgray; text-align:center'>".$msg."</h6>";
+	               			}
+	               		}
+
+
+	               ?>
 			        <div class="control-group">
 					    <label class="control-label" for="vehicleID">CarSpy Key</label>
 					    <div class="controls">
@@ -239,15 +320,7 @@ if($newcar) {
   </script>
  -->
   	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  	<!-- 
-  	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-     <script>
-        $(function() {
-            $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2Y" });
-            $( "#datepicker" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-        });
-    </script>
-  	 -->
+  	
   	<script src="js/foundation/foundation.js"></script>
 
 	

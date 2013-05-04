@@ -137,9 +137,9 @@ if(!isset($user)){
 		 <div id="cslogo">
 		 	<a href="/"><img  src="img/CarSpyGray3.png"></a>
 		 </div>
-		 <div class="small-6 columns">
+		 <div >
 			<span>
-				<h3 style="margin-bottom: 5px;">Welcome, <a id="username" href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				<h3 style="margin-bottom: 5px;">Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				 
 				 <!-- <h3 ><a href="profile.php" class="namebutton"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
 				 -->
@@ -158,8 +158,8 @@ if(!isset($user)){
 
 	</div>
 	
-	<div class="row container dynamo">
-		<div class="large-3 selects" >
+	<div>
+		<div >
 
 			<div style="text-align:center;">
 					<h5>Choose a Car:</h5> 
@@ -180,51 +180,44 @@ if(!isset($user)){
 					</select>			
 			</div>
 		</div>
-		<div class="large-9 theMap columns">
-			<div style="height:300px;  ">
-				<div id="map_canvas"></div>
-			</div>
-		</div>
-	</div>
-
-	<div class="row container">
-		<!-- <div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
-			<div class="ribbon-before"></div>
-			<div class="ribbon-after"></div>
-			
- -->	<div class="large-12 panel" style="margin: 0px; padding: 10px;">		
- 			<h3 style="font-family: 'Gruppo'; text-align: center; padding: 0px; margin: 0px;">SpyPics</h3>
-		</div>
-	</div>
-
-	<div class="row container" style="padding: 5px 5px 0px 5px;">
-		
- 		<div class="large-12" >
+		<div>
 
  			<ul id="pics" style="display:inline-block;">
 
 			</ul>
 
  		</div>
-
-
-	</div>
-	<!-- <div class="footer">
-		<div style="text-align:center;">
-			<ul>
-				<li><a href="profile.php">Profile</a></li>
-				<li><a href="http://carspycapstone.wordpress.com/"><img src="img/vigilogo.png"></a></li>
-				<li><a href="http://carspycapstone.wordpress.com/">About Us</a></li>
-				
-				
-			</ul>
-		</div>
 		
 	</div>
- -->
- <div class="footer">
+
+	
+		<!-- <div class="large-12 panel" style="width:102%; margin-top:-5px; margin-left:-10px; margin-right:-10px;">
+			<div class="ribbon-before"></div>
+			<div class="ribbon-after"></div>
+			
+ -->	
+	
+	<div style="margin: 0px; padding: 10px;">		
+ 			<h3 style="font-family: 'Gruppo'; text-align: center; padding: 0px; margin: 0px;">SpyPics</h3>
+		</div>
+
+	
+		
+ 		
+		
+			<div style="height:300px;  ">
+				<div id="map_canvas"></div>
+			</div>
+		
+
+
+	<div class="footer" style="background:#232323 url(/img/linenbg.jpg);
+	-moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	-o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
+	box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);width:100%;position:absolute;" >
 		<div style="text-align:center;">
-			<ul>
+			<ul style="margin-right:4%;">
 				<li style="display:inline;"><a style="color:orangered;margin-right:5px;" href="profile.php">Profile</a></li>
 				<li style="display:inline;"><a style="color:orangered;margin-right:5px;">|</a></li>
 				<li style="display:inline;"><a style="color:orangered;" href="http://carspycapstone.wordpress.com/"><img src="img/vigilogo.png"></a></li>
@@ -238,6 +231,7 @@ if(!isset($user)){
 		</div>
 		
 	</div>
+
 <script>
 		var drawMap = function(latitude, longitude) {
 			var coords = new google.maps.LatLng(latitude, longitude);
@@ -257,38 +251,16 @@ if(!isset($user)){
 
 		// Map marker label content
 		var contentString = function(address,coords) {
-			
 
-			
+			var where = '<div id="infoBOX">'+
+			    '<div id="siteNotice">'+
+			    '</div>'+
+			    '<h4 id="firstHeading" class="firstHeading" style="text-align:center;">CarSpy Location</h4>'+
+			    '<div id="bodyContent">'+
+			    '<a href="http://maps.google.com/?q='+coords+'">'+address+'</a>'+
 
-				var where = '<div id="infoBOX">'+
-				    '<div id="siteNotice">'+
-				    '</div>'+
-				    '<h4 id="firstHeading" class="firstHeading" style="text-align:center;">CarSpy Location</h4>'+
-				    '<div id="bodyContent">'+
-				    '<a style="color:orangered;" href="http://maps.google.com/?q='+coords+'">'+address+'</a>'+
-
-				    '</div>'+
-				    '</div>';
-
-    	return where;}
-
-
-    	// Map marker label content
-		var errorString = function() {
-			
-
-			
-
-				var where = '<div id="infoBOX">'+
-				    '<div id="siteNotice">'+
-				    '</div>'+
-				    '<h4 id="firstHeading" class="firstHeading" style="text-align:center;">CarSpy Location</h4>'+
-				    '<div id="bodyContent" style="text-align:center;">'+
-				    '<a style="color:red; text-align:center;">Location Unavailable</a>'+
-
-				    '</div>'+
-				    '</div>';
+			    '</div>'+
+			    '</div>';
 
     	return where;}
 
@@ -308,16 +280,7 @@ if(!isset($user)){
 					infowindow.open(map, marker);
 				}
 			} else {
-				//alert("Geocoder failed due to: " + status);
-				map.setZoom(11);
-					marker = new google.maps.Marker({
-						position: coords,
-						map: map
-					});
-					//infowindow.setContent(results[1].formatted_address);
-					infowindow.setContent(errorString());
-					infowindow.open(map, marker);
-
+				alert("Geocoder failed due to: " + status);
 			}
 		});
 	};
@@ -389,7 +352,7 @@ if(!isset($user)){
 
 	var updatePictures = function(data) {
 		$.each(data, function(index, value){
-			$('#pics').append('<li style="display:inline-block;"><img src="' + value.path +'" alt="spypics/CarSpy2.jpg"></li>');
+			$('#pics').append('<li style="display:inline-block;"><img src="' + value.path +'"></li>');
 		});
 	};
 

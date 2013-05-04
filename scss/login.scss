@@ -11,6 +11,7 @@ $graybg: #2f2f2f;
 body{
 	
   background: $graybg; 
+  font-family: 'Gruppo';
 
 }
 
@@ -199,4 +200,6 @@ padding-bottom: 1px;
 padding-top: 12px;
 }
 
-
+#myModalLabel, #resetPassword{
+  font-family: 'Gruppo';
+}

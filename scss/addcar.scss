@@ -11,19 +11,24 @@ $graybg: #2f2f2f;
 body{
 	
   background: $graybg; 
+  font-family: 'Gruppo';
+
 
 }
 
 
 #topnav
 {
-  z-index:999;width:100%;
+  z-index:999;
+  width:100%;
   background:#232323 url(/img/linenbg.jpg);
   -moz-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
   -o-box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
   box-shadow:0 0 10px 3px rgba(0, 0, 0, 0.5);
-  height: 85px;
+  height: 100%;
+  padding-top: 1px;
+  padding-bottom: 1%;
 }
   
 
@@ -58,8 +63,17 @@ body{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
   //font-size: 1.35em;
   //margin-top: 1%;
-  margin-top:-60px; 
+   
   margin-right:50px;
+  margin-top: -50px;
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-family: 'Gruppo';
+}
+
+#topnav h3:hover
+{
+  font-style: underline;
 }
 
 #topnav #buttonnav-col
@@ -77,13 +91,6 @@ body{
   padding: 11px;
 margin-left: 30px;
 }
-
-
-#topnav #buttonnav
-{
-  width:285px;margin:0 auto
-}
-
 
 
 .user{

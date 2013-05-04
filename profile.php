@@ -24,7 +24,8 @@ if (!$loggedin && !isset($id)) {
                     lastName,
                     email,
                     phone,
-                    DATE_FORMAT(birth, '%W, %M %e, %Y') as birth,
+                    DATE_FORMAT(birth, '%W, %M %e, %Y') as bday,
+                    birth,
                     address,
                     gender
             FROM User
@@ -83,13 +84,26 @@ if (count($_POST) > 0) {
 
 	if($_POST['submit'] == 'edit'){
 	    
+	    $psw= md5 ( $_POST['password'] );
+
+		// $data = array(
+		// 				'password' => $psw,
+  //                   'firstName' => $_POST['regFirstName'],
+  //                   'lastName' => $_POST['regLastName'],
+  //                   'email' => $_POST['regMail'],
+  //                   'phone' => $_POST['regPhone'],
+  //                   'birth' => $_POST['regDate'],
+  //                   'address' =>  $_POST['regAddress'],
+  //                   'gender' => $_POST['regGender']
+		// 	);
 
 		$sql = "UPDATE User
 	            SET
 	                firstName = '{$_POST['firstName']}',
 	                lastName = '{$_POST['lastName']}',
 	                email = '{$_POST['email']}',
-	                birth = '{$_POST['birth']}',
+	                password = '{$psw}',
+	                birth = '{$_POST['date']}',
 	                gender = '{$_POST['gender']}',
 	                phone = '{$_POST['phone']}',
 	                address = '{$_POST['address']}'
@@ -99,29 +113,32 @@ if (count($_POST) > 0) {
 	    $stmt = $db->prepare($sql);
 	    $stmt->execute();
 
+	    header('Location: profile.php');
+		return;
+
 	    }
-	else{
+	// else{
 
-		$sql = "UPDATE Vehicle
-	            SET
+	// 	$sql = "UPDATE Vehicle
+	//             SET
 	                
-                userID = '{$id}',
-                make = '{$_POST['make']}',
-                model = '{$_POST['model']}',
-                color = '{$_POST['color']}',
-                year = '{$_POST['year']}',
-                licensePlate = '{$_POST['licensePlate']}',
-                owner = '{$_POST['owner']}'
+ //                userID = '{$id}',
+ //                make = '{$_POST['make']}',
+ //                model = '{$_POST['model']}',
+ //                color = '{$_POST['color']}',
+ //                year = '{$_POST['year']}',
+ //                licensePlate = '{$_POST['licensePlate']}',
+ //                owner = '{$_POST['owner']}'
                 
-                WHERE vehicleID = '{$_POST['vehicleID']}';";
+ //                WHERE vehicleID = '{$_POST['vehicleID']}';";
 
-	    $stmt = $db->prepare($sql);
-	    $stmt->execute();
+	//     $stmt = $db->prepare($sql);
+	//     $stmt->execute();
 
 
 	
 		
-	}
+	// }
 	
 }
 
@@ -142,7 +159,7 @@ if (count($_POST) > 0) {
   <link rel="stylesheet" href="css/normalize.css" />
   
   <link rel="stylesheet" href="css/profile.css" />
-  
+  <link href='http://fonts.googleapis.com/css?family=Metrophobic|Belleza|Gruppo' rel='stylesheet' type='text/css'>
 
   <script src="js/vendor/custom.modernizr.js"></script>
 
@@ -151,29 +168,26 @@ if (count($_POST) > 0) {
 
 	<div id="topnav">
 		 <div id="cslogo">
-		 	<a href="/"><img  src="img/CarSpyGray2.png"></a>
-
+		 	<a href="/"><img  src="img/CarSpyGray3.png"></a>
+		 </div>
+		 <div class="small-6 columns">
 			<span>
-				<h3 >Welcome, <a class="dropdown-toggle" role="button" data-toggle="dropdown" data-target="" href="profile.php" id="username"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				<h3 style="margin-bottom: 5px; font-family: 'Gruppo';">Welcome, <a href="profile.php" style="color: #ff7b0d;"><?php echo $user['firstName'] ?> <?php echo $user['lastName'] ?></a></h3>
+				 
+			</span>
+			<span style="float: right; margin-top: -15px; margin-right: 50px;">
 				
-			</span>
-			<span style="float: right; margin-right: 50px; margin-top: -20px;">
-				<!-- <a href="#" onclick="this.parentNode.submit()"><p style="text-align: right; size: 6px; color: gray; margin-right: 50px; margin-top: -20px;">Log Out</p>
-
-
-			</a>
- -->
 			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
-                                <input type="hidden" value="logout" name="loggedOut" />
-                                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
-                                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; size: 6px; color: gray; ">Log Out</a>
-                            </form>
+                <input type="hidden" value="logout" name="loggedOut" />
+                <input type="hidden" style="color: #32CD32; text-decoration: underline;" value="Log Out" />
+                <a href="#" onclick="this.parentNode.submit()" style="text-align: right; font-size: 12px; color: gray; ">Log Out</a>
+            </form>
 
 			</span>
 		
+		</div> 
 
-		</div>
-		
+	</div>
 		
 		    
 		    
@@ -242,7 +256,7 @@ if (count($_POST) > 0) {
 								</tr>
 								<tr>
 									<td>Date of Birth</td>
-									<td><?php echo $user['birth'] ?></td>
+									<td><?php echo $user['bday'] ?></td>
 									
 								</tr>
 								<tr>
@@ -293,7 +307,7 @@ if (count($_POST) > 0) {
                                  // <li class='divider'></li>";}
                                   			foreach ($vehicles as $key) {
                                   				echo "<li class='divider'></li>
-                                  				<li class='active'><a href='#'>{$key['vehicleID']}</a></li>
+                                  				<li class='active' data-key='{$key['vehicleID']}'><a href='#'>{$key['vehicleID']}</a></li>
                                   <li class='divider'></li>
 
                                   ";
@@ -387,7 +401,7 @@ if (count($_POST) > 0) {
 		    	<div id="edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="editProfile" aria-hidden="true">
 						 <div class="modal-header">
 						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						    <h3 id="editProfile">Edit Profile Info</h3>
+						    <h3 id="modalHeader">Edit Profile Info</h3>
 						  </div>
 
 						  <div class="modal-body">
@@ -454,77 +468,83 @@ if (count($_POST) > 0) {
 						  </div>
 					</div>
 				</form>
-				<form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" id="addCar">
-					<div id="add" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addCar" aria-hidden="true">
-						 <div class="modal-header">
-						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-						    <h3 id="addCar">Add a Device</h3>
-						  </div>
-
-						  <div class="modal-body">
-						    
-						    <div class="control-group">
-							    <label class="control-label" for="vehicleID">Device ID</label>
-							    <div class="controls">
-							      <input type="text" id="vehicleID" name="vehicleID" placeholder="Device ID" required="required">
-							    </div>
-							  </div>
-							  <div class="control-group">
-							    <label class="control-label" for="make">Make</label>
-							    <div class="controls">
-							      <input type="text" id="make" name="make" placeholder="Toyota" required="required">
-							    </div>
-							  </div>	
-							  <div class="control-group">
-							    <label class="control-label" for="model">Model</label>
-							    <div class="controls">
-							      <input id="Model" name="Model" type="text" placeholder="Prius" required="required">
-							      
-							  	</div>
-								</div>
-
-							  <!-- add button to email password change instead -->
-							  <div class="control-group">
-							    <label class="control-label" for="color">Color</label>
-							    <div class="controls">
-							      <input type="text" id="color" name="color" placeholder="Green" required="required">
-							    </div>
-							  </div>
-
-							  <div class="control-group">
-							    <label class="control-label" for="year">Year</label>
-							    <div class="controls">
-							    	<input type="text" id="year" name="year" placeholder="2005" required="required">
-							    </div>
-							  </div>
-							  <div class="control-group">
-							    <label class="control-label" for="licensePlate">License</label>
-							    <div class="controls">
-							      <input type="text" id="licensePlate" name="licensePlate" placeholder="SPR-ING">
-							    </div>
-							  </div>
-							  <div class="control-group">
-							    <label class="control-label" for="owner">Owner</label>
-							    <div class="controls">
-							      <input type="text" id="owner" name="owner" placeholder="Juan del Campo"/>
-							    </div>
-							  </div>
-							  
-						  </div>
-						  <div class="modal-footer">
-						    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-						    <button type='submit' name="submit" value="add" class="btn btn-warning btn-primary">Add Device</button>
-						  </div>
-					</div>
-
-
-				</form>
+				
 		    </div>
 
 	</div>
 
 	 <!-- /container --> 
 
+	<script type="text/javascript" language="javascript">
+   function username_validation(name){
+    var valid_name =/^([a-zA-Z]{1})[a-zA-Z0-9._]{5,30}$/;
+    if(!valid_name.test(name)) 
+     {         
+         return false; 
+     } 
+     else 
+     { 
+         return true;
+     } 
+    
+	}
+	function email_validation(email){
+	var valid_email = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+		if(!valid_email.test(email)) 
+	     {         
+	         return false; 
+	     } 
+	     else 
+	     { 
+	         return true;
+	     }
+	    
+	}
+	function phone_validation(phone){
+		var valid_phone = /^\(?([0-9]{3})\)?[-.+ ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+		if(!valid_phone.test(phone)) 
+	     {         
+	         return false; 
+	     } 
+	     else 
+	     { 
+	         return true;
+	     }
+	    
+	}
+	function password_validation(pass, uname){
+		if(pass.length < 6 || pass == uname) 
+	     {         
+	         return false; 
+	     } 
+	     else 
+	     { 
+	         return true;
+	     }
+
+	}
+	function conpassword_validation(conpass, res){
+	  	if(conpass != res) 
+	     {         
+	         return false; 
+	     } 
+	     else 
+	     { 
+	         return true;
+	     }
+	  
+	}
+    $(document).ready(function() {
+
+      $("#button").click(function(){
+         $(".target").effect( "highlight", 
+          {color:"#669966"}, 3000 );
+      });
+
+   });
+
+
+   </script>
 
   <script>
   document.write('<script src=' +
@@ -535,35 +555,6 @@ if (count($_POST) > 0) {
   
   	<script src="js/foundation/foundation.js"></script>
 
-  	<!--
-	
-	<script src="js/foundation/foundation.alerts.js"></script>
-	
-	<script src="js/foundation/foundation.clearing.js"></script>
-	
-	<script src="js/foundation/foundation.cookie.js"></script>
-	
-	<script src="js/foundation/foundation.dropdown.js"></script>
-	
-	<script src="js/foundation/foundation.forms.js"></script>
-	
-	<script src="js/foundation/foundation.joyride.js"></script>
-	
-	<script src="js/foundation/foundation.magellan.js"></script>
-	
-	<script src="js/foundation/foundation.orbit.js"></script>
-	
-	<script src="js/foundation/foundation.placeholder.js"></script>
-	
-	<script src="js/foundation/foundation.reveal.js"></script>
-	
-	<script src="js/foundation/foundation.section.js"></script>
-	
-	<script src="js/foundation/foundation.tooltips.js"></script>
-	
-	<script src="js/foundation/foundation.topbar.js"></script>
-
-	-->
 
 	<script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

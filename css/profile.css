@@ -5458,14 +5458,15 @@ table tfoot tr td {
 /* line 13, ../scss/profile.scss */
 body {
   background: #2f2f2f;
+  font-family: 'Belleza';
 }
 
-/* line 18, ../scss/profile.scss */
+/* line 19, ../scss/profile.scss */
 span {
   display: inline;
 }
 
-/* line 23, ../scss/profile.scss */
+/* line 24, ../scss/profile.scss */
 #topnav {
   z-index: 999;
   width: 100%;
@@ -5474,10 +5475,12 @@ span {
   -webkit-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
   -o-box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
-  height: 85px;
+  height: 100%;
+  padding-top: 1px;
+  padding-bottom: 1%;
 }
 
-/* line 36, ../scss/profile.scss */
+/* line 40, ../scss/profile.scss */
 #topnav h1 {
   color: #ffffff;
   /* Old browsers */
@@ -5497,7 +5500,7 @@ span {
   /* IE6-9 fallback on horizontal gradient */
 }
 
-/* line 51, ../scss/profile.scss */
+/* line 55, ../scss/profile.scss */
 #topnav h3 {
   text-align: right;
   color: #ffffff;
@@ -5516,33 +5519,41 @@ span {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
   /* IE6-9 fallback on horizontal gradient */
-  margin-top: -45px;
   margin-right: 50px;
+  margin-top: -50px;
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-family: "Belleza", sans-serif;
 }
 
-/* line 69, ../scss/profile.scss */
+/* line 78, ../scss/profile.scss */
+#topnav h3:hover {
+  font-style: underline;
+}
+
+/* line 83, ../scss/profile.scss */
 #topnav #buttonnav-col {
   background: url(/img/linenbg.jpg);
 }
 
-/* line 74, ../scss/profile.scss */
+/* line 88, ../scss/profile.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 78, ../scss/profile.scss */
+/* line 92, ../scss/profile.scss */
 .container {
   -webkit-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   -moz-box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   box-shadow: rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset;
   background: #202020;
   background-color: rgba(0, 0, 0, 0.3);
-  margin-top: 5%;
+  margin-top: 3%;
   padding: 10px;
 }
 
-/* line 91, ../scss/profile.scss */
+/* line 105, ../scss/profile.scss */
 .ribbon-before {
   position: absolute;
   left: 1px;
@@ -5552,7 +5563,7 @@ span {
   margin-top: -31px !important;
 }
 
-/* line 100, ../scss/profile.scss */
+/* line 114, ../scss/profile.scss */
 .ribbon-after {
   position: absolute;
   left: 1px;
@@ -5564,20 +5575,20 @@ span {
   background: url(/img/ribbon-after.png);
 }
 
-/* line 116, ../scss/profile.scss */
+/* line 130, ../scss/profile.scss */
 #cslogo {
   padding: 11px;
   margin-left: 30px;
 }
 
-/* line 122, ../scss/profile.scss */
+/* line 136, ../scss/profile.scss */
 select {
   background-color: #2f2f2f;
   height: 30px;
   color: white;
 }
 
-/* line 133, ../scss/profile.scss */
+/* line 147, ../scss/profile.scss */
 .spacer {
   width: 1020px !important;
   margin-top: -5px;
@@ -5585,18 +5596,18 @@ select {
   margin-right: -10px;
 }
 
-/* line 141, ../scss/profile.scss */
+/* line 155, ../scss/profile.scss */
 #topnav #buttonnav {
   width: 285px;
   margin: 0 auto;
 }
 
-/* line 147, ../scss/profile.scss */
+/* line 161, ../scss/profile.scss */
 .user {
   width: 110px;
 }
 
-/* line 151, ../scss/profile.scss */
+/* line 165, ../scss/profile.scss */
 .panel {
   -webkit-box-shadow: 0px 0px 5px #333333;
   -moz-box-shadow: 0px 0px 5px #333333;
@@ -5607,43 +5618,62 @@ select {
   width: 100%;
 }
 
-/* line 161, ../scss/profile.scss */
+/* line 175, ../scss/profile.scss */
 #personal {
   float: left;
   width: 50%;
   padding: 10px;
 }
 
-/* line 169, ../scss/profile.scss */
+/* line 183, ../scss/profile.scss */
 #vehicle {
   float: left;
   width: 50%;
   padding: 10px;
 }
 
-/* line 176, ../scss/profile.scss */
+/* line 190, ../scss/profile.scss */
+table tbody tr {
+  font-family: 'Gruppo';
+  font-weight: bold;
+}
+
+/* line 196, ../scss/profile.scss */
 table tbody tr > :first-child {
   color: #999;
   font-weight: bold;
   word-wrap: break-word;
 }
 
-/* line 186, ../scss/profile.scss */
+/* line 205, ../scss/profile.scss */
+li h1 {
+  font-family: 'Gruppo';
+  font-weight: bold;
+}
+
+/* line 212, ../scss/profile.scss */
 table {
   width: 100%;
 }
 
-/* line 190, ../scss/profile.scss */
+/* line 215, ../scss/profile.scss */
+#modalHeader {
+  font-family: 'Gruppo';
+  font-weight: bold;
+  text-align: center;
+}
+
+/* line 221, ../scss/profile.scss */
 #username {
   color: #ff7b0d;
 }
 
-/* line 194, ../scss/profile.scss */
+/* line 225, ../scss/profile.scss */
 #vehicle {
   width: 50%;
 }
 
-/* line 198, ../scss/profile.scss */
+/* line 229, ../scss/profile.scss */
 #personal {
   width: 50%;
 }
@@ -5651,13 +5681,13 @@ table {
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   /* Styles */
-  /* line 207, ../scss/profile.scss */
+  /* line 238, ../scss/profile.scss */
   #vehicle {
     clear: left;
     width: 100%;
   }
 
-  /* line 211, ../scss/profile.scss */
+  /* line 242, ../scss/profile.scss */
   #personal {
     width: 100%;
   }
@@ -5665,13 +5695,13 @@ table {
 /* Smartphones (landscape) ----------- */
 @media only screen and (min-width: 321px) {
   /* Styles */
-  /* line 220, ../scss/profile.scss */
+  /* line 251, ../scss/profile.scss */
   #vehicle {
     clear: left;
     width: 100%;
   }
 
-  /* line 224, ../scss/profile.scss */
+  /* line 255, ../scss/profile.scss */
   #personal {
     width: 100%;
   }
@@ -5679,13 +5709,13 @@ table {
 /* Smartphones (portrait) ----------- */
 @media only screen and (max-width: 320px) {
   /* Styles */
-  /* line 233, ../scss/profile.scss */
+  /* line 264, ../scss/profile.scss */
   #vehicle {
     clear: left;
     width: 100%;
   }
 
-  /* line 237, ../scss/profile.scss */
+  /* line 268, ../scss/profile.scss */
   #personal {
     width: 100%;
   }

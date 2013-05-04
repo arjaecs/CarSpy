@@ -1,5 +1,4 @@
 <?php // Page for logging in and for registering if you are a new user.
-//session_start();
 
 
 if(isset($_COOKIE['loggedin'])){
@@ -11,42 +10,67 @@ if(isset($_COOKIE['loggedin'])){
 $loggedin = false;
 $id = 0;
 
-// When the user presses the submit button this code will run
 if ( count($_POST) > 0) {
     require_once('db.php');
     
 
-    // If the Register button was pressed run this code
+    // If the Register button was pressed 
    if($_POST['submit'] == 'Register'){
 
     	$db = db::getInstance();
 
-    	$prev = "SELECT email FROM User WHERE email = '{$_POST['mail']}'";
+    	$data = array('email' => $_POST['regMail']);
+
+    	$prev = "SELECT email FROM User WHERE email = :email";
 
     	$stmt = $db->prepare($prev);
-        $stmt->execute();
+        $stmt->execute($data);
         $existing = $stmt->fetchAll();
 
         $exists = false;
-        if(count($existing)>0){
+        if(count($existing)>0){ // User wanted to register a new account with a pre-existing email
         	$exists = true;
         	$reset = 'Existing account found, try again!';
         }
-        else{
+        else{ // Email wasn't found within the database
 
-		$psw= md5 ( $_POST['pass'] );
+		$psw= md5 ( $_POST['regPass'] );
+
+		$data = array(
+						'password' => $psw,
+                    'firstName' => $_POST['regFirstName'],
+                    'lastName' => $_POST['regLastName'],
+                    'email' => $_POST['regMail'],
+                    'phone' => $_POST['regPhone'],
+                    'birth' => $_POST['regDate'],
+                    'address' =>  $_POST['regAddress'],
+                    'gender' => $_POST['regGender']
+			);
         
+        // $sql = "INSERT INTO User
+        //         SET
+
+        //             password = '{$psw}',
+        //             firstName = '{$_POST['firstName']}',
+        //             lastName = '{$_POST['lastName']}',
+        //             email = '{$_POST['mail']}',
+        //             phone = '{$_POST['phone']}',
+        //             birth = '{$_POST['date']}',
+        //             address =  '{$_POST['address']}',
+        //             gender = '{$_POST['gender']}'
+        // ";
+
         $sql = "INSERT INTO User
                 SET
 
-                    password = '{$psw}',
-                    firstName = '{$_POST['firstName']}',
-                    lastName = '{$_POST['lastName']}',
-                    email = '{$_POST['mail']}',
-                    phone = '{$_POST['phone']}',
-                    birth = '{$_POST['date']}',
-                    address =  '{$_POST['address']}',
-                    gender = '{$_POST['gender']}'
+                    password = :password,
+                    firstName = :firstName,
+                    lastName = :lastName,
+                    email = :email,
+                    phone = :phone,
+                    birth = :birth,
+                    address =  :address,
+                    gender = :gender
         ";
 
 
@@ -110,6 +134,8 @@ if ( count($_POST) > 0) {
 	}
 	else{
 
+		//Reset Password
+
 		$db = db::getInstance();
 
 		$sql = "SELECT
@@ -137,6 +163,7 @@ if ( count($_POST) > 0) {
 
 		}
 		else{
+			//Email found, reset email with randomly generated one and send email
 		
 			$passsql = "UPDATE User
 			            SET
@@ -201,6 +228,7 @@ if($loggedin) {
   <link rel="stylesheet" href="css/normalize.css" />
   
   <link rel="stylesheet" href="css/login.css" />
+  <link href='http://fonts.googleapis.com/css?family=Metrophobic|Belleza|Gruppo' rel='stylesheet' type='text/css'>
 
   <script src="js/vendor/custom.modernizr.js"></script>
  
@@ -264,55 +292,55 @@ if($loggedin) {
 						  <div class="modal-body">
 						    
 						    <div class="control-group">
-							    <label class="control-label" for="firstName">First Name</label>
+							    <label class="control-label" for="regFirstName">First Name</label>
 							    <div class="controls">
-							      <input type="text" id="firstName" name="firstName" placeholder="First Name" required="required">
+							      <input type="text" id="regFirstName" name="regFirstName" placeholder="First Name" required="required">
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="lastName">Last Name</label>
+							    <label class="control-label" for="regLastName">Last Name</label>
 							    <div class="controls">
-							      <input type="text" id="lastName" name="lastName" placeholder="Last Name" required="required">
+							      <input type="text" id="regLastName" name="regLastName" placeholder="Last Name" required="required">
 							    </div>
 							  </div>	
 							  <div class="control-group">
-							    <label class="control-label" for="mail">Email</label>
+							    <label class="control-label" for="regMail">Email</label>
 							    <div class="controls">
-							      <input id="mail" name="mail" type="email" placeholder="example@email.com" required="required">
+							      <input id="regMail" name="regMail" type="email" placeholder="example@email.com" required="required">
 							      <!--<input type="text" id="inputEmail" placeholder="Email"> -->
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="password">Password</label>
+							    <label class="control-label" for="regPass">Password</label>
 							    <div class="controls">
-							      <input type="password"  name="pass" placeholder="Password" required="required">
+							      <input type="password"  id="regPass" name="regPass" placeholder="Password" required="required">
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="gender">Gender</label>
+							    <label class="control-label" for="regGender">Gender</label>
 							    <div class="controls">
-							    	<select name="gender" id="gender" name="gender">
+							    	<select name="regGender" id="regGender">
                                         <option value='Male'>Male</option>
                                         <option value='Female'>Female</option>
                                     </select>
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="phone">Phone</label>
+							    <label class="control-label" for="regPhone">Phone</label>
 							    <div class="controls">
-							      <input type="tel" id="phone" name="phone" placeholder="787 123 4567">
+							      <input type="tel" id="regPhone" name="regPhone" placeholder="787 123 4567">
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="date">Date of Birth</label>
+							    <label class="control-label" for="regDate">Date of Birth</label>
 							    <div class="controls">
-							      <input type="text" id="date" name="date" placeholder="YYYY-MM-DD"/>
+							      <input type="text" id="regDate" name="regDate" placeholder="YYYY-MM-DD"/>
 							    </div>
 							  </div>
 							  <div class="control-group">
-							    <label class="control-label" for="address">Address</label>
+							    <label class="control-label" for="regAddress">Address</label>
 							    <div class="controls">
-							      <input type="text" id="address" name="address" placeholder="#Street City, State Zip">
+							      <input type="text" id="regAddress" name="regAddress" placeholder="#Street City, State Zip">
 							    </div>
 							  </div>
 						  </div>
